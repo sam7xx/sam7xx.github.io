@@ -33,6 +33,27 @@
 :root {
   --gap-max: calc(var(--gap-margin) + var(--gap-padding));
 }
+.post-count {
+  scrollbar-width: none;
+  color: var(--text-p2);
+}
+.totalcount {
+  color: var(--text-p2);
+}
+.page-footer {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+}
+.bread-nav div#page-words span.sep:before {
+  content: '|';
+}
+.bread-nav div#page-words span.updated {
+  visibility: hidden;
+}
+.bread-nav:hover div#page-words span.updated {
+  visibility: visible;
+}
 :root {
   --hue: 192deg;
   --sat: 98%;
