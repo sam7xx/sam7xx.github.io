@@ -18,27 +18,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>基于hexo&github免费博客搭建记录 - 七分配的Sam</title>
+  <title>post - 七分配的Sam</title>
 
   
     <meta name="description" content="1. 构建工具安装准备1.1 Node.js环境搭建hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Node.js比较旧，需前往Node.js 官网按指引安装最新稳定版本。 由于我使用的是WSL子系统，这里我选择Linux系统和nvm安装方式。 首先安装nvm Node.js版本管理器，再使用nvm工具包安装指定版本Node.js，Node.js自带npm软件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于hexo&amp;github免费博客搭建记录">
-<meta property="og:url" content="https://sam7xx.github.io/2025/09/13/blog/blog/">
+<meta property="og:title" content="post">
+<meta property="og:url" content="https://sam7xx.github.io/2025/09/20/blog/hexo/">
 <meta property="og:site_name" content="七分配的Sam">
 <meta property="og:description" content="1. 构建工具安装准备1.1 Node.js环境搭建hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Node.js比较旧，需前往Node.js 官网按指引安装最新稳定版本。 由于我使用的是WSL子系统，这里我选择Linux系统和nvm安装方式。 首先安装nvm Node.js版本管理器，再使用nvm工具包安装指定版本Node.js，Node.js自带npm软件">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gitee.com/misty7/image-library/blob/master/1.png">
-<meta property="article:published_time" content="2025-09-13T15:16:42.000Z">
-<meta property="article:modified_time" content="2025-09-20T08:35:39.790Z">
+<meta property="article:published_time" content="2025-09-20T10:19:42.000Z">
+<meta property="article:modified_time" content="2025-09-20T10:30:12.079Z">
 <meta property="article:author" content="Sam">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="开关电源">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/misty7/image-library/blob/master/1.png">
   
   
   
-  <meta name="keywords" content="hexo">
+  <meta name="keywords" content="开关电源">
 
   <!-- feed -->
   
@@ -50,7 +50,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sam","sameAs":[],"image":"https://gitee.com/misty7/image-library/blob/master/1.png"},"dateCreated":"2025-09-13T23:16:42+08:00","dateModified":"2025-09-20T16:35:39+08:00","datePublished":"2025-09-13T23:16:42+08:00","description":"","headline":"基于hexo&github免费博客搭建记录","mainEntityOfPage":{"@type":"WebPage","@id":"https://sam7xx.github.io/2025/09/13/blog/blog/"},"publisher":{"@type":"Organization","name":"Sam","sameAs":[],"image":"https://gitee.com/misty7/image-library/blob/master/1.png","logo":{"@type":"ImageObject","url":"https://gitee.com/misty7/image-library/blob/master/1.png"}},"url":"https://sam7xx.github.io/2025/09/13/blog/blog/","keywords":"hexo","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sam","sameAs":[],"image":"https://gitee.com/misty7/image-library/blob/master/1.png"},"dateCreated":"2025-09-20T18:19:42+08:00","dateModified":"2025-09-20T18:30:12+08:00","datePublished":"2025-09-20T18:19:42+08:00","description":"","headline":"post","mainEntityOfPage":{"@type":"WebPage","@id":"https://sam7xx.github.io/2025/09/20/blog/hexo/"},"publisher":{"@type":"Organization","name":"Sam","sameAs":[],"image":"https://gitee.com/misty7/image-library/blob/master/1.png","logo":{"@type":"ImageObject","url":"https://gitee.com/misty7/image-library/blob/master/1.png"}},"url":"https://sam7xx.github.io/2025/09/20/blog/hexo/","image":[]}</script>
   <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css"><link rel="preload" as="style" crossorigin href="https://fontsapi.zeoseven.com/442/main/result.css" onload="this.rel='stylesheet'" onerror="this.href='https://fontsapi-storage.zeoseven.com/442/main/result.css'" /> <noscript> <link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" /> </noscript><link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.css" rel="stylesheet">
 </head>
 <body>
@@ -62,17 +62,14 @@
 
 <div class="nav-area">
 
-<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/blog/" style="color:#1BCDFC"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="笔记" href="/note/" style="color:#3DC550"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.25 4.48v3.057c0 .111 0 .27.02.406a.936.936 0 0 0 .445.683a.96.96 0 0 0 .783.072c.13-.04.272-.108.378-.159L17 8.005l1.124.534c.106.05.248.119.378.16a.958.958 0 0 0 .783-.073a.936.936 0 0 0 .444-.683c.021-.136.021-.295.021-.406V3.031c.113-.005.224-.01.332-.013C21.154 2.98 22 3.86 22 4.933v11.21c0 1.112-.906 2.01-2.015 2.08c-.97.06-2.108.179-2.985.41c-1.082.286-1.99 1.068-3.373 1.436c-.626.167-1.324.257-1.627.323V5.174c.32-.079 1.382-.203 1.674-.371c.184-.107.377-.216.576-.323m5.478 8.338a.75.75 0 0 1-.546.91l-4 1a.75.75 0 0 1-.364-1.456l4-1a.75.75 0 0 1 .91.546" clip-rule="evenodd"/><path fill="currentColor" d="M18.25 3.151c-.62.073-1.23.18-1.75.336a8.2 8.2 0 0 0-.75.27v3.182l.75-.356l.008-.005a1.13 1.13 0 0 1 .492-.13c.047 0 .094.004.138.01c.175.029.315.1.354.12l.009.005l.749.356V3.647z"/><path fill="currentColor" d="M12 5.214c-.334-.064-1.057-.161-1.718-.339C8.938 4.515 8.05 3.765 7 3.487c-.887-.234-2.041-.352-3.018-.412C2.886 3.007 2 3.9 2 4.998v11.146c0 1.11.906 2.01 2.015 2.079c.97.06 2.108.179 2.985.41c.486.129 1.216.431 1.873.726c1.005.451 2.052.797 3.127 1.034z" opacity=".5"/><path fill="currentColor" d="M4.273 12.818a.75.75 0 0 1 .91-.545l4 1a.75.75 0 1 1-.365 1.455l-4-1a.75.75 0 0 1-.545-.91m.909-4.545a.75.75 0 1 0-.364 1.455l4 1a.75.75 0 0 0 .364-1.455z"/></svg></a><a class="nav-item" title="项目" href="/project/" style="color:#FA6400"><img no-lazy src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2779789.png" / onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="nav-item" title="跑步记录" href="/runing/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path opacity=".4" d="M121.6 549.8L142.9 573.7L154.9 563.1L234.9 491.9L238 489.2L239.4 485.3L254.8 442.1C244.3 437.9 235 432 226.8 425L211.8 466.9L210.4 470.8L207.3 473.5L133.4 539.2L121.4 549.8zM139.4 296.9L169.1 308.8C170.1 306.4 180 281.5 199 234.1L203 224L275.7 224C275.3 225.5 266.1 262.3 248.1 334.5C241.9 359.4 256.3 384.7 280.9 392.1L376.8 420.9L394.2 426.1L386.8 442.7L337.6 553.5L331.1 568.1L360.3 581.1L366.8 566.5L430.8 422.5L438.2 405.9L420.8 400.7L328 372.9L312.8 368.3C313.1 367.3 321.5 338.8 338 282.7L348.4 247C360.8 268.2 373.4 289.9 386.3 312L390.9 319.9L496.1 319.9L496.1 287.9L409.3 287.9L404.7 280L376.5 231.6C362.2 207 335.9 191.9 307.4 191.9L181.3 191.9L177.3 202L145.3 282L139.4 296.9zM312.2 88C312.2 110.1 330.1 128 352.2 128C374.3 128 392.2 110.1 392.2 88C392.2 65.9 374.3 48 352.2 48C330.1 48 312.2 65.9 312.2 88z"/><path d="M372.5 320.1C367.6 311.6 361.2 300.6 353.3 287.1C350.5 296.5 343.6 319.9 332.6 357.5L425.4 385.3C439 389.4 450.6 392.8 460.2 395.7C456.1 404.9 451.2 416 445.4 428.9L381.4 572.9C377.1 582.6 372.7 592.4 368.4 602.1L324.5 582.6L309.9 576.1C313.6 567.7 332.2 526 365.6 450.8L372.2 436.1L356.8 431.5L276.3 407.4C243.6 397.6 224.3 363.7 232.6 330.6L255.3 240L213.9 240C172 344.8 187 307.2 178.1 329.6C170.7 326.6 155.8 320.7 133.5 311.8L118.6 305.9C123.2 294.5 137.8 257.9 162.5 196.2L170.5 176.1L307.4 176.1C341.5 176.1 373.1 194.2 390.3 223.7L418.5 272.1L512.1 272.1L512.1 336.1L381.7 336.1L372.4 320.2zM420.7 400.7L327.9 372.9L312.7 368.3C313 367.3 321.4 338.8 337.9 282.7L348.4 247C360.8 268.2 373.4 289.9 386.3 312L390.9 319.9L496.1 319.9L496.1 287.9L409.3 287.9L404.7 280L376.5 231.6C362.2 207 335.9 191.9 307.4 191.9L181.3 191.9L177.3 202L145.3 282L139.4 296.9L169.1 308.8C170.1 306.4 180 281.5 199 234.1L203 224L275.7 224C275.3 225.5 266.1 262.3 248.1 334.5C241.9 359.4 256.3 384.7 280.9 392.1L376.8 420.9L394.2 426.1L386.8 442.7L337.6 553.5L331.1 568.1L360.3 581.1L366.8 566.5L430.8 422.5L438.2 405.9L420.8 400.7zM392.2 88C392.2 65.9 374.3 48 352.2 48C330.1 48 312.2 65.9 312.2 88C312.2 110.1 330.1 128 352.2 128C374.3 128 392.2 110.1 392.2 88zM352.2 32C383.1 32 408.2 57.1 408.2 88C408.2 118.9 383.1 144 352.2 144C321.3 144 296.2 118.9 296.2 88C296.2 57.1 321.3 32 352.2 32zM196.8 461.5L214.4 412.3C218.2 416.9 222.3 421.1 226.8 425L211.8 466.9L210.4 470.8L207.3 473.5L133.4 539.2L121.4 549.8L142.7 573.7L154.7 563.1L234.7 491.9L237.8 489.2L239.2 485.3L254.6 442.1C257.9 443.5 261.2 444.7 264.7 445.7L269.8 447.2L254.3 490.7L251.5 498.4L245.4 503.8L165.4 575C157.4 582.1 149.5 589.2 141.5 596.3C136.2 590.3 125.5 578.4 109.6 560.4L99 548.5C106.6 541.7 139.2 512.7 196.8 461.5z"/></svg></a></nav>
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/blog/" style="color:#1BCDFC"><span>博客</span></a><a class="nav-item" title="笔记" href="/note/" style="color:#3DC550"><span>笔记</span></a><a class="nav-item" title="项目" href="/project/" style="color:#FA6400"><span>项目</span></a><a class="nav-item" title="记录" href="/runing/" style="color:#F44336"><span>记录</span></a></nav>
 </div>
 <div class="widgets">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
 
 
 
-<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/09/13/blog/blog/"><span class="title">基于hexo&github免费博客搭建记录</span></a><a class="item title" href="/1970/01/01/hello-world/"><span class="title">Hello World</span></a></div></widget>
-
-<widget class="widget-wrapper markdown"><div class="widget-body fs14"><h1 id=""><a href="#" class="headerlink" title=""></a><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"></h1><h1 id="-1"><a href="#-1" class="headerlink" title=""></a><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script></h1><h1 id="-2"><a href="#-2" class="headerlink" title=""></a><script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script></h1><p><meting-js server="netease" type="playlist" id="14222331844"></meting-js></p>
-</div></widget>
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/09/20/blog/hexo/"><span class="title">post</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" title="Github" href="https://github.com/sam7xx" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-github fa-brands fa-bounce"></i></a><a class="social" title="email" href="mailto://2690640537@qq.com" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-envelope fa-bounce" style="color: #B197FC;"></i></a><a class="social" title="music" href="https://music.163.com/playlist?id=14222331844&uct2=U2FsdGVkX1+EPfkU6bkXeVQBZidFKGqf/EwUTYBsI50=" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-music fa-spin" style="color: #74C0FC;"></i></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -85,13 +82,13 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-09-13T15:16:42.000Z">2025-09-13</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-09-20T08:35:39.790Z">2025-09-20</time></span></div><div class="flex-row" id="page-words"><span style="padding: 4px;">本文：2k字</span><span class="sep updated" style="padding: 4px;"></span><span class="text updated" style="padding: 4px;">阅读时长：9分</span></div><div class="flex-row" id="tag"> <span>&nbsp标签：</span><a class="cap breadcrumb-link" href="/tags/hexo/">hexo</a>&nbsp</div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-09-13T15:16:42.000Z">2025-09-13</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-09-20T08:35:39.790Z">2025-09-20</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-09-20T10:19:42.000Z">2025-09-20</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-09-20T10:30:12.079Z">2025-09-20</time></span></div><div class="flex-row" id="page-words"><span style="padding: 4px;">本文：1.9k字</span><span class="sep updated" style="padding: 4px;"></span><span class="text updated" style="padding: 4px;">阅读时长：8分</span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-09-20T10:19:42.000Z">2025-09-20</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-09-20T10:30:12.079Z">2025-09-20</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>基于hexo&github免费博客搭建记录</span></h1>
+        <h1 class="text title"><span>post</span></h1>
         
       </div>
     </div>
@@ -169,7 +166,7 @@
 </ul>
 <p>终端运行hexo clean 清除缓存，hexo g&amp;hexo s渲染网页后本地预览。</p>
 <h3 id="14-引入音乐"><a href="#14-引入音乐" class="headerlink" title="14. 引入音乐"></a>14. 引入音乐</h3><h3 id="15-永久链接"><a href="#15-永久链接" class="headerlink" title="15. 永久链接"></a>15. 永久链接</h3><h3 id="16-AI摘要接入"><a href="#16-AI摘要接入" class="headerlink" title="16. AI摘要接入"></a>16. AI摘要接入</h3><p><a target="_blank" rel="noopener" href="https://ai.zhheo.com/">洪墨AI - 网站AI摘要、知识库AI客服和搜索插件平台</a></p>
-<h3 id="17-字体设置"><a href="#17-字体设置" class="headerlink" title="17. 字体设置"></a>17. 字体设置</h3><p><a target="_blank" rel="noopener" href="https://chinese-font.netlify.app/zh-cn/">✨中文网字计划-提供便捷实用的全字符集中文渲染方案</a></p>
+<h3 id="17-字体设置"><a href="#17-字体设置" class="headerlink" title="17. 字体设置"></a>17. 字体设置</h3><p><a target="_blank" rel="noopener" href="https://chinese-font.netlify.app/zh-cn/">中文网字计划-提供便捷实用的全字符集中文渲染方案</a></p>
 <p>_config.yml 文件中，最后一行加入以下指令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">inject:</span><br><span class="line">  head:</span><br><span class="line">    - &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css&quot;&gt;</span><br></pre></td></tr></table></figure>
 
@@ -177,7 +174,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">style:</span><br><span class="line">    font-family:</span><br><span class="line">        logo: &#x27;&quot;LXGW WenKai Screen&quot;, system-ui, ...&#x27;</span><br><span class="line">        body: &#x27;&quot;LXGW WenKai Screen&quot;, system-ui, ...&#x27;</span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="https://fonts.zeoseven.com/items/442/#embed">Maple Mono NF-CN - ZeoSeven Fonts (ZSFT)</a></p>
-<h3 id="18-动态图标引入"><a href="#18-动态图标引入" class="headerlink" title="18.动态图标引入"></a>18.动态图标引入</h3><p><a target="_blank" rel="noopener" href="https://www.bootcdn.cn/font-awesome/">font-awesome (v7.0.0) - Font Awesome 字体为您提供可缩放矢量图标,它可以被定制大小、颜色、阴影以及任何可以用 CSS 的样式。 | BootCDN - Bootstrap 中文网开源项目免费 CDN 加速服务 铂特优选</a></p>
+<h3 id="18-动态图标引入"><a href="#18-动态图标引入" class="headerlink" title="18.动态图标引入"></a>18.动态图标引入</h3><p><a target="_blank" rel="noopener" href="https://www.bootcdn.cn/font-awesome/">font-awesome v7 CDN</a></p>
 </article>
 <div class="article-footer">
     <section id="license">
@@ -189,29 +186,14 @@
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/1970/01/01/hello-world/">Hello World</a></div></section></div>
 
 
 
 
-  <div class="related-wrap md-text" id="comments">
-    <section class='header cmt-title cap theme'>
-      <p>快来参与讨论吧~</p>
-
-    </section>
-    <section class='body cmt-body giscus'>
-      
-
-<svg class="loading" style="vertical-align:middle;fill:currentColor;overflow:hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
-
-<div id="giscus" src="https://giscus.app/client.js" data-repo="sam7xx/sam7xx.github.io" data-repo-id="R_kgDOO7x7jQ" data-category="Announcements" data-category-id="DIC_kwDOO7x7jc4Cu25Y" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="noborder_light" data-lang="zh-CN" crossorigin="anonymous"></div>
-
-    </section>
-  </div>
 
 
 
-<footer class="page-footer footnote"><hr><div class="text"><span class="totalcount">共发表 2 篇文章 · </span><span class="post-count">总计 2k 字</span><center>
+<footer class="page-footer footnote"><hr><div class="text"><span class="totalcount">共发表 1 篇文章 · </span><span class="post-count">总计 1.9k 字</span><center>
 <span id="runtime_span"></span>
 <script type="text/javascript">
 function show_runtime() {
@@ -245,7 +227,7 @@ show_runtime();
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E5%87%86%E5%A4%87"><span class="toc-text">1. 构建工具安装准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-Node-js%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">1.1 Node.js环境搭建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-NPM%E7%AE%80%E4%BB%8B"><span class="toc-text">1.2 NPM简介</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HEXO%E9%85%8D%E7%BD%AE"><span class="toc-text">2. HEXO配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-hexo%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">2.1 hexo安装以及初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-hexo%E9%85%8D%E7%BD%AE-%E5%BC%80%E5%A7%8B%E6%8A%98%E8%85%BE"><span class="toc-text">2.2 hexo配置  开始折腾</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BD%91%E7%AB%99%E7%BB%9F%E8%AE%A1"><span class="toc-text">3. 网站统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-giscus%E8%AF%84%E8%AE%BA%E5%90%AF%E7%94%A8"><span class="toc-text">4. giscus评论启用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AD%97%E6%95%B0%E7%BB%9F%E8%AE%A1"><span class="toc-text">5. 字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%8A%A8%E6%80%81%E5%9B%BE%E6%A0%87%E9%85%8D%E7%BD%AE"><span class="toc-text">6. 动态图标配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE"><span class="toc-text">7. 图床设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E4%BE%A7%E8%BE%B9%E6%A0%8F%E9%85%8D%E7%BD%AE"><span class="toc-text">8. 侧边栏配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="toc-text">9. 字体设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F%E9%85%8D%E7%BD%AE"><span class="toc-text">10. 顶部导航栏配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%B7%B1%E6%B5%85%E8%89%B2%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2"><span class="toc-text">11. 深浅色模式切换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8"><span class="toc-text">12. 添加音乐播放器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE"><span class="toc-text">13. 背景图片设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%BC%95%E5%85%A5%E9%9F%B3%E4%B9%90"><span class="toc-text">14. 引入音乐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E6%B0%B8%E4%B9%85%E9%93%BE%E6%8E%A5"><span class="toc-text">15. 永久链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-AI%E6%91%98%E8%A6%81%E6%8E%A5%E5%85%A5"><span class="toc-text">16. AI摘要接入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="toc-text">17. 字体设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#18-%E5%8A%A8%E6%80%81%E5%9B%BE%E6%A0%87%E5%BC%95%E5%85%A5"><span class="toc-text">18.动态图标引入</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>参与讨论</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="auto"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E5%87%86%E5%A4%87"><span class="toc-text">1. 构建工具安装准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-Node-js%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">1.1 Node.js环境搭建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-NPM%E7%AE%80%E4%BB%8B"><span class="toc-text">1.2 NPM简介</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HEXO%E9%85%8D%E7%BD%AE"><span class="toc-text">2. HEXO配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-hexo%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">2.1 hexo安装以及初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-hexo%E9%85%8D%E7%BD%AE-%E5%BC%80%E5%A7%8B%E6%8A%98%E8%85%BE"><span class="toc-text">2.2 hexo配置  开始折腾</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BD%91%E7%AB%99%E7%BB%9F%E8%AE%A1"><span class="toc-text">3. 网站统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-giscus%E8%AF%84%E8%AE%BA%E5%90%AF%E7%94%A8"><span class="toc-text">4. giscus评论启用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AD%97%E6%95%B0%E7%BB%9F%E8%AE%A1"><span class="toc-text">5. 字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%8A%A8%E6%80%81%E5%9B%BE%E6%A0%87%E9%85%8D%E7%BD%AE"><span class="toc-text">6. 动态图标配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE"><span class="toc-text">7. 图床设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E4%BE%A7%E8%BE%B9%E6%A0%8F%E9%85%8D%E7%BD%AE"><span class="toc-text">8. 侧边栏配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="toc-text">9. 字体设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E9%A1%B6%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F%E9%85%8D%E7%BD%AE"><span class="toc-text">10. 顶部导航栏配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%B7%B1%E6%B5%85%E8%89%B2%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2"><span class="toc-text">11. 深浅色模式切换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E6%B7%BB%E5%8A%A0%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8"><span class="toc-text">12. 添加音乐播放器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%E8%AE%BE%E7%BD%AE"><span class="toc-text">13. 背景图片设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%BC%95%E5%85%A5%E9%9F%B3%E4%B9%90"><span class="toc-text">14. 引入音乐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E6%B0%B8%E4%B9%85%E9%93%BE%E6%8E%A5"><span class="toc-text">15. 永久链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-AI%E6%91%98%E8%A6%81%E6%8E%A5%E5%85%A5"><span class="toc-text">16. AI摘要接入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="toc-text">17. 字体设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#18-%E5%8A%A8%E6%80%81%E5%9B%BE%E6%A0%87%E5%BC%95%E5%85%A5"><span class="toc-text">18.动态图标引入</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
@@ -740,30 +722,6 @@ show_runtime();
 
 
 <!-- optional -->
-
-  <script type="module">
-  const el = document.querySelector('#comments #giscus');
-  util.viewportLazyload(el, load_discus, false);
-
-  function load_discus() {
-    if (!el) return;
-    try {
-        el.innerHTML = '';
-      } catch (error) {
-        console.error(error);
-      }
-      const script = document.createElement('script');
-      script.async = true;
-      for (const key of Object.keys(el.attributes)) {
-        const attr = el.attributes[key];
-        if (['class', 'id'].includes(attr.name) === false) {
-          script.setAttribute(attr.name, attr.value);
-        }
-      }
-      el.appendChild(script);
-  }
-</script>
-
 
 
 
