@@ -4,9 +4,9 @@
   --fsh2: calc(var(--fsp) + 11px);
   --fsh3: calc(var(--fsp) + 7px);
   --fsh4: calc(var(--fsp) + 4px);
-  --side-content-width: 255px;
-  --gap-margin: 11px;
-  --gap-padding: 11px;
+  --side-content-width: 222px;
+  --gap-margin: 15px;
+  --gap-padding: 15px;
   --gap-p: calc(16px + 1px);
   --gap-p-compact: calc(16px * 0.75);
 }
@@ -2636,7 +2636,7 @@ div.toast.show {
 .page-footer {
   margin: 4rem 1rem 3rem;
   color: var(--text-p2);
-  width: 95%;
+  width: 100%;
 }
 .page-footer a {
   color: var(--text-p2);
