@@ -1,33 +1,33 @@
 :root {
-  --width-main: 1111px;
+  --width-main: 1080px;
   --fsp: 16px;
   --fsh2: calc(var(--fsp) + 11px);
   --fsh3: calc(var(--fsp) + 7px);
   --fsh4: calc(var(--fsp) + 4px);
   --side-content-width: 255px;
-  --gap-margin: 7px;
-  --gap-padding: 7px;
-  --gap-p: calc(16px + 4px);
+  --gap-margin: 11px;
+  --gap-padding: 11px;
+  --gap-p: calc(16px + 1px);
   --gap-p-compact: calc(16px * 0.75);
 }
 @media screen and (min-width: 2048px) {
   :root {
-    --width-main: 780px;
+    --width-main: 1170px;
   }
 }
 @media screen and (min-width: 2560px) {
   :root {
-    --width-main: 860px;
+    --width-main: 1290px;
   }
 }
 @media screen and (max-width: 768px) {
   :root {
-    --side-content-width: 188px;
+    --side-content-width: 282px;
   }
 }
 @media screen and (max-width: 667px) {
   :root {
-    --side-content-width: 224px;
+    --side-content-width: 336px;
   }
 }
 :root {
@@ -66,47 +66,47 @@
   --accent: #ff5724;
   --link: hsla(207deg 90% 54% / 1);
   --link-a20: hsla(207deg 90% 54% / 0.2);
-  --background: hsla(210deg 20% 98% / 1);
+  --background: hsla(255deg 20% 98% / 1);
   --card: #fff;
-  --bg-a20: hsla(210deg 0% 100% / 0.2);
-  --bg-a50: hsla(210deg 0% 100% / 0.5);
-  --bg-a60: hsla(210deg 0% 100% / 0.6);
-  --bg-a75: hsla(210deg 0% 100% / 0.75);
-  --bg-a100: hsla(210deg 0% 100% / 1);
-  --text: hsla(210deg 0% 0% / 1);
-  --text-reverse: hsla(210deg 0% 100% / 1);
-  --text-p1: hsla(210deg 0% 0% / 0.8);
-  --text-p2: hsla(210deg 0% 0% / 0.7);
-  --text-p3: hsla(210deg 0% 0% / 0.5);
-  --text-p4: hsla(210deg 0% 0% / 0.4);
-  --text-meta: hsla(210deg 0% 0% / 0.2);
-  --text-code: hsla(210deg 0% 0% / 0.9);
-  --text-a10: hsla(210deg 0% 0% / 0.1);
-  --text-a20: hsla(210deg 0% 0% / 0.2);
-  --block: hsla(210deg 50% 12% / 0.04);
-  --block-border: hsla(210deg 50% 12% / 0.06);
+  --bg-a20: hsla(255deg 0% 100% / 0.2);
+  --bg-a50: hsla(255deg 0% 100% / 0.5);
+  --bg-a60: hsla(255deg 0% 100% / 0.6);
+  --bg-a75: hsla(255deg 0% 100% / 0.75);
+  --bg-a100: hsla(255deg 0% 100% / 1);
+  --text: hsla(255deg 0% 0% / 1);
+  --text-reverse: hsla(255deg 0% 100% / 1);
+  --text-p1: hsla(255deg 0% 0% / 0.8);
+  --text-p2: hsla(255deg 0% 0% / 0.7);
+  --text-p3: hsla(255deg 0% 0% / 0.5);
+  --text-p4: hsla(255deg 0% 0% / 0.4);
+  --text-meta: hsla(255deg 0% 0% / 0.2);
+  --text-code: hsla(255deg 0% 0% / 0.9);
+  --text-a10: hsla(255deg 0% 0% / 0.1);
+  --text-a20: hsla(255deg 0% 0% / 0.2);
+  --block: hsla(255deg 50% 12% / 0.04);
+  --block-border: hsla(255deg 50% 12% / 0.06);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: hsla(210deg 8% 12% / 1);
-    --card: hsla(210deg 10% 24% / 1);
-    --bg-a20: hsla(210deg 0% 0% / 0.2);
-    --bg-a50: hsla(210deg 0% 0% / 0.5);
-    --bg-a60: hsla(210deg 0% 0% / 0.6);
-    --bg-a75: hsla(210deg 0% 0% / 0.75);
-    --bg-a100: hsla(210deg 0% 0% / 1);
-    --text: hsla(210deg 0% 100% / 1);
-    --text-reverse: hsla(210deg 0% 0% / 1);
-    --text-p1: hsla(210deg 0% 100% / 0.8);
-    --text-p2: hsla(210deg 0% 100% / 0.7);
-    --text-p3: hsla(210deg 0% 100% / 0.5);
-    --text-p4: hsla(210deg 0% 100% / 0.4);
-    --text-meta: hsla(210deg 0% 100% / 0.2);
-    --text-code: hsla(210deg 0% 100% / 0.9);
-    --text-a10: hsla(210deg 0% 100% / 0.1);
-    --text-a20: hsla(210deg 0% 100% / 0.2);
-    --block: hsla(210deg 24% 72% / 0.08);
-    --block-border: hsla(210deg 24% 72% / 0.12);
+    --background: hsla(255deg 8% 12% / 1);
+    --card: hsla(255deg 10% 24% / 1);
+    --bg-a20: hsla(255deg 0% 0% / 0.2);
+    --bg-a50: hsla(255deg 0% 0% / 0.5);
+    --bg-a60: hsla(255deg 0% 0% / 0.6);
+    --bg-a75: hsla(255deg 0% 0% / 0.75);
+    --bg-a100: hsla(255deg 0% 0% / 1);
+    --text: hsla(255deg 0% 100% / 1);
+    --text-reverse: hsla(255deg 0% 0% / 1);
+    --text-p1: hsla(255deg 0% 100% / 0.8);
+    --text-p2: hsla(255deg 0% 100% / 0.7);
+    --text-p3: hsla(255deg 0% 100% / 0.5);
+    --text-p4: hsla(255deg 0% 100% / 0.4);
+    --text-meta: hsla(255deg 0% 100% / 0.2);
+    --text-code: hsla(255deg 0% 100% / 0.9);
+    --text-a10: hsla(255deg 0% 100% / 0.1);
+    --text-a20: hsla(255deg 0% 100% / 0.2);
+    --block: hsla(255deg 24% 72% / 0.08);
+    --block-border: hsla(255deg 24% 72% / 0.12);
     --text-code: hsla(20 75 60 / 1);
   }
 }
@@ -116,46 +116,46 @@
   }
 }
 :root[data-theme="light"] {
-  --background: hsla(210deg 20% 98% / 1);
+  --background: hsla(255deg 20% 98% / 1);
   --card: #fff;
-  --bg-a20: hsla(210deg 0% 100% / 0.2);
-  --bg-a50: hsla(210deg 0% 100% / 0.5);
-  --bg-a60: hsla(210deg 0% 100% / 0.6);
-  --bg-a75: hsla(210deg 0% 100% / 0.75);
-  --bg-a100: hsla(210deg 0% 100% / 1);
-  --text: hsla(210deg 0% 0% / 1);
-  --text-reverse: hsla(210deg 0% 100% / 1);
-  --text-p1: hsla(210deg 0% 0% / 0.8);
-  --text-p2: hsla(210deg 0% 0% / 0.7);
-  --text-p3: hsla(210deg 0% 0% / 0.5);
-  --text-p4: hsla(210deg 0% 0% / 0.4);
-  --text-meta: hsla(210deg 0% 0% / 0.2);
-  --text-code: hsla(210deg 0% 0% / 0.9);
-  --text-a10: hsla(210deg 0% 0% / 0.1);
-  --text-a20: hsla(210deg 0% 0% / 0.2);
-  --block: hsla(210deg 50% 12% / 0.04);
-  --block-border: hsla(210deg 50% 12% / 0.06);
+  --bg-a20: hsla(255deg 0% 100% / 0.2);
+  --bg-a50: hsla(255deg 0% 100% / 0.5);
+  --bg-a60: hsla(255deg 0% 100% / 0.6);
+  --bg-a75: hsla(255deg 0% 100% / 0.75);
+  --bg-a100: hsla(255deg 0% 100% / 1);
+  --text: hsla(255deg 0% 0% / 1);
+  --text-reverse: hsla(255deg 0% 100% / 1);
+  --text-p1: hsla(255deg 0% 0% / 0.8);
+  --text-p2: hsla(255deg 0% 0% / 0.7);
+  --text-p3: hsla(255deg 0% 0% / 0.5);
+  --text-p4: hsla(255deg 0% 0% / 0.4);
+  --text-meta: hsla(255deg 0% 0% / 0.2);
+  --text-code: hsla(255deg 0% 0% / 0.9);
+  --text-a10: hsla(255deg 0% 0% / 0.1);
+  --text-a20: hsla(255deg 0% 0% / 0.2);
+  --block: hsla(255deg 50% 12% / 0.04);
+  --block-border: hsla(255deg 50% 12% / 0.06);
 }
 :root[data-theme="dark"] {
-  --background: hsla(210deg 8% 12% / 1);
-  --card: hsla(210deg 10% 24% / 1);
-  --bg-a20: hsla(210deg 0% 0% / 0.2);
-  --bg-a50: hsla(210deg 0% 0% / 0.5);
-  --bg-a60: hsla(210deg 0% 0% / 0.6);
-  --bg-a75: hsla(210deg 0% 0% / 0.75);
-  --bg-a100: hsla(210deg 0% 0% / 1);
-  --text: hsla(210deg 0% 100% / 1);
-  --text-reverse: hsla(210deg 0% 0% / 1);
-  --text-p1: hsla(210deg 0% 100% / 0.8);
-  --text-p2: hsla(210deg 0% 100% / 0.7);
-  --text-p3: hsla(210deg 0% 100% / 0.5);
-  --text-p4: hsla(210deg 0% 100% / 0.4);
-  --text-meta: hsla(210deg 0% 100% / 0.2);
-  --text-code: hsla(210deg 0% 100% / 0.9);
-  --text-a10: hsla(210deg 0% 100% / 0.1);
-  --text-a20: hsla(210deg 0% 100% / 0.2);
-  --block: hsla(210deg 24% 72% / 0.08);
-  --block-border: hsla(210deg 24% 72% / 0.12);
+  --background: hsla(255deg 8% 12% / 1);
+  --card: hsla(255deg 10% 24% / 1);
+  --bg-a20: hsla(255deg 0% 0% / 0.2);
+  --bg-a50: hsla(255deg 0% 0% / 0.5);
+  --bg-a60: hsla(255deg 0% 0% / 0.6);
+  --bg-a75: hsla(255deg 0% 0% / 0.75);
+  --bg-a100: hsla(255deg 0% 0% / 1);
+  --text: hsla(255deg 0% 100% / 1);
+  --text-reverse: hsla(255deg 0% 0% / 1);
+  --text-p1: hsla(255deg 0% 100% / 0.8);
+  --text-p2: hsla(255deg 0% 100% / 0.7);
+  --text-p3: hsla(255deg 0% 100% / 0.5);
+  --text-p4: hsla(255deg 0% 100% / 0.4);
+  --text-meta: hsla(255deg 0% 100% / 0.2);
+  --text-code: hsla(255deg 0% 100% / 0.9);
+  --text-a10: hsla(255deg 0% 100% / 0.1);
+  --text-a20: hsla(255deg 0% 100% / 0.2);
+  --block: hsla(255deg 24% 72% / 0.08);
+  --block-border: hsla(255deg 24% 72% / 0.12);
   --text-code: hsla(20 75 60 / 1);
 }
 @media screen and (max-width: 667px) {
@@ -404,46 +404,46 @@
   --theme-block: var(--theme);
   --theme-mark: var(--theme);
   --theme-codeblock: var(--theme);
-  --background: hsla(210deg 20% 98% / 1);
+  --background: hsla(255deg 20% 98% / 1);
   --card: #fff;
-  --bg-a20: hsla(210deg 0% 100% / 0.2);
-  --bg-a50: hsla(210deg 0% 100% / 0.5);
-  --bg-a60: hsla(210deg 0% 100% / 0.6);
-  --bg-a75: hsla(210deg 0% 100% / 0.75);
-  --bg-a100: hsla(210deg 0% 100% / 1);
-  --text: hsla(210deg 0% 0% / 1);
-  --text-reverse: hsla(210deg 0% 100% / 1);
-  --text-p1: hsla(210deg 0% 0% / 0.8);
-  --text-p2: hsla(210deg 0% 0% / 0.7);
-  --text-p3: hsla(210deg 0% 0% / 0.5);
-  --text-p4: hsla(210deg 0% 0% / 0.4);
-  --text-meta: hsla(210deg 0% 0% / 0.2);
-  --text-code: hsla(210deg 0% 0% / 0.9);
-  --text-a10: hsla(210deg 0% 0% / 0.1);
-  --text-a20: hsla(210deg 0% 0% / 0.2);
-  --block: hsla(210deg 50% 12% / 0.04);
-  --block-border: hsla(210deg 50% 12% / 0.06);
+  --bg-a20: hsla(255deg 0% 100% / 0.2);
+  --bg-a50: hsla(255deg 0% 100% / 0.5);
+  --bg-a60: hsla(255deg 0% 100% / 0.6);
+  --bg-a75: hsla(255deg 0% 100% / 0.75);
+  --bg-a100: hsla(255deg 0% 100% / 1);
+  --text: hsla(255deg 0% 0% / 1);
+  --text-reverse: hsla(255deg 0% 100% / 1);
+  --text-p1: hsla(255deg 0% 0% / 0.8);
+  --text-p2: hsla(255deg 0% 0% / 0.7);
+  --text-p3: hsla(255deg 0% 0% / 0.5);
+  --text-p4: hsla(255deg 0% 0% / 0.4);
+  --text-meta: hsla(255deg 0% 0% / 0.2);
+  --text-code: hsla(255deg 0% 0% / 0.9);
+  --text-a10: hsla(255deg 0% 0% / 0.1);
+  --text-a20: hsla(255deg 0% 0% / 0.2);
+  --block: hsla(255deg 50% 12% / 0.04);
+  --block-border: hsla(255deg 50% 12% / 0.06);
 }
 .colorful[color='dark'] {
-  --background: hsla(210deg 8% 12% / 1);
-  --card: hsla(210deg 10% 24% / 1);
-  --bg-a20: hsla(210deg 0% 0% / 0.2);
-  --bg-a50: hsla(210deg 0% 0% / 0.5);
-  --bg-a60: hsla(210deg 0% 0% / 0.6);
-  --bg-a75: hsla(210deg 0% 0% / 0.75);
-  --bg-a100: hsla(210deg 0% 0% / 1);
-  --text: hsla(210deg 0% 100% / 1);
-  --text-reverse: hsla(210deg 0% 0% / 1);
-  --text-p1: hsla(210deg 0% 100% / 0.8);
-  --text-p2: hsla(210deg 0% 100% / 0.7);
-  --text-p3: hsla(210deg 0% 100% / 0.5);
-  --text-p4: hsla(210deg 0% 100% / 0.4);
-  --text-meta: hsla(210deg 0% 100% / 0.2);
-  --text-code: hsla(210deg 0% 100% / 0.9);
-  --text-a10: hsla(210deg 0% 100% / 0.1);
-  --text-a20: hsla(210deg 0% 100% / 0.2);
-  --block: hsla(210deg 24% 72% / 0.08);
-  --block-border: hsla(210deg 24% 72% / 0.12);
+  --background: hsla(255deg 8% 12% / 1);
+  --card: hsla(255deg 10% 24% / 1);
+  --bg-a20: hsla(255deg 0% 0% / 0.2);
+  --bg-a50: hsla(255deg 0% 0% / 0.5);
+  --bg-a60: hsla(255deg 0% 0% / 0.6);
+  --bg-a75: hsla(255deg 0% 0% / 0.75);
+  --bg-a100: hsla(255deg 0% 0% / 1);
+  --text: hsla(255deg 0% 100% / 1);
+  --text-reverse: hsla(255deg 0% 0% / 1);
+  --text-p1: hsla(255deg 0% 100% / 0.8);
+  --text-p2: hsla(255deg 0% 100% / 0.7);
+  --text-p3: hsla(255deg 0% 100% / 0.5);
+  --text-p4: hsla(255deg 0% 100% / 0.4);
+  --text-meta: hsla(255deg 0% 100% / 0.2);
+  --text-code: hsla(255deg 0% 100% / 0.9);
+  --text-a10: hsla(255deg 0% 100% / 0.1);
+  --text-a20: hsla(255deg 0% 100% / 0.2);
+  --block: hsla(255deg 24% 72% / 0.08);
+  --block-border: hsla(255deg 24% 72% / 0.12);
   --text-code: hsla(20 75 60 / 1);
   --theme: #111;
   --theme-border: none;
@@ -478,25 +478,25 @@
   --text-p4: hsla(50.96385542168675deg 90% 20% / 0.4);
   --link: hsla(50.96385542168675deg 95% 32% / 1);
   --link-a20: hsla(50.96385542168675deg 95% 32% / 0.2);
-  --background: hsla(210deg 20% 98% / 1);
+  --background: hsla(255deg 20% 98% / 1);
   --card: #fff;
-  --bg-a20: hsla(210deg 0% 100% / 0.2);
-  --bg-a50: hsla(210deg 0% 100% / 0.5);
-  --bg-a60: hsla(210deg 0% 100% / 0.6);
-  --bg-a75: hsla(210deg 0% 100% / 0.75);
-  --bg-a100: hsla(210deg 0% 100% / 1);
-  --text: hsla(210deg 0% 0% / 1);
-  --text-reverse: hsla(210deg 0% 100% / 1);
-  --text-p1: hsla(210deg 0% 0% / 0.8);
-  --text-p2: hsla(210deg 0% 0% / 0.7);
-  --text-p3: hsla(210deg 0% 0% / 0.5);
-  --text-p4: hsla(210deg 0% 0% / 0.4);
-  --text-meta: hsla(210deg 0% 0% / 0.2);
-  --text-code: hsla(210deg 0% 0% / 0.9);
-  --text-a10: hsla(210deg 0% 0% / 0.1);
-  --text-a20: hsla(210deg 0% 0% / 0.2);
-  --block: hsla(210deg 50% 12% / 0.04);
-  --block-border: hsla(210deg 50% 12% / 0.06);
+  --bg-a20: hsla(255deg 0% 100% / 0.2);
+  --bg-a50: hsla(255deg 0% 100% / 0.5);
+  --bg-a60: hsla(255deg 0% 100% / 0.6);
+  --bg-a75: hsla(255deg 0% 100% / 0.75);
+  --bg-a100: hsla(255deg 0% 100% / 1);
+  --text: hsla(255deg 0% 0% / 1);
+  --text-reverse: hsla(255deg 0% 100% / 1);
+  --text-p1: hsla(255deg 0% 0% / 0.8);
+  --text-p2: hsla(255deg 0% 0% / 0.7);
+  --text-p3: hsla(255deg 0% 0% / 0.5);
+  --text-p4: hsla(255deg 0% 0% / 0.4);
+  --text-meta: hsla(255deg 0% 0% / 0.2);
+  --text-code: hsla(255deg 0% 0% / 0.9);
+  --text-a10: hsla(255deg 0% 0% / 0.1);
+  --text-a20: hsla(255deg 0% 0% / 0.2);
+  --block: hsla(255deg 50% 12% / 0.04);
+  --block-border: hsla(255deg 50% 12% / 0.06);
   --link: hsla(4.105263157894738deg 89.62264150943398% 58.43137254901961% / 1);
   --link-a20: hsla(4.105263157894738deg 89.62264150943398% 58.43137254901961% / 0.2);
   --theme-border: none;
@@ -525,25 +525,25 @@
   --text-p4: hsla(4.105263157894738deg 80% 80% / 0.4);
   --link: hsla(4.105263157894738deg 80% 60% / 1);
   --link-a20: hsla(4.105263157894738deg 80% 60% / 0.2);
-  --background: hsla(210deg 8% 12% / 1);
-  --card: hsla(210deg 10% 24% / 1);
-  --bg-a20: hsla(210deg 0% 0% / 0.2);
-  --bg-a50: hsla(210deg 0% 0% / 0.5);
-  --bg-a60: hsla(210deg 0% 0% / 0.6);
-  --bg-a75: hsla(210deg 0% 0% / 0.75);
-  --bg-a100: hsla(210deg 0% 0% / 1);
-  --text: hsla(210deg 0% 100% / 1);
-  --text-reverse: hsla(210deg 0% 0% / 1);
-  --text-p1: hsla(210deg 0% 100% / 0.8);
-  --text-p2: hsla(210deg 0% 100% / 0.7);
-  --text-p3: hsla(210deg 0% 100% / 0.5);
-  --text-p4: hsla(210deg 0% 100% / 0.4);
-  --text-meta: hsla(210deg 0% 100% / 0.2);
-  --text-code: hsla(210deg 0% 100% / 0.9);
-  --text-a10: hsla(210deg 0% 100% / 0.1);
-  --text-a20: hsla(210deg 0% 100% / 0.2);
-  --block: hsla(210deg 24% 72% / 0.08);
-  --block-border: hsla(210deg 24% 72% / 0.12);
+  --background: hsla(255deg 8% 12% / 1);
+  --card: hsla(255deg 10% 24% / 1);
+  --bg-a20: hsla(255deg 0% 0% / 0.2);
+  --bg-a50: hsla(255deg 0% 0% / 0.5);
+  --bg-a60: hsla(255deg 0% 0% / 0.6);
+  --bg-a75: hsla(255deg 0% 0% / 0.75);
+  --bg-a100: hsla(255deg 0% 0% / 1);
+  --text: hsla(255deg 0% 100% / 1);
+  --text-reverse: hsla(255deg 0% 0% / 1);
+  --text-p1: hsla(255deg 0% 100% / 0.8);
+  --text-p2: hsla(255deg 0% 100% / 0.7);
+  --text-p3: hsla(255deg 0% 100% / 0.5);
+  --text-p4: hsla(255deg 0% 100% / 0.4);
+  --text-meta: hsla(255deg 0% 100% / 0.2);
+  --text-code: hsla(255deg 0% 100% / 0.9);
+  --text-a10: hsla(255deg 0% 100% / 0.1);
+  --text-a20: hsla(255deg 0% 100% / 0.2);
+  --block: hsla(255deg 24% 72% / 0.08);
+  --block-border: hsla(255deg 24% 72% / 0.12);
   --text-code: hsla(20 75 60 / 1);
   --link: hsla(50.96385542168675deg 100% 67.45098039215686% / 1);
   --link-a20: hsla(50.96385542168675deg 100% 67.45098039215686% / 0.2);
@@ -2248,7 +2248,7 @@ div.toast.show {
 }
 .article.banner .bg+.content {
   min-height: 200px;
-  aspect-ratio: 2.5;
+  aspect-ratio: 2;
   --text-banner: #fff;
   --button-hover-bg: rgba(255,255,255,0.25);
 }
@@ -2271,8 +2271,8 @@ div.toast.show {
   --blur-bg: rgba(0,0,0,0);
   --blur-px: 1em;
   --blur-sat: 100%;
-  --blur-height-top: 6rem;
-  --blur-height-bottom: 7rem;
+  --blur-height-top: 3rem;
+  --blur-height-bottom: 4rem;
   --blur-opacity: 0;
   background: var(--blur-bg);
   transition: all 0.2s ease-out;
@@ -2282,9 +2282,9 @@ div.toast.show {
 }
 .article.banner .bg+.content:hover {
   --blur-bg: rgba(0,0,0,0.1);
-  --blur-sat: 150%;
-  --blur-height-top: 6rem;
-  --blur-height-bottom: 7rem;
+  --blur-sat: 100%;
+  --blur-height-top: 3rem;
+  --blur-height-bottom: 4rem;
   --blur-opacity: 1;
 }
 .article.banner .bg+.content:before,
@@ -2636,6 +2636,7 @@ div.toast.show {
 .page-footer {
   margin: 4rem 1rem 3rem;
   color: var(--text-p2);
+  width: 95%;
 }
 .page-footer a {
   color: var(--text-p2);
@@ -7245,17 +7246,7 @@ details.toc[open] >div.body section .header+.doc_tree {
   --saturate: 400%;
   --blur-px: 77px;
   --background-opacity: 1;
-  background-position: center;
-  background-size: cover;
-  --inset: 32px;
-  --background-opacity: 1;
-  background-image: url("https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.13/image/sidebar-bg1@small.jpg");
-  filter: saturate(var(--saturate)) blur(var(--blur-px)) opacity(var(--background-opacity));
-}
-@media screen and (prefers-color-scheme: dark) {
-  .l_left .sidebg {
-    --background-opacity: 0.75;
-  }
+  background-color: var(--block);
 }
 .l_left .leftbar-container {
   height: calc(100vh - var(--gap-margin) * 2 - 96px);
@@ -7284,22 +7275,6 @@ details.toc[open] >div.body section .header+.doc_tree {
   left: 0;
   right: 0;
   border-radius: 22px;
-}
-@media screen and (min-width: 667px) {
-  .l_left .leftbar-container:before {
-    background: rgba(255,255,255,0.5);
-    box-shadow: inset 0 0 32px 1px rgba(255,255,255,0.5);
-    backdrop-filter: saturate(300%);
-    -webkit-backdrop-filter: saturate(300%);
-    mask: linear-gradient(#000, rgba(0,0,0,0.5), 70%, transparent, 90%, transparent);
-    -webkit-mask: linear-gradient(#000, rgba(0,0,0,0.5), 70%, transparent, 90%, transparent);
-  }
-}
-@media screen and (prefers-color-scheme: dark) {
-  .l_left .leftbar-container:before {
-    background: rgba(255,255,255,0.05);
-    box-shadow: inset 0 0 32px 1px rgba(255,255,255,0.1);
-  }
 }
 @media screen and (max-width: 667px) {
   .l_left {
@@ -9112,7 +9087,7 @@ body>.sitebg .siteblur {
   background-color: var(--blur-bg);
   --blur-sat: 300%;
   --blur-px: 7px;
-  --blur-bg: var(--bg-a75);
+  --blur-bg: var(--bg-a55);
 }
 @supports ((-webkit-backdrop-filter: blur(var(--blur-px))) or (backdrop-filter: blur(var(--blur-px)))) {
   body>.sitebg .siteblur {
