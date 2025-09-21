@@ -22,12 +22,12 @@
 }
 @media screen and (max-width: 768px) {
   :root {
-    --side-content-width: 282px;
+    --side-content-width: 188px;
   }
 }
 @media screen and (max-width: 667px) {
   :root {
-    --side-content-width: 336px;
+    --side-content-width: 224px;
   }
 }
 :root {
