@@ -1,0 +1,104 @@
+/* 基础样式重置 */
+.code-toolbar {
+  font-family: none;
+  margin: 0.75em 0;  /* 减少整体外边距 */
+  border: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 底部固定工具栏样式 */
+.toolbar-container {
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3em 0.5em;  /* 减少内边距 */
+  background: #fffccc;
+  border-top: 1px solid #404040;
+  box-shadow: 0 -1px 3px rgba(255, 255, 255, 0.1);
+  order: 1;
+}
+
+/* 代码信息标签 */
+.code-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;  /* 减少标签间隙 */
+}
+
+.language-tag {
+  background: #7ccccc;
+  padding: 0.15em 0.4em;  /* 减少内边距 */
+  border-radius: 3px;
+  font-size: 0.7em;  /* 调整字体大小 */
+  text-transform: uppercase;
+}
+
+.file-name {
+  color: #1b0775;
+  font-size: 0.75em;  /* 调整字体大小 */
+}
+
+/* 按钮组样式 */
+.toolbar-buttons {
+  display: flex;
+  gap: 0.7em;  /* 减少按钮间距 */
+}
+
+.toolbar-btn {
+  background: #999999;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  padding: 0.35em 0.6em;  /* 减少内边距 */
+  font-size: 0.75em;  /* 调整字体大小 */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+/* 代码区域样式 */
+.code-container {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 0.8em;  /* 减少内边距 */
+  overflow: auto;
+  border-radius: 6px 6px 0 0;
+  order: 0;
+  margin-bottom: 0;  /* 移除底部外边距 */
+}
+
+/* 紧急修复：强制清除所有间隙 */
+.code-toolbar,
+.code-toolbar *,
+.code-toolbar *::before,
+.code-toolbar *::after {
+  margin: 0 !important;
+  border-width: 0 !important;
+  border-spacing: 0 !important;
+}
+
+/* 然后单独设置需要的样式 */
+.code-container {
+  padding: 0.4em 0.6em !important;
+}
+.toolbar-container {
+  padding: 0.4em 0.6em !important;  
+}
+
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .toolbar-container {
+    flex-wrap: wrap;
+    gap: 0.3em;
+  }
+  
+  .toolbar-buttons {
+    justify-content: flex-end;
+  }
+}
