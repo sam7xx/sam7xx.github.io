@@ -71,13 +71,13 @@ jobs:
           fi
 
       # 后续部署步骤保持不变...
-      - name: 部署到 GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public
-          publish_branch: gh-pages
-          force_orphan: true
+      # - name: 部署到 GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   with:
+      #     github_token: ${{ secrets.GH_TOKEN }}
+      #     publish_dir: ./public
+      #     publish_branch: gh-pages
+      #     force_orphan: true
 
       - name: 部署到 Vercel
         uses: amondnet/vercel-action@v25
