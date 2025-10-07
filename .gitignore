@@ -1,5 +1,5 @@
 node_modules/
-public/
+# public/
 .deploy_git/
 *.log
 .DS_Store
