@@ -152,8 +152,4 @@ function generate_canonical() {
 
   <%- json_ld() %>
   <%- custom_inject() %>
-  <!-- 引入 Vercel Analytics 脚本 -->
-<% if (!is_amp()) { %> <!-- 非 AMP 页面才加载 -->
-  <script src="/js/vercel-analytics.js"></script>
-<% } %>
 </head>

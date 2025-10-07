@@ -101,7 +101,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 - 在 Netlify/Vercel 控制台导入 Hexo 源代码仓库。
 
 - **配置构建参数**
-   
+  
    - 框架预设：`hexo`
    - 构建命令：`hexo generate`
    - 输出目录：`public`
@@ -109,6 +109,138 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 - **部署**
 
    平台会自动安装依赖（`npm install`）并执行构建，完成后提供临时域名，支持绑定自定义域名。
+
+### 5.  **GitHub Actions** 配置自动化工作流
+
+要实现一次代码推送后自动部署到 **GitHub Pages、Vercel、Cloudflare Pages** 三个平台，可通过 **GitHub Actions** 配置统一的工作流。以下是针对这三个平台的详细自动化部署方案：
+
+#### 5.1 准备
+
+1. 项目已托管在 GitHub 仓库（如 Hexo、Vue、React 等静态项目）。
+2. 已在三个平台完成基础配置：
+   - **GitHub Pages**：仓库开启 Pages 功能（目标分支设为 `gh-pages`）。
+   - **Vercel**：导入 GitHub 仓库创建项目（无需手动部署，后续通过 Action 触发）。
+   - **Cloudflare Pages**：通过 GitHub 关联仓库创建项目（构建命令和输出目录先暂填，后续通过 Action 覆盖）。
+3. 获取各平台的部署凭证（敏感信息，存储在 GitHub Secrets 中）：
+
+| 平台             | 所需凭证                                              | 获取方式                                                     |
+| ---------------- | ----------------------------------------------------- | ------------------------------------------------------------ |
+| GitHub Pages     | 个人访问令牌（PAT），需勾选 `repo` 和 `workflow` 权限 | [GitHub PAT 生成](https://github.com/settings/tokens/new)    |
+| Vercel           | Vercel 令牌（Token）+ 项目 ID+USER ID                 | Vercel 控制台 → 账户设置 → `Tokens`；项目设置 → `General` 中获取项目 ID;菜单中找到 Account→ Genera→ USER ID |
+| Cloudflare Pages | Cloudflare API 令牌 + 账户 ID + 项目名称              | Cloudflare 控制台 → 我的个人资料 → `API Tokens`（创建含 `Pages:Edit` 权限的令牌）；账户 ID 在 Workers 和 Pages 页面获取；项目名称为 Cloudflare Pages 中创建的项目名 |
+
+### 步骤：配置 GitHub Actions 工作流
+
+#### 1. 存储敏感凭证到 GitHub Secrets
+
+进入 GitHub 仓库 → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`，添加以下凭证：
+
+- `GH_TOKEN`：GitHub Pages 的 PAT
+- `VERCEL_TOKEN`：Vercel 令牌
+- `VERCEL_PROJECT_ID`：Vercel 项目 ID
+- `CF_API_TOKEN`：Cloudflare API 令牌
+- `CF_ACCOUNT_ID`：Cloudflare 账户 ID
+- `CF_PROJECT_NAME`：Cloudflare Pages 项目名称
+
+#### 2. 创建工作流配置文件
+
+在项目根目录创建 `.github/workflows/deploy.yml`，内容如下（以 Hexo 项目为例，其他静态项目可调整构建命令）：
+
+```yaml
+name: 自动部署到 GitHub/Vercel/Cloudflare
+on:
+  push:
+    branches: [ main ]  # 推送 main 分支时触发
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1：拉取代码
+      - name: 拉取 GitHub 代码
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # 若使用主题子模块（如 Hexo 主题），必须启用
+
+      # 步骤2：安装 Node 环境
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x  # 适配大多数静态项目的 Node 版本
+          cache: 'npm'        # 缓存依赖，加速构建
+
+      # 步骤3：构建项目（以 Hexo 为例，其他项目修改对应命令）
+      - name: 安装依赖并构建静态文件
+        run: |
+          npm install
+          npm install -g hexo-cli  # Hexo 需全局安装
+          hexo clean  # 清理缓存
+          hexo generate  # 生成静态文件（输出到 public 目录）
+
+      # 步骤4：部署到 GitHub Pages
+      - name: 部署到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./public  # 静态文件目录
+          publish_branch: gh-pages  # GitHub Pages 目标分支
+
+      # 步骤5：部署到 Vercel
+      - name: 部署到 Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}  # 可选，个人账号可不填
+          working-directory: ./public  # 部署静态文件目录
+          vercel-args: '--prod'  # 部署到生产环境
+
+      # 步骤6：部署到 Cloudflare Pages
+      - name: 部署到 Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: ${{ secrets.CF_PROJECT_NAME }}
+          directory: ./public  # 静态文件目录
+          branch: main  # 关联的 GitHub 分支
+```
+
+#### 3. 推送代码触发自动部署
+
+```bash
+# 提交工作流文件
+git add .github/workflows/deploy.yml
+git commit -m "Add auto-deploy workflow to 3 platforms"
+git push origin main
+```
+
+#### 4. 查看部署状态
+
+- 部署进度：GitHub 仓库 → `Actions` → 选择当前工作流 → 查看实时日志。
+- 结果验证：
+  - GitHub Pages：访问 `https://<用户名>.github.io/<仓库名>`
+  - Vercel：访问 Vercel 项目分配的域名（如 `<项目名>.vercel.app`）
+  - Cloudflare Pages：访问 Cloudflare 分配的域名（如 `<项目名>.pages.dev`）
+
+### 关键说明
+
+**Cloudflare Pages 特殊配置**：
+
+1. - 若项目需要构建命令（如动态生成），可在 `cloudflare/pages-action` 中添加 `buildCommand: "npm run build"`（但静态文件已提前生成，通常无需此步）。
+   - 确保 Cloudflare API 令牌包含 `Pages:Edit` 权限，否则部署会失败。
+
+2. **部署失败排查**：
+
+   查看 GitHub Actions 日志中的错误信息，常见问题：
+
+   - 凭证错误（Secrets 名称或值不正确）
+   - 构建命令失败（依赖安装错误，需检查 `package.json`）
+   - 静态文件目录错误（确保 `publish_dir` 与实际输出目录一致）
+
+通过此配置，每次向 `main` 分支推送代码时，GitHub Actions 会自动完成构建并同步部署到三个平台，实现 “一次推送，多平台联动更新”。
+
+编辑
 
 ### 5. 部署失败的常见问题与解决
 
