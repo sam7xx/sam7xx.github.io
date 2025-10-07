@@ -1,0 +1,127 @@
+.navbar
+  z-index: 800  // 合理层级，高于普通内容但低于弹窗等组件
+  top: 0  // 简化定位，从顶部开始
+  position: sticky
+  position: -webkit-sticky
+  display: block
+  min-height: 56px
+  width: 100%
+  box-sizing: border-box
+  background: transparent
+  // 添加过渡效果，减少滚动时的突兀感
+  transition: transform 0.2s ease, opacity 0.2s ease
+
+// 关键容器样式，避免与其他元素重叠
+.navbar-blur 
+  margin: 12px auto  // 上下留出空间，避免紧贴其他元素
+  max-width: calc(100% - 24px)  // 限制最大宽度，避免边缘溢出
+  width: min(1200px, 100%)  // 响应式宽度
+  border-radius: 64px
+  position: relative
+  padding: 6px 0
+  background: var(--card)
+  border: var(--card-border, 1px solid transparent)
+  // 添加细微阴影区分层级，减少干涉感
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03)
+
+.navbar-container 
+  max-width: 100%
+  margin: 0 auto
+  border-radius: 64px
+  overflow: visible
+  scrollbar(0, 0)
+  padding: 0 16px
+  background: transparent
+
+.navbar nav
+  display: inline-flex
+  font-size: $fs-14
+  z-index: 1
+  min-height: 44px
+  align-items: center
+  background: transparent
+  >p
+    margin: 0
+  a
+    padding: .375rem 0.875rem
+    margin: 0.25rem
+    line-height: 1.8
+    color: var(--text-p1)
+    border-radius: 32px
+    font-weight: 500
+    white-space: nowrap
+    position: relative
+    z-index: 1
+    trans1 all
+    &:hover
+      background: var(--bg-a50)
+    &.active, &:hover
+      color: var(--text)
+    &.active
+      background: var(--bg-a60)
+      :root[data-theme="dark"] &
+        background: rgba(white, 0.25)
+      @media (prefers-color-scheme: dark)
+        background: rgba(white, 0.25)
+      :root[data-theme="light"] &
+        background: var(--bg-a60)
+        
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06)
+      cursor default
+      pointer-events: none
+
+  a+a
+    margin-left: 4px
+
+// 滚动时的适配处理
+// 当页面滚动超过一定距离时微调样式，减少与内容区的干涉
+body.scrolled .navbar
+  min-height: 52px
+
+body.scrolled .navbar-blur
+  margin: 8px auto
+  padding: 4px 0
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05)
+
+// 移动端优化，避免与底部导航或顶部状态栏干涉
+@media screen and (max-width: $device-mobile-iphone-max)
+  .navbar-blur
+    margin: 8px 12px
+    border-radius: 32px  // 小屏幕使用更圆润的边角
+    padding: 4px 0
+  
+  .navbar-container
+    padding: 0 8px
+  
+  body.scrolled .navbar-blur
+    margin: 4px 8px
+
+// 主题变量保持与卡片一致
+:root[data-theme="dark"] .navbar
+  --gap-margin: 8px
+  --bg-a50: rgba(255, 255, 255, 0.1)
+  --bg-a60: rgba(255, 255, 255, 0.15)
+  --text: #ffffff
+  --text-p1: rgba(255, 255, 255, 0.8)
+
+:root[data-theme="light"] .navbar
+  --gap-margin: 8px
+  --bg-a50: rgba(0, 0, 0, 0.05)
+  --bg-a60: rgba(0, 0, 0, 0.08)
+  --text: #000000
+  --text-p1: rgba(0, 0, 0, 0.7)
+
+// 系统主题适配
+@media (prefers-color-scheme: dark)
+  :root:not([data-theme]) .navbar
+    --bg-a50: rgba(255, 255, 255, 0.1)
+    --bg-a60: rgba(255, 255, 255, 0.15)
+    --text: #ffffff
+    --text-p1: rgba(255, 255, 255, 0.8)
+
+@media (prefers-color-scheme: light)
+  :root:not([data-theme]) .navbar
+    --bg-a50: rgba(0, 0, 0, 0.05)
+    --bg-a60: rgba(0, 0, 0, 0.08)
+    --text: #000000
+    --text-p1: rgba(0, 0, 0, 0.7)

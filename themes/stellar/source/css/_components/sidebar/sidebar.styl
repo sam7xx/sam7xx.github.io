@@ -1,0 +1,139 @@
+// 左侧栏基础样式
+.l_left
+  // 外边距：上下为基础间距的2倍，左右为基础间距
+  margin: calc(var(--gap-margin) * 2) var(--gap-margin)
+  // 最大高度：视口高度减去上下边距（2倍基础间距）和左侧栏底部外边距
+  max-height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $leftbar-bottom-margin)
+  // 左侧栏圆角（使用卡片大圆角变量）
+  border-radius: $border-card-l
+
+  // 左侧栏头部样式
+  .header
+    // 外边距：上为最大间距，左右为基础间距，下为0
+    margin: var(--gap-max) var(--gap-margin) 0
+
+// 右侧栏基础样式
+.l_right
+  // 外边距：上下为基础间距的2倍，左右为0
+  margin: calc(var(--gap-margin) * 2) 0
+  // 右侧栏圆角（使用卡片大圆角变量）
+  border-radius: $border-card-l
+
+// 大屏幕响应式调整（宽度≥2K设备）
+@media screen and (min-width: $device-2k)
+  .l_left
+    // 左侧自动外边距（左对齐），右侧为2倍最大间距
+    margin-left: auto
+    margin-right: calc(2 * var(--gap-max))
+  .l_right
+    // 左侧为最大间距，右侧自动外边距（右对齐）
+    margin-left: var(--gap-max)
+    margin-right: auto
+
+// 左侧栏内部样式补充
+.l_left
+  // 左侧栏背景容器（用于背景图/色和特效）
+  .sidebg
+    pointer-events: none  // 禁止鼠标事件（不干扰上层内容）
+    position: absolute    // 绝对定位（相对于父容器）
+    --inset: 0            // 内部边距变量（默认0）
+    top: var(--inset)     // 上距离（使用内部边距变量）
+    bottom: var(--inset)  // 下距离（使用内部边距变量）
+    left: var(--inset)    // 左距离（使用内部边距变量）
+    right: var(--inset)   // 右距离（使用内部边距变量）
+    border-radius: $border-card-l  // 背景容器圆角（与左侧栏一致）
+    --saturate: 400%      // 饱和度变量（默认400%）
+    --blur-px: convert(hexo-config('style.leftbar.blur-px'))  // 模糊像素（从Hexo配置读取）
+    --background-opacity: 1  // 背景透明度（默认1）
+
+    // 如果配置了左侧栏背景图
+    if $leftbar-background-image
+      background-position: center  // 背景图居中
+      background-size: cover       // 背景图覆盖容器
+      
+      // 如果配置了模糊像素
+      if hexo-config('style.leftbar.blur-px')
+        --inset: 32px  // 有模糊时，增加内部边距（避免边缘模糊被截断）
+      
+      // 如果配置了背景透明度
+      if hexo-config('style.leftbar.background-opacity')
+        --background-opacity: hexo-config('style.leftbar.background-opacity')  // 使用配置的透明度
+      
+      // 设置背景图（从Hexo配置读取）
+      background-image: convert(hexo-config('style.leftbar.background-image'))
+      // 应用滤镜：饱和度+模糊+透明度
+      filter: saturate(var(--saturate)) blur(var(--blur-px)) opacity(var(--background-opacity))
+      
+      // 系统暗色模式下的调整
+      @media screen and (prefers-color-scheme: dark)
+        // 暗色模式下背景透明度降低75%
+        --background-opacity: hexo-config('style.leftbar.background-opacity') * 0.75
+
+    // 如果配置了左侧栏背景色（无背景图时）
+    else if $leftbar-background-color
+      background-color: convert($leftbar-background-color)  // 使用配置的背景色
+
+  // 左侧栏内容容器
+  .leftbar-container
+    // 高度：视口高度减去上下边距（2倍基础间距）和左侧栏底部外边距
+    height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $leftbar-bottom-margin)
+    display: flex               // 使用flex布局
+    flex-direction: column      // 子元素垂直排列
+    word-break: break-all       // 强制文字换行（避免溢出）
+    text-align: justify         // 文字两端对齐
+    border-radius: $border-card-l  // 容器圆角（与左侧栏一致）
+    overflow: hidden            // 隐藏溢出内容
+
+    // 内部widgets容器样式
+    >.widgets
+      border-radius: $border-bar  // 使用小边框圆角变量
+      // 底部渐变遮罩（内容到下方逐渐透明）
+      mask: linear-gradient(white, 90%, transparent)
+      -webkit-mask: linear-gradient(white, 90%, transparent)  // Safari兼容
+
+    // 所有直接子元素
+    >*
+      z-index: 1  // 层级1（确保在背景之上）
+
+    // 前后伪元素（用于叠加效果）
+    &:before,&:after
+      position: absolute    // 绝对定位
+      pointer-events: none  // 禁止鼠标事件
+      content: ''           // 空内容
+      top: 0                // 上对齐
+      bottom: 0             // 下对齐
+      left: 0               // 左对齐
+      right: 0              // 右对齐
+      border-radius: $border-card-l  // 与容器同圆角
+
+    // 前伪元素（用于背景叠加层）
+    &:before
+      // 如果有左侧栏背景图
+      if $leftbar-background-image
+        // 中等屏幕及以上（大于移动设备最大宽度）
+        @media screen and (min-width: $device-mobile-max)
+          background: rgba(white, 0.5)  // 白色半透明背景
+          box-shadow: inset 0 0 32px 1px rgba(white, 0.5)  // 内部发光效果
+          backdrop-filter: saturate(300%)  // 背景饱和度增强
+          -webkit-backdrop-filter: saturate(300%)  // Safari兼容
+          // 遮罩渐变（顶部不透明，70%后逐渐透明）
+          mask: linear-gradient(black, rgba(black, 0.5), 70%, transparent, 90%, transparent)
+          -webkit-mask: linear-gradient(black, rgba(black, 0.5), 70%, transparent, 90%, transparent)
+
+        // 系统暗色模式下的调整
+        @media screen and (prefers-color-scheme: dark)
+          background: rgba(white, 0.05)  // 白色极淡透明背景
+          box-shadow: inset 0 0 32px 1px rgba(white, 0.1)  // 内部淡色发光
+
+// 移动设备响应式调整（宽度≤移动设备最大宽度）
+@media screen and (max-width: $device-mobile-max)
+  .l_left
+    overflow: hidden  // 隐藏溢出内容
+    background: var(--bg-a100)  // 使用100%透明度背景色变量
+
+    .sidebg
+      --inset: 0  // 内部边距重置为0
+      --saturate: 300%  // 饱和度降低为300%
+
+    .leftbar-container:after
+      background: var(--bg-a20)  // 20%透明度背景色（用于叠加效果）
