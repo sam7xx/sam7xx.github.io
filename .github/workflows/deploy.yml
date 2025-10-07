@@ -2,70 +2,75 @@ name: 自动部署到 GitHub/Vercel/Cloudflare
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # 允许手动触发，方便测试
+  workflow_dispatch:
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15  # 防止构建超时
+    timeout-minutes: 20
 
     steps:
-      # 步骤1：拉取代码（增强子模块可靠性）
-      - name: 拉取代码及子模块
+      # 步骤1：拉取代码（确保基础文件完整）
+      - name: 拉取代码
         uses: actions/checkout@v4
         with:
-          submodules: recursive
           fetch-depth: 0
-          # 增加子模块拉取超时设置
-          submodules-timeout: 10
 
-      # 步骤2：强制确保 Stellar 主题存在（解决 CI 子模块拉取失败）
-      - name: 验证并修复 Stellar 主题
+      # 步骤2：彻底清理并重新克隆 Stellar 主题（杜绝路径问题）
+      - name: 强制安装 Stellar 主题
         run: |
-          echo "检查主题目录状态..."
-          if [ ! -d "themes/stellar" ] || [ -z "$(ls -A themes/stellar)" ]; then
-            echo "主题缺失，开始强制克隆..."
-            rm -rf themes/stellar  # 清理无效目录
-            git clone https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
-          else
-            echo "主题已存在，版本信息："
-            git -C themes/stellar log --oneline -1  # 输出主题版本，便于调试
+          echo "当前工作目录: $(pwd)"
+          # 彻底删除旧主题目录（避免残留文件干扰）
+          rm -rf themes/stellar
+          # 克隆主题到 themes/stellar（确保路径绝对正确）
+          git clone https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
+          # 验证主题目录结构（核心文件必须存在）
+          echo "主题目录内容："
+          ls -la themes/stellar
+          echo "主题关键文件检查："
+          if [ ! -f "themes/stellar/layout/layout.ejs" ]; then
+            echo "错误：主题核心模板文件缺失！"
+            exit 1
           fi
 
-      # 步骤3：安装 Node.js（使用更稳定的 LTS 版本）
+      # 步骤3：验证 Hexo 配置中的主题名称
+      - name: 检查 _config.yml 主题配置
+        run: |
+          echo "当前主题配置："
+          grep "theme:" _config.yml
+          # 确保配置为小写 "stellar"（区分大小写）
+          if ! grep -q "theme: stellar" _config.yml; then
+            echo "错误：_config.yml 中主题配置不正确，应为 'theme: stellar'"
+            exit 1
+          fi
+
+      # 步骤4：安装 Node.js（稳定版本）
       - name: 安装 Node.js 22.19.0
         uses: actions/setup-node@v4
         with:
-          node-version: 22.19.0  # 22.x 过于前沿，20.x LTS 兼容性更优
+          node-version: 22.19.0
           cache: 'npm'
-          cache-dependency-path: package-lock.json
 
-      # 步骤4：安装依赖（增加调试和兼容性处理）
-      - name: 安装依赖并检查版本
+      # 步骤5：安装依赖（包括主题依赖）
+      - name: 安装项目及主题依赖
         run: |
-          echo "Node.js 版本: $(node -v)"
-          echo "npm 版本: $(npm -v)"
-          # 强制安装兼容版本的依赖（解决版本冲突）
-          npm install --force
-          # 输出依赖树，便于排查冲突
-          npm ls hexo hexo-theme-stellar
+          npm install  # 安装 Hexo 核心依赖
+          cd themes/stellar && npm install && cd ../../  # 安装主题自身依赖
 
-      # 步骤5：构建项目（增加详细日志和结果验证）
-      - name: 构建静态文件
+      # 步骤6：构建（强制指定主题，输出完整日志）
+      - name: 构建静态文件（强制主题）
         run: |
-          npx hexo clean
-          # 生成时输出详细日志，捕捉主题加载错误
-          npx hexo generate --debug
-          # 验证构建结果
+          # 清理缓存（包括 Hexo 主题缓存）
+          npx hexo clean --debug
+          # 显式指定主题构建（解决自动识别失败问题）
+          npx hexo generate --theme stellar --debug
+          # 再次验证构建结果
           if [ ! -d "public" ] || [ -z "$(ls -A public)" ]; then
-            echo "错误：构建失败，public 目录为空！"
+            echo "错误：构建后 public 目录为空！"
             exit 1
-          else
-            echo "构建成功，public 目录内容："
-            ls -la public  # 输出构建结果，确认有效内容
           fi
 
-      # 步骤6：部署到 GitHub Pages
+      # 后续部署步骤保持不变...
       - name: 部署到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -73,9 +78,7 @@ jobs:
           publish_dir: ./public
           publish_branch: gh-pages
           force_orphan: true
-          enable_jekyll: false  # 禁用 Jekyll，避免干扰 Hexo 生成的文件
 
-      # 步骤7：部署到 Vercel（修复重复配置，增加错误容忍）
       - name: 部署到 Vercel
         uses: amondnet/vercel-action@v25
         with:
@@ -84,9 +87,8 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./public
           vercel-args: '--prod'
-        continue-on-error: true  # 单个平台失败不影响整体
+        continue-on-error: true
 
-      # 步骤8：部署到 Cloudflare Pages
       - name: 部署到 Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
