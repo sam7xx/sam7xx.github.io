@@ -112,6 +112,7 @@ deploy:
   type: git
   repo: git@github.com:sam7xx/sam7xx.github.io.git
   branch: main
+  message: "Hexo deploy: {{ now('YYYY-MM-DD HH:mm:ss') }}"  
 
 aplayer:
   # 示例配置
@@ -140,3 +141,4 @@ inject:
       </noscript> 
     - <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.css" rel="stylesheet">  # fontawesome动态图标引入
     - <script src="/darkmode.js"></script>  # hexo暗黑模式切换工具
+    - <script src="/vercel-analytics.js"></script>  # Vercel Analytics
