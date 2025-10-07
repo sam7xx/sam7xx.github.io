@@ -1,0 +1,57 @@
+name: 自动部署到 GitHub/Vercel/Cloudflare
+on:
+  push:
+    branches: [ main ]  # 推送 main 分支时触发
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1：拉取代码
+      - name: 拉取 GitHub 代码
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # 若使用主题子模块（如 Hexo 主题），必须启用
+
+      # 步骤2：安装 Node 环境
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x  # 适配大多数静态项目的 Node 版本
+          cache: 'npm'        # 缓存依赖，加速构建
+
+      # 步骤3：构建项目（以 Hexo 为例，其他项目修改对应命令）
+      - name: 安装依赖并构建静态文件
+        run: |
+          npm install
+          npm install -g hexo-cli  # Hexo 需全局安装
+          hexo clean  # 清理缓存
+          hexo generate  # 生成静态文件（输出到 public 目录）
+
+      # 步骤4：部署到 GitHub Pages
+      - name: 部署到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./public  # 静态文件目录
+          publish_branch: gh-pages  # GitHub Pages 目标分支
+
+      # 步骤5：部署到 Vercel
+      - name: 部署到 Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}  # 可选，个人账号可不填
+          working-directory: ./public  # 部署静态文件目录
+          vercel-args: '--prod'  # 部署到生产环境
+
+      # 步骤6：部署到 Cloudflare Pages
+      - name: 部署到 Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: ${{ secrets.CF_PROJECT_NAME }}
+          directory: ./public  # 静态文件目录
+          branch: main  # 关联的 GitHub 分支
