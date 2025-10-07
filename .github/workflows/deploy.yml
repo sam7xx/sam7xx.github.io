@@ -7,51 +7,53 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 步骤1：拉取代码
+      # 步骤1：拉取代码（包含子模块，如主题）
       - name: 拉取 GitHub 代码
         uses: actions/checkout@v4
         with:
-          submodules: true  # 若使用主题子模块（如 Hexo 主题），必须启用
+          submodules: recursive  # 递归拉取子模块（确保主题完整）
+          fetch-depth: 0         # 拉取完整历史，避免 Hexo 生成错误
 
-      # 步骤2：安装 Node 环境
+      # 步骤2：安装 Node 环境（使用 LTS 版本，兼容性更好）
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x  # 适配大多数静态项目的 Node 版本
+          node-version: 22.20.0  # 推荐 22.x LTS（比 20.x 兼容性更稳定）
           cache: 'npm'        # 缓存依赖，加速构建
 
-      # 步骤3：构建项目（以 Hexo 为例，其他项目修改对应命令）
+      # 步骤3：构建项目（优化 Hexo 依赖安装方式）
       - name: 安装依赖并构建静态文件
         run: |
-          npm install
-          npm install -g hexo-cli  # Hexo 需全局安装
-          hexo clean  # 清理缓存
-          hexo generate  # 生成静态文件（输出到 public 目录）
+          npm install           # 安装 package.json 中的依赖（包括 hexo）
+          npx hexo clean        # 使用 npx 调用本地 hexo，无需全局安装
+          npx hexo generate     # 生成静态文件到 public 目录
 
       # 步骤4：部署到 GitHub Pages
       - name: 部署到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public  # 静态文件目录
-          publish_branch: gh-pages  # GitHub Pages 目标分支
+          github_token: ${{ secrets.GH_TOKEN }}  # 需要在 GitHub 配置
+          publish_dir: ./public
+          publish_branch: gh-pages
+          force_orphan: true  # 强制创建独立分支，减少历史体积
 
-      # 步骤5：部署到 Vercel
+      # 步骤5：部署到 Vercel（优化参数，确保必填项）
       - name: 部署到 Vercel
         uses: amondnet/vercel-action@v25
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}  # 可选，个人账号可不填
-          working-directory: ./public  # 部署静态文件目录
-          vercel-args: '--prod'  # 部署到生产环境
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}        # 必须配置
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}      # 必须配置（个人/组织 ID）
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}  # 必须配置（项目 ID）
+          working-directory: ./public                      # 静态文件目录
+          vercel-args: '--prod'                            # 部署到生产环境
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}      # 重复声明以确保生效
 
-      # 步骤6：部署到 Cloudflare Pages
+      # 步骤6：部署到 Cloudflare Pages（优化参数）
       - name: 部署到 Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: ${{ secrets.CF_PROJECT_NAME }}
-          directory: ./public  # 静态文件目录
-          branch: main  # 关联的 GitHub 分支
+          apiToken: ${{ secrets.CF_API_TOKEN }}      # 必须配置（Cloudflare API 令牌）
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}    # 必须配置（账户 ID）
+          projectName: ${{ secrets.CF_PROJECT_NAME }} # 必须配置（Pages 项目名称）
+          directory: ./public                        # 静态文件目录
+          branch: main                               # 与 Cloudflare 关联的分支
