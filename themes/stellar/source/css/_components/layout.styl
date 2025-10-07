@@ -1,0 +1,109 @@
+.l_body
+  display: grid // 使用网格布局
+  grid-template-columns: 1fr minmax(200px,var(--width-main)) 1fr // 三列布局：左右自适应，中间最小200px
+  grid-gap: calc(var(--gap-margin) * 4) // 网格间距为4倍基础间距
+  @media screen and (max-width: $device-desktop) // 桌面端以下响应式
+    grid-gap: calc(var(--gap-margin) * 2) // 间距调整为2倍基础间距
+  margin: auto // 容器水平居中
+  font-size: var(--fsp) // 使用预设字体大小变量
+
+.l_body aside
+  z-index: 8 // 侧边栏层级（高于主内容）
+  flex-shrink: 0 // 禁止收缩
+  position: sticky // 粘性定位（滚动时固定）
+  position: -webkit-sticky // Safari兼容
+  --width-sidebar: calc(var(--gap-margin) * 2 + var(--gap-padding) * 2 + var(--side-content-width)) // 侧边栏宽度变量
+  width: var(--width-sidebar) // 应用侧边栏宽度
+
+.l_body .l_left
+  justify-self: right // 左侧栏网格内右对齐
+  top: calc(var(--gap-margin) * 2) // 粘性定位顶部距离（2倍基础间距）
+
+.l_body .l_right
+  justify-self: left // 右侧栏网格内左对齐
+  max-height: calc(100% - calc(var(--gap-margin) * 2) * 2) // 右侧栏最大高度（预留上下间距）
+  .widgets
+    height: 100% // 占满父容器高度
+    overflow visible // 溢出内容可见
+
+// 平板布局
+@media screen and (max-width: $device-laptop) // 平板端断点
+  .l_body .l_right
+    --gap-margin: 16px // 重定义平板端基础间距
+  .laptop-only
+    display: block !important // 强制显示平板专属元素
+  .l_body
+    grid-gap: calc(var(--gap-margin) * 1) // 网格间距调整为1倍基础间距
+    .l_right
+      position: fixed // 右侧栏改为固定定位
+      transform: translateX(320px) // 初始隐藏（向右平移）
+      transition: transform .38s ease-out // 平移过渡动画
+      margin: 0 // 清除margin
+      --inset: 8px // 内边距变量
+      right: var(--inset) // 右侧距离
+      top: calc(var(--gap-margin) * 2) // 顶部距离
+      max-height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $rightbar-bottom-margin) // 最大高度计算
+      box-shadow: $boxshadow-card-float // 卡片悬浮阴影
+      z-index: 10 // 层级（高于遮罩）
+      background: var(--background) // 使用背景色变量
+      overflow: auto // 溢出滚动
+      scrollbar(0, 0) // 隐藏滚动条
+      --blur-bg: var(--bg-a60) // 模糊背景色
+      --blur-px: 50px // 模糊程度
+  .l_body[rightbar] // 右侧栏显示状态
+    .l_right
+      transform: translateX(0px) // 平移回可视区域
+    .main-mask
+      pointer-events: inherit // 遮罩层可点击
+
+// 手机布局
+@media screen and (max-width: $device-mobile-max) // 手机端断点
+  .mobile-only
+    display: block !important // 强制显示手机专属元素
+  .l_body
+    padding: 0 // 清除内边距
+    display: block // 改为块状布局（取消网格）
+    .l_left
+      position: fixed // 左侧栏固定定位
+      transform: translateX(-320px) // 初始隐藏（向左平移）
+      transition: transform .38s ease-out // 平移过渡动画
+      margin: 0 // 清除margin
+      --inset: 8px // 内边距变量
+      left: var(--inset) // 左侧距离
+      top: calc(var(--gap-margin) * 2) // 顶部距离
+      max-height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $leftbar-bottom-margin) // 最大高度计算
+      .leftbar-container
+        --inset: 8px // 内容容器内边距
+        height: 'calc(%s - %s * 2 - %s)' % (100vh var(--gap-margin) $leftbar-bottom-margin) // 内容高度
+      box-shadow: $boxshadow-card-float // 卡片悬浮阴影
+      z-index: 10 // 层级（高于遮罩）
+    .l_main
+      max-width: 100% // 主内容全屏宽度
+
+  .l_body[leftbar] // 左侧栏显示状态
+    .l_left
+      transform: translateX(0px) // 平移回可视区域
+    .main-mask
+      pointer-events: inherit // 遮罩层可点击
+
+.main-mask
+  position: fixed // 固定定位（全屏覆盖）
+  pointer-events: none // 初始禁止点击
+  top: 0 // 顶部贴边
+  left: 0 // 左侧贴边
+  width: 100% // 全屏宽度
+  height: 100% // 全屏高度
+  background: rgba(black, 0.1) // 半透明背景（弱化主内容）
+  z-index: 9 // 层级（介于主内容和侧边栏之间）
+  opacity 0 // 初始透明（隐藏）
+  trans1 opacity // 透明度过渡动画
+
+// 普通屏幕布局
+.l_body .l_left
+  margin-bottom: 16px; // 只保留少量底部留白（数值按需调整）
+
+// 手机端布局
+@media screen and (max-width: $device-mobile-max)
+  .l_body
+    .l_left
+      padding-bottom: 8px; // 少量底部内边距（按需调整）
