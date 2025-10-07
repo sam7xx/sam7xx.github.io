@@ -1,100 +1,58 @@
-name: 自动部署到 GitHub/Vercel/Cloudflare
+name: 部署到 GitHub Pages/Vercel/Cloudflare
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
 
     steps:
-      # 步骤1：拉取代码（确保基础文件完整）
+      # 步骤1：拉取代码（获取仓库中的public目录）
       - name: 拉取代码
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 步骤2：彻底清理并重新克隆 Stellar 主题（杜绝路径问题）
-      - name: 强制安装 Stellar 主题
+      # 步骤2：验证public目录（确保静态文件存在）
+      - name: 检查public目录完整性
         run: |
-          echo "当前工作目录: $(pwd)"
-          # 彻底删除旧主题目录（避免残留文件干扰）
-          rm -rf themes/stellar
-          # 克隆主题到 themes/stellar（确保路径绝对正确）
-          git clone https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
-          # 验证主题目录结构（核心文件必须存在）
-          echo "主题目录内容："
-          ls -la themes/stellar
-          echo "主题关键文件检查："
-          if [ ! -f "themes/stellar/layout/layout.ejs" ]; then
-            echo "错误：主题核心模板文件缺失！"
-            exit 1
-          fi
-
-      # 步骤3：验证 Hexo 配置中的主题名称
-      - name: 检查 _config.yml 主题配置
-        run: |
-          echo "当前主题配置："
-          grep "theme:" _config.yml
-          # 确保配置为小写 "stellar"（区分大小写）
-          if ! grep -q "theme: stellar" _config.yml; then
-            echo "错误：_config.yml 中主题配置不正确，应为 'theme: stellar'"
-            exit 1
-          fi
-
-      # 步骤4：安装 Node.js（稳定版本）
-      - name: 安装 Node.js 22.19.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.19.0
-          cache: 'npm'
-
-      # 步骤5：安装依赖（包括主题依赖）
-      - name: 安装项目及主题依赖
-        run: |
-          npm install  # 安装 Hexo 核心依赖
-          cd themes/stellar && npm install && cd ../../  # 安装主题自身依赖
-
-      # 步骤6：构建（强制指定主题，输出完整日志）
-      - name: 构建静态文件（强制主题）
-        run: |
-          # 清理缓存（包括 Hexo 主题缓存）
-          npx hexo clean --debug
-          # 显式指定主题构建（解决自动识别失败问题）
-          npx hexo generate --theme stellar --debug
-          # 再次验证构建结果
           if [ ! -d "public" ] || [ -z "$(ls -A public)" ]; then
-            echo "错误：构建后 public 目录为空！"
+            echo "错误：public目录不存在或为空！请确保已提前生成静态文件。"
             exit 1
           fi
+          echo "public目录验证通过，文件列表："
+          ls -la public
 
-      # 后续部署步骤保持不变...
-      # - name: 部署到 GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v4
-      #   with:
-      #     github_token: ${{ secrets.GH_TOKEN }}
-      #     publish_dir: ./public
-      #     publish_branch: gh-pages
-      #     force_orphan: true
+      # 步骤3：直接部署到GitHub Pages（使用现有public目录）
+      - name: 部署到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./public  # 直接使用现有public目录
+          publish_branch: gh-pages
+          force_orphan: true
 
+      # 步骤4：部署到Vercel（使用现有public目录）
       - name: 部署到 Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./public
-          vercel-args: '--prod'
+          working-directory: ./public  # 指向public目录
+          vercel-args: '--prod'  # 部署为生产环境
         continue-on-error: true
 
+      # 步骤5：部署到Cloudflare Pages（使用现有public目录）
       - name: 部署到 Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ secrets.CF_PROJECT_NAME }}
-          directory: ./public
+          directory: ./public  # 指向public目录
           branch: main
         continue-on-error: true
