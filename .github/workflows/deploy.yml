@@ -33,10 +33,10 @@ jobs:
           fi
 
       # 步骤3：安装 Node.js（使用更稳定的 LTS 版本）
-      - name: 安装 Node.js 20.19.0
+      - name: 安装 Node.js 22.19.0
         uses: actions/setup-node@v4
         with:
-          node-version: 20.19.0  # 22.x 过于前沿，20.x LTS 兼容性更优
+          node-version: 22.19.0  # 22.x 过于前沿，20.x LTS 兼容性更优
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
