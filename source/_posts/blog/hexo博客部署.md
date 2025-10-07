@@ -129,22 +129,23 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 | Vercel           | Vercel 令牌（Token）+ 项目 ID+USER ID                 | Vercel 控制台 → 账户设置 → `Tokens`；项目设置 → `General` 中获取项目 ID;菜单中找到 Account→ Genera→ USER ID |
 | Cloudflare Pages | Cloudflare API 令牌 + 账户 ID + 项目名称              | Cloudflare 控制台 → 我的个人资料 → `API Tokens`（创建含 `Pages:Edit` 权限的令牌）；账户 ID 在 Workers 和 Pages 页面获取；项目名称为 Cloudflare Pages 中创建的项目名 |
 
-### 步骤：配置 GitHub Actions 工作流
+#### 5.2 配置 GitHub Actions 工作流
 
-#### 1. 存储敏感凭证到 GitHub Secrets
+- 进入 GitHub 仓库 → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`，添加以下凭证：
 
-进入 GitHub 仓库 → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`，添加以下凭证：
+  - `GH_TOKEN`：GitHub Pages 的 PAT
 
-- `GH_TOKEN`：GitHub Pages 的 PAT
-- `VERCEL_TOKEN`：Vercel 令牌
-- `VERCEL_PROJECT_ID`：Vercel 项目 ID
-- `CF_API_TOKEN`：Cloudflare API 令牌
-- `CF_ACCOUNT_ID`：Cloudflare 账户 ID
-- `CF_PROJECT_NAME`：Cloudflare Pages 项目名称
+  - `VERCEL_TOKEN`：Vercel 令牌
 
-#### 2. 创建工作流配置文件
+  - `VERCEL_PROJECT_ID`：Vercel 项目 ID
 
-在项目根目录创建 `.github/workflows/deploy.yml`，内容如下（以 Hexo 项目为例，其他静态项目可调整构建命令）：
+  - `CF_API_TOKEN`：Cloudflare API 令牌
+
+  - `CF_ACCOUNT_ID`：Cloudflare 账户 ID
+
+  - `CF_PROJECT_NAME`：Cloudflare Pages 项目名称
+
+- 创建工作流配置文件，在项目根目录创建 `.github/workflows/deploy.yml`，内容如下（以 Hexo 项目为例，其他静态项目可调整构建命令）：
 
 ```yaml
 name: 自动部署到 GitHub/Vercel/Cloudflare
@@ -206,7 +207,7 @@ jobs:
           branch: main  # 关联的 GitHub 分支
 ```
 
-#### 3. 推送代码触发自动部署
+- 推送代码触发自动部署
 
 ```bash
 # 提交工作流文件
@@ -215,7 +216,7 @@ git commit -m "Add auto-deploy workflow to 3 platforms"
 git push origin main
 ```
 
-#### 4. 查看部署状态
+- 查看部署状态
 
 - 部署进度：GitHub 仓库 → `Actions` → 选择当前工作流 → 查看实时日志。
 - 结果验证：
@@ -223,7 +224,7 @@ git push origin main
   - Vercel：访问 Vercel 项目分配的域名（如 `<项目名>.vercel.app`）
   - Cloudflare Pages：访问 Cloudflare 分配的域名（如 `<项目名>.pages.dev`）
 
-### 关键说明
+- 关键说明
 
 **Cloudflare Pages 特殊配置**：
 
@@ -242,20 +243,39 @@ git push origin main
 
 编辑
 
-### 5. 部署失败的常见问题与解决
+#### 5.3  部署失败的常见问题与解决
 
 - **`hexo d` 提示无权限**
    - 原因：Git 仓库认证失败。
    - 解决：使用 SSH 地址（`git@github.com:yourname/yourrepo.git`）而非 HTTPS，或配置 Git 凭证。
+   
 - **部署后页面空白 / 样式丢失**
    - 原因：`_config.yml` 中 `url` 配置错误，或静态资源路径引用问题。
    - 解决：确保 `url` 与实际域名一致（如 `url: https://yourname.github.io`），并执行 `hexo clean` 重新生成。
+   
 - **平台构建失败（提示缺少依赖）**
    - 原因：`package.json` 未提交到仓库，或依赖未正确声明。
    - 解决：确保 `package.json` 和 `package-lock.json` 已提交，必要时在构建命令前加 `npm install`（如 `npm install && hexo generate`）。
+   
 - **部署后 404 错误**
    - 原因：部署分支或输出目录配置错误。
    - 解决：确认 GitHub Pages 指向的分支正确（如 `main`），或 Cloudflare/Netlify 的输出目录为 `public`。
+   
+- **Github 自动部署jekyll构建问题**
+
+   - 原因：Github默认使用jekyll主题构建，识别到主题不是jekyll报错。
+   - 解决：可以生成一个.nojekyll文件来禁用jekyll部署，再工作流中增加public文件下.nojekyll
+   - 根目录也添加 `.nojekyll`（双重保险）,虽然工作流已在 `public` 目录生成 `.nojekyll`，但可在仓库根目录也添加一个，防止 GitHub 误读：
+
+   ```bash
+   # 本地仓库根目录执行
+   touch .nojekyll
+   git add .nojekyll
+   git commit -m "根目录添加.nojekyll，禁用Jekyll"
+   git push origin main
+   ```
+
+   通过以上步骤，能从工作流配置、仓库设置、缓存清理三个层面彻底禁用 Jekyll，确保 GitHub Pages 直接托管 Hexo 生成的静态文件。核心逻辑是：**确保 `.nojekyll` 被正确部署到 `gh-pages` 分支的根目录，且 GitHub 识别到该文件**。
 
 ### 6. 心得
 
