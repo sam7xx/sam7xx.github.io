@@ -178,6 +178,46 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
    git push -u origin main
    ```
 
+#### 切换到 SSH 协议（推荐长期使用）
+
+1. **生成 SSH 密钥（如果没有）**
+
+   打开终端，执行：
+
+   ```bash
+   ssh-keygen -t ed25519 -C "你的GitHub邮箱"
+   ```
+
+   一路回车默认即可（无需设置密码，或根据需要设置）。
+
+2. **添加 SSH 密钥到 GitHub**
+
+   - 查看公钥内容（复制全部输出）：
+
+     ```bash
+     cat ~/.ssh/id_ed25519.pub  # 若使用其他算法，文件名可能不同（如 id_rsa.pub）
+     ```
+
+   - 登录 GitHub，进入 `Settings` → `SSH and GPG keys` → `New SSH key`，粘贴公钥并保存。
+
+3. **将远程仓库 URL 从 HTTPS 切换为 SSH**
+
+   执行以下命令修改远程地址：
+
+   ```bash
+   git remote set-url origin git@github.com:sam7xx/sam7xx.github.io.git
+   ```
+
+### 验证是否成功
+
+执行一次推送测试：
+
+```bash
+git push origin main
+```
+
+如果不再提示认证失败，说明配置成功。
+
 #### 步骤 2：在 Cloudflare 控制台创建 Pages 项目
 
 1. **登录 Cloudflare 控制台**
