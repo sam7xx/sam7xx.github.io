@@ -1,58 +1,81 @@
-name: 部署到 GitHub Pages/Vercel/Cloudflare
+name: 自动构建部署（使用现有主题）
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
-      # 步骤1：拉取代码（获取仓库中的public目录）
+      # 步骤1：拉取代码（包含已有的themes/stellar目录）
       - name: 拉取代码
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 步骤2：验证public目录（确保静态文件存在）
-      - name: 检查public目录完整性
+      # 步骤2：验证主题目录是否存在（关键！确保仓库中已有主题文件）
+      - name: 检查主题目录
         run: |
-          if [ ! -d "public" ] || [ -z "$(ls -A public)" ]; then
-            echo "错误：public目录不存在或为空！请确保已提前生成静态文件。"
+          if [ ! -d "themes/stellar" ]; then
+            echo "错误：themes/stellar目录不存在，请确保主题文件已提交到仓库！"
             exit 1
           fi
-          echo "public目录验证通过，文件列表："
-          ls -la public
+          echo "主题目录验证通过，使用仓库中已有的主题文件"
 
-      # 步骤3：直接部署到GitHub Pages（使用现有public目录）
-      - name: 部署到 GitHub Pages
+      # 步骤3：安装Node.js
+      - name: 安装Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+
+      # 步骤4：安装依赖（使用仓库中已有的主题，无需重新安装主题依赖）
+      - name: 安装Hexo及项目依赖
+        run: |
+          npm install hexo-cli -g
+          npm install  # 安装根目录依赖
+          cd themes/stellar && npm install && cd ../../  # 安装主题目录依赖（如果有）
+
+      # 步骤5：构建静态文件
+      - name: 构建静态文件
+        run: |
+          hexo clean
+          hexo generate
+
+      # 步骤6：添加.nojekyll文件，跳过Jekyll构建
+      - name: 禁用Jekyll构建
+        run: touch public/.nojekyll
+
+      # 步骤7：部署到GitHub Pages
+      - name: 部署到GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public  # 直接使用现有public目录
+          publish_dir: ./public
           publish_branch: gh-pages
           force_orphan: true
 
-      # 步骤4：部署到Vercel（使用现有public目录）
-      - name: 部署到 Vercel
+      # 步骤8：部署到Vercel
+      - name: 部署到Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./public  # 指向public目录
-          vercel-args: '--prod'  # 部署为生产环境
+          working-directory: ./public
+          vercel-args: '--prod'
         continue-on-error: true
 
-      # 步骤5：部署到Cloudflare Pages（使用现有public目录）
-      - name: 部署到 Cloudflare Pages
+      # 步骤9：部署到Cloudflare Pages
+      - name: 部署到Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ secrets.CF_PROJECT_NAME }}
-          directory: ./public  # 指向public目录
+          directory: ./public
           branch: main
         continue-on-error: true
