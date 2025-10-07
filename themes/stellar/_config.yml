@@ -9,9 +9,9 @@ stellar:
 
 ######## head tags ########
 preconnect:
-  - https://cdn.jsdelivr.net
-  - https://gcore.jsdelivr.net
-  - https://unpkg.com
+  # - https://gcore.jsdelivr.net
+  # - https://gcore.jsdelivr.net
+  # - https://unpkg.com
 
 # 一旦设置源站地址，非源站地址将不会被SEO收录，并且访问时弹出提示
 # 如果访问地址不在备用站主机列表，则警告信息为非法克隆
@@ -37,60 +37,34 @@ logo:
 
 # 侧边栏主功能导航菜单
 menubar:
-  columns: 5 # 一行多少个
+  columns: 4 # 一行多少个
   items: # 可按照自己需求增加，符合以下格式即可
     # id: 页面中高亮的 menu_id 
     # theme: 高亮时的颜色，仅 svg 中 fill="currentColor" 时有效
     # icon: 支持 svg/img 标签，可以定义在 icons.yml 文件中，也支持外部图片的 URL
     # title: 标题
     # url: 点击跳转到哪，支持相对路径和绝对路径
-    - id: post
-      theme: '#2196F3'
-      icon: '<i class="fa-solid fa-newspaper" style="font-size:1.25em;"></i>'
-      title: 博客
-      url: /blog
-    - id: note
-      theme: '#4CAF50'
-      icon: '<i class="fa-solid fa-pen-to-square" style="font-size:1.25em;"></i>'
-      title: 笔记
-      url: /note
-    - id: project
-      theme: '#FF9800'
-      icon: '<i class="fa-solid fa-folder-open" style="font-size:1.25em;"></i>'
-      title: 项目
-      url: /project
-    - id: runing
-      theme: '#CC96F3'
-      icon: '<i class="fa-solid fa-clock" style="font-size:1.25em;"></i>'
-      title: 记录
-      url: /records
-    - id: more
-      theme: '#390ca1'
-      icon: <i class="fa-solid fa-ellipsis-vertical fa-shake" style="font-size:1.25em;"></i>
-      title: 更多
-      # 这里配置子菜单，使用 nested 字段
-      nested:
-        - id: archives
-          title: 归档
-          url: /archives
-        - id: categories
-          title: 分类
-          url: /categories
-        - id: tags
-          title: 标签
-          url: /tags
-        - id: messages
-          title: 留言
-          url: /messages
-        - id: rss
-          title: RSS
-          url: /atom.xml
-        - id: friends
-          title: 友链
-          url: /friends
-        - id: about
-          title: 关于
-          url: /about
+    # - id: post
+    #   theme: '#1BCDFC'
+    #   icon: solar:documents-bold-duotone
+    #   title: 博客
+    #   url: /
+    # - id: wiki
+    #   theme: '#3DC550'
+    #   icon: solar:notebook-bookmark-bold-duotone
+    #   title: 文档
+    #   url: /wiki/
+    # - id: explore
+    #   theme: '#FA6400'
+    #   icon: solar:planet-bold-duotone
+    #   title: 探索
+    #   url: /explore/
+    # - id: social
+    #   theme: '#F44336'
+    #   icon: solar:chat-square-like-bold-duotone
+    #   title: 社交
+    #   url: /friends/
+
 
 ######## Main ########
 # 站点主结构树
@@ -98,14 +72,14 @@ site_tree:
   # -- 列表类页面 -- #
   # 主页配置
   home:
-    leftbar:  welcome, recent, music
-    rightbar: tagcloud
+    leftbar: welcome, recent
+    rightbar: 
   # 博客列表页配置
   index_blog:
     base_dir: blog # 只影响自动生成的页面路径
     menu_id: post # 未在 front-matter 中指定 menu_id 时，layout 为 post 的页面默认使用这里配置的 menu_id
-    leftbar:  welcome, recent  # for categories/tags/archives
-    rightbar: tagcloud
+    leftbar: welcome, recent # for categories/tags/archives
+    rightbar: 
     nav_tabs:  # 近期发布 分类 标签 专栏 归档 and ...
       # '朋友文章': /friends/rss/
   # 博客专栏列表页配置
@@ -117,7 +91,7 @@ site_tree:
     base_dir: wiki # 只影响自动生成的页面路径
     menu_id: wiki # 未在 front-matter 中指定 menu_id 时，layout 为 wiki 的页面默认使用这里配置的 menu_id
     leftbar: related, recent # for wiki
-    rightbar: tagcloud
+    rightbar: 
     nav_tabs:
       # 'more': https://github.com/xaoxuu
   # -- 内容类页面 -- #
@@ -193,11 +167,11 @@ notebook:
   # 是否在笔记页面显示许可协议。false 表示不显示。true 表示沿用主题许可协议内容。也可以给定具体的文本指定协议内容。
   # 可以在笔记本 yaml 的 license 字段中覆盖此参数。
   # 可以在笔记的 front-matter/license 中覆盖此参数。
-  license: true
+  license: false
   # 是否在笔记页面显示分享按钮。
   # 可以在笔记本 yaml 的 share 字段中覆盖此参数。
   # 可以在笔记的 front-matter/share 中覆盖此参数。
-  share: true
+  share: false
 
 
 ######## Article ########
@@ -209,22 +183,22 @@ article:
   # 封面图宽高比
   cover_ratio: 2
   # 文章内横幅宽高比
-  banner_ratio: 2
+  banner_ratio: 2.5
   # 如果没有指定横幅，是否根据 tags 作为关键词搜索横幅图片？
   auto_banner: false # search from https://source.unsplash.com/
   # 如果没有指定 excerpt 和 description，将自动取多长的内容作为文章摘要？
-  auto_excerpt: 77
+  auto_excerpt: 128
   # 分类颜色
   category_color:
     '探索号': '#f44336'
   # 文章许可协议
-  license: '本文采用 [署名-非商业性使用-相同方式共享 4.0 国际](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。<br/>本文部分素材来源于网络，如有侵权请[邮箱](mailto:2690640537@qq.com)联系站主，站主将在24h内删除。'
+  license: '本文采用 [署名-非商业性使用-相同方式共享 4.0 国际](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。'
   # 分享
-  share:  [wechat, weibo, email, link]
+  share: # [wechat, weibo, email, link]
   # 相关文章，需要安装插件 (for layout: post)
   # npm i hexo-related-popular-posts
   related_posts:
-    enable: true
+    enable: false
     max_count: 5
 
 search:
@@ -243,10 +217,10 @@ search:
 
 ######## Comments ########
 comments:
-  service: waline # beaudar, utterances, giscus, twikoo, waline, artalk
+  service: # beaudar, utterances, giscus, twikoo, waline, artalk
   comment_title: 快来参与讨论吧~
-  lazyload: true # true / false
-  custom_css: waline # artalk,twikoo,... 可以为没有全局启用的评论加载自定义样式
+  lazyload: false # true / false
+  custom_css: # artalk,twikoo,... 可以为没有全局启用的评论加载自定义样式
   # beaudar
   # https://beaudar.lipk.org/
   beaudar:
@@ -272,16 +246,16 @@ comments:
   # https://giscus.app/zh-CN
   giscus:
     src: https://giscus.app/client.js
-    data-repo: sam7xx/sam7xx.github.io # [在此输入仓库]
-    data-repo-id: R_kgDOO7x7jQ # [在此输入仓库 ID]
-    data-category: Announcements # [在此输入分类名]
-    data-category-id: DIC_kwDOO7x7jc4Cu25Y
+    data-repo: xxx/xxx # [在此输入仓库]
+    data-repo-id: # [在此输入仓库 ID]
+    data-category: # [在此输入分类名]
+    data-category-id:
     data-mapping: pathname
     data-strict: 0
     data-reactions-enabled: 1
     data-emit-metadata: 0
-    data-input-position: bottom # top, bottom
-    data-theme: noborder_light
+    data-input-position: top # top, bottom
+    data-theme: preferred_color_scheme
     data-lang: zh-CN
     data-loading: # lazy
     crossorigin: anonymous
@@ -295,43 +269,24 @@ comments:
   # Waline
   # https://waline.js.org/
   waline:
-    js: https://unpkg.com/@waline/client@v3/dist/waline.js #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.js
-    css: https://unpkg.com/@waline/client@v3/dist/waline.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.css
-    meta_css: https://unpkg.com/@waline/client@v3/dist/waline-meta.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline-meta.css
+    js: https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.js
+    css: https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.css
+    meta_css: https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline-meta.css
     # Waline server address url, you should set this to your own link
-    serverURL: https://waline.sam7.top
+    serverURL: https://waline.vercel.app
     # If false, comment count will only be displayed in post page, not in home page
     commentCount: true
     # Pageviews count, Note: You should not enable both `waline.pageview` and `leancloud_visitors`.
     pageview: false
-    locale:
-      # #自定义反应标题。如果像我一样不想要反应标题，可以在这一项里留空。
-      # reactionTitle:  
-      # #反应表情的文章描述
-      # reaction0: 爱你哟
-      # reaction1: oh~~
-      # reaction2: 嘚瑟~
-      # reaction3: 无语
-
-      placeholder: 
-       嗨，朋友，留个脚印再走呗。  
-
-    #反应表情组
-    reaction: 
-      - https://img.skyreeves.com/emojis/blobs/ablobcatheart.png
-      - https://img.skyreeves.com/emojis/blobs/ablobcatattentionreverse.png
-      - https://img.skyreeves.com/emojis/blobs/ablobcatrainbow.png
-      - https://img.skyreeves.com/emojis/blobs/blobcatsaitama.png
-      - https://img.skyreeves.com/emojis/blobs/blobcatflip.png
     # Custom emoji
-    emoji:
-      - https://unpkg.com/@waline/emojis@1.1.0/weibo
-      - https://unpkg.com/@waline/emojis@1.1.0/alus
-      - https://unpkg.com/@waline/emojis@1.1.0/bilibili
-      - https://unpkg.com/@waline/emojis@1.1.0/qq
-      - https://unpkg.com/@waline/emojis@1.1.0/tieba
-      - https://unpkg.com/@waline/emojis@1.1.0/tw-emoji
-      - https://unpkg.com/@waline/emojis@1.1.0/bmoji
+    # emoji:
+    #   - https://unpkg.com/@waline/emojis@1.1.0/weibo
+    #   - https://unpkg.com/@waline/emojis@1.1.0/alus
+    #   - https://unpkg.com/@waline/emojis@1.1.0/bilibili
+    #   - https://unpkg.com/@waline/emojis@1.1.0/qq
+    #   - https://unpkg.com/@waline/emojis@1.1.0/tieba
+    #   - https://unpkg.com/@waline/emojis@1.1.0/tw-emoji
+    #   - https://unpkg.com/@waline/emojis@1.1.0/bmoji
     # 设置自己的图床服务，替换默认的 Base 64 编码嵌入（有体积大小限制），在评论中上传图片更加方便
     # imageUploader:
       # 适配了兰空图床V1、V2版本
@@ -347,12 +302,17 @@ comments:
       # api: https://xxxxxx/api/upload
       # token: xxxxxxxxxxxxxx
       # resp: data.url
+    #   fileName: # 根据版本二选一
+    #   tokenName: # 根据版本二选一
+    #   api: # 图床 api 地址
+    #   token: # 图床验证
+    #   resp: # 图片地址返回值的字段
 
   # Artalk
   # https://artalk.js.org/
   artalk:
-    css: https://unpkg.com/artalk@2.9/dist/Artalk.css
-    js: https://unpkg.com/artalk@2.9/dist/Artalk.js
+    css: https://unpkg.com/artalk@2.9/dist/artalk.css
+    js: https://unpkg.com/artalk@2.9/dist/artalk.js
     server: # 后端服务地址
     site: '' # 站点名称
     darkMode: auto # 其它模式都有问题，慎用，否则后果自负
@@ -367,38 +327,21 @@ comments:
 
 
 ######## Footer ########
-footer: 
+footer:
   social:
-    github:
-      icon: '<i class="fa-solid fa-github fa-brands" style="font-size:1em;"></i>'
-      title: 'Github'
-      url : https://github.com/sam7xx 
-    rss: 
-      icon: '<i class="fa-solid fa-rss fa-bounce" style="color: #FF5722;font-size:1em;"></i>'
-      title: 'RSS'
-      url : /atom.xml
-    email: 
-      icon: '<i class="fa-solid fa-envelope fa-bounce" style="color: #B197FC;font-size:1em;"></i>'
-      title: 'Email'
-      url : "mailto://2690640537@qq.com"
-    theme:
-      icon: '<i class="fa-solid fa-circle-half-stroke fa-flip" style="color: #FFD600;font-size:1em;"></i>'
-      title: '主题切换'
-      url: 'javascript:void(0);'
-    message:
-      icon: '<i class="fa-solid fa-message fa-bounce" style="color:#FF9800;font-size:1em;"></i>'
-      title: '留言板'
-      url: '/messages'
-    about:
-      icon: '<i class="fa-solid fa-user" style="color:#4CAF50;font-size:1em;"></i>'
-      title: '关于作者'
-      url: '/about'
-    friends:
-      icon: '<i class="fa-solid fa-link" style="color:#2196F3;font-size:1em;"></i>'
-      title: '友链'
-      url: '/friends'
-
-#  sitemap:
+    # github:
+    #   icon: '<img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/08a41b181ce68.svg"/>'
+    #   url: /
+    # music:
+    #   icon: '<img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/3845874.svg"/>'
+    #   url: /
+    # unsplash:
+    #   icon: '<img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/3616429.svg"/>'
+    #   url: /
+    # comments:
+    #   icon: '<img src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/942ebbf1a4b91.svg"/>'
+    #   url: /about/#comments
+  sitemap:
     # - title: 博客
     #   items:
     #     - '[近期发布](/)'
@@ -424,42 +367,8 @@ footer:
     #     - '[xxx](/)'
     #     - '[xxx](/)'
   content: | # 支持 Markdown 格式
-          <center>
-
-          网站由 [{author.name}](/) © 2025使用 [{theme.name}]({theme.tree}) 主题创建
-
-          <span id="runtime_span"></span>
-          <script type="text/javascript">
-          function show_runtime() {
-              window.setTimeout("show_runtime()", 1000);
-              X = new Date("2025/09/06 19:00:00");
-              Y = new Date();
-              T = (Y.getTime() - X.getTime());
-              M = 24 * 60 * 60 * 1000;
-              a = T / M;
-              A = Math.floor(a);
-              b = (a - A) * 24;
-              B = Math.floor(b);
-              c = (b - B) * 60;
-              C = Math.floor((b - B) * 60);
-              D = Math.floor((c - C) * 60);
-              runtime_span.innerHTML = "网站已运行 " + A + "天" + B + "小时" + C + "分" + D + "秒"
-          }
-          show_runtime();
-          </script>
-          <!--不蒜子计数器-->
-          <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-          <!--添加一个访问量-->
-          总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次
-          <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span>
-          </center>
-          <div style="display: flex;justify-content: center;align-items: center;margin: 10px;">
-            <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/iNxx4M" data-src="https://u.sam7.top/iNxx4M" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
-            <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img class="lazy entered loaded" src="https://u.sam7.top/43dwwK" data-src="https://u.sam7.top/43dwwK" alt="只要保留原作者姓名并在基于原作创作的新作品适用同类型的许可协议，即可基于非商业目的对原作重新编排、改编或者再创作。" style="width:100px;height:35px" data-ll-status="loaded"></a>
-          </div>
-
-
-
+    本站由 [{author.name}](/) 使用 [{theme.name} {theme.version}]({theme.tree}) 主题创建。
+    本博客所有文章除特别声明外，均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。
   # 主题用户越多，开发者维护和更新的积极性就越高，如果您喜欢本主题，请在适当的位置显示主题信息和仓库链接以表支持。
 
 
@@ -497,7 +406,7 @@ tag_plugins:
     default_color: theme # theme, accent, red, orange, yellow, green, cyan, blue, purple
   # {% image %}
   image:
-    fancybox: true # true, false
+    fancybox: false # true, false
   # {% copy xxx %}
   copy:
     toast: 复制成功
@@ -543,7 +452,7 @@ tag_plugins:
 # 基础依赖
 dependencies:
   jquery: https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js
-  marked: https://gcore.jsdelivr.net/npm/marked@16/lib/marked.umd.min.js
+  marked: https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js
   lazyload:
     js: https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js
     transition: fade # blur, fade
@@ -628,14 +537,13 @@ plugins:
   # available for {% image xxx %}
   fancybox:
     enable: true
-    loader: /js/plugins/fancybox-loader.js
-    js: https://gcore.jsdelivr.net/npm/@fancyapps/ui@6/dist/fancybox/fancybox.umd.js
-    css: https://gcore.jsdelivr.net/npm/@fancyapps/ui@6/dist/fancybox/fancybox.css
+    js: https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js
+    css: https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css
     # 让 md 语法图片支持放大可以这样写: .md-text img:not([class]), .md-text .image img
     # 可以处理评论区的图片（不支持 iframe 类评论系统）例如：
     # 使用 twikoo 评论可以写: .tk-content img:not([class*="emo"])
     # 使用 waline 评论可以写: #waline_container .vcontent img
-    selector: .timenode p>img, waline_container .vcontent img, .custom-image-container a, .md-text img:not([class]), .md-text .image img # 多个选择器用英文逗号隔开
+    selector: .timenode p>img # 多个选择器用英文逗号隔开
 
   # swiper
   swiper:
@@ -648,32 +556,27 @@ plugins:
     enable: #true # 慎用，有些时候打开页面空白
     js: https://gcore.jsdelivr.net/npm/scrollreveal@4.0/dist/scrollreveal.min.js
     distance: 8px
-    duration: 500 # ms
-    interval: 50 # ms
+    duration: 1000 # ms
+    interval: 100 # ms
     scale: 1 # 0.1~1
   
   # AI 摘要
   # https://github.com/qxchuckle/Post-Summary-AI
   tianli_gpt: 
-    enable: true
+    enable: #true
     js: https://jsd.onmicrosoft.cn/gh/qxchuckle/Post-Summary-AI@6.0/chuckle-post-ai.min.js
-    field: all # all, post, wiki
-    key: S-JAVXPRUNPV8LWXO4 # tianli_gpt key
-    total_length: 500 # 设置提交的字数限制，默认为1000字，上限为5000，超过5000字符将被截断
-    typewriter: true # 打字机动画 效果
+    field: post # all, post, wiki
+    key: 5Q5mpqRK5DkwT1X9Gi5e # tianli_gpt key
+    total_length: 1000 # 设置提交的字数限制，默认为1000字，上限为5000，超过5000字符将被截断
+    typewriter: true # 打字机动画 
     summary_directly: true # 是否直接显示摘要，否则显示 AI 简介
-    summary_position: bottom # 摘要位置，默认bottom
-    summary_offset: 0 # 摘要位置偏移量，默认0
-    summary_color: theme # theme, accent, red, orange, yellow, green, cyan, blue, purple
-    rec_enable: true # 是否启用相关文章推荐
-    rec_count: 3 # 推荐文章数量，默认3  上限10
     rec_method: all # all, web # 文章推荐方式，all：匹配数据库内所有文章进行推荐，web：仅当前站内的文章，默认all
-    hide_shuttle: false # 是否隐藏矩阵穿梭  按钮
-    summary_toggle: false # 是否显示摘要切换按钮
+    hide_shuttle: true # 是否隐藏矩阵穿梭
+    summary_toggle: false
     interface:
       name: AI摘要
       introduce: '我是文章辅助AI: QX-AI，点击下方的按钮，让我生成本文简介、推荐相关文章等。'
-      version: GPT
+      version: TianliGPT
       button: ["介绍自己", "推荐文章", "生成摘要", "矩阵穿梭"]
 
 
@@ -684,7 +587,7 @@ plugins:
   katex:
     enable: #true # hexo-renderer-markdown-it-plus 默认开启 katex，此选项仅用于引入样式
     inject: |
-      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
   
   # MathJax
   # 需在Markdown文件开头加入mathjax: true
@@ -724,8 +627,7 @@ plugins:
     enable: false # 此插件会和代码块冲突，仅适用于纯中文博主。
     css: https://unpkg.com/heti@0.9/umd/heti.min.css
     js: https://unpkg.com/heti@0.9/umd/heti-addon.min.js
-  
-  tabs: true  # 确保这一行存在且为 true
+
 
 
 style:
@@ -733,27 +635,27 @@ style:
   smooth_scroll: true # true / false 开启时如果目录过长可能无法准确定位
   font-size:
     root: 16px # 改这个会影响全局所有文字的字号
-    body: 16px # 影响正文区域的字号，如果改成 px 则不受 root 影响
-    code: 75% # 相较于其所在行的文本大小，建议用百分比
+    body: 17px # 影响正文区域的字号，如果改成 px 则不受 root 影响
+    code: 85% # 相较于其所在行的文本大小，建议用百分比
     codeblock: 0.8125rem # 13px
   font-family:
-    body: '"LXGW WenKai Screen",system-ui, "Microsoft Yahei", "Segoe UI", Arial, sans-serif'
-    code: '"Maple Mono NF CN", Menlo, Monaco, Consolas, system-ui, monospace, sans-serif'
-    codeblock: '"Maple Mono NF CN", Menlo, Monaco, Consolas, system-ui, monospace, sans-serif'
+    body: 'system-ui, "Microsoft Yahei", "Segoe UI", Arial, sans-serif'
+    code: 'Menlo, Monaco, Consolas, system-ui, monospace, sans-serif'
+    codeblock: 'Menlo, Monaco, Consolas, system-ui, monospace, sans-serif'
   text-align: left
   prefix:
     h2: https://api.iconify.design/ci:heading-h2.svg
   border-radius:
-    card-l: 22px # 侧边栏、文章横幅位置的圆角
-    card: 14px # 文章内大部分卡片的圆角
-    card-s: 10px # 文章内小型卡片的圆角
-    bar: 6px # 横条类元素的圆角
-    image-l: 22px # 非技术类文章插图圆角
-    image: 14px # 技术类文章插图圆角
-    image-s: 6px # 评论区图片圆角（部分评论支持）
+    card-l: 24px # 侧边栏、文章横幅位置的圆角
+    card: 16px # 文章内大部分卡片的圆角
+    card-s: 12px # 文章内小型卡片的圆角
+    bar: 8px # 横条类元素的圆角
+    image-l: 24px # 非技术类文章插图圆角
+    image: 16px # 技术类文章插图圆角
+    image-s: 8px # 评论区图片圆角（部分评论支持）
   color:
     # 主题色配置（不会根据明暗动态调整，请设置为通用的颜色）
-    theme: '#FCFDF8' # 主题色
+    theme: 'hsl(192 98% 55%)' # 主题色
     accent: 'hsl(14 100% 57%)' # 强调色
     link: 'hsl(207 90% 54%)' # 超链接颜色
   animated_avatar:
@@ -769,22 +671,20 @@ style:
     start: 'linear-gradient(to right, hsl(215, 95%, 64%), hsl(195, 95%, 60%), hsl(165, 95%, 56%), hsl(165, 95%, 56%), hsl(195 95% 60%), hsl(215, 95%, 64%))'
   leftbar:
     # 可以设置：纯色/渐变色/图片作为背景
-    background-color:  var(--block) #var(--card) var(--block)
-    background-image: #url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.13/image/sidebar-bg1@small.jpg)
-    blur-px: 11px
-    blur-bg: var(--bg-a33)
-    background-opacity: 1
+    background-color: var(--card) # var(--block)
+    background-image: url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.13/image/sidebar-bg1@small.jpg)
+    blur-px: 100px
+    blur-bg: var(--bg-a60)
+    background-opacity: 0.8
   paginator:
     prev: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/f049bbd4e88ec.svg
     next: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/064b95430caf4.svg
   error_page: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
   site: # 使用 background-image 后，blur 设置才有效
-    background-color:  var(--background) #var(--bg-a11) var(--background)
-    background-image:  #url(https://t.alcy.cc/fj)
-    blur-px: 14px # 增加模糊度使背景不突兀
-    blur-bg:  var(--bg-a55)
-    blur-sat: 100% # 适当降低饱和度使背景不抢眼
-    
+    # background-image: url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.14/image/site-bg1@small.webp)
+    blur-px: 100px
+    blur-bg: var(--bg-a75)
+    blur-sat: 300%
   # 技术文章内页各级标题前面的符号
   header_prefix:
     h2: '#'
@@ -818,4 +718,3 @@ api_host:
 system:
   # hexo 支持输出的链接格式众多，维护成本高，为了减少出错，统一成推荐的格式。
   override_pretty_urls: true
-
