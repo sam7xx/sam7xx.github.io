@@ -1,4 +1,4 @@
-name: 自动构建部署（使用现有主题）
+name: 彻底禁用Jekyll的自动部署
 on:
   push:
     branches: [ main ]
@@ -10,55 +10,61 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      # 步骤1：拉取代码（包含已有的themes/stellar目录）
       - name: 拉取代码
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 步骤2：验证主题目录是否存在（关键！确保仓库中已有主题文件）
       - name: 检查主题目录
         run: |
           if [ ! -d "themes/stellar" ]; then
-            echo "错误：themes/stellar目录不存在，请确保主题文件已提交到仓库！"
+            echo "错误：themes/stellar目录不存在！"
             exit 1
           fi
-          echo "主题目录验证通过，使用仓库中已有的主题文件"
 
-      # 步骤3：安装Node.js
       - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
           cache: 'npm'
 
-      # 步骤4：安装依赖（使用仓库中已有的主题，无需重新安装主题依赖）
-      - name: 安装Hexo及项目依赖
+      - name: 安装依赖
         run: |
           npm install hexo-cli -g
-          npm install  # 安装根目录依赖
-          cd themes/stellar && npm install && cd ../../  # 安装主题目录依赖（如果有）
+          npm install
+          cd themes/stellar && npm install && cd ../../
 
-      # 步骤5：构建静态文件
       - name: 构建静态文件
         run: |
           hexo clean
           hexo generate
 
-      # 步骤6：添加.nojekyll文件，跳过Jekyll构建
-      - name: 禁用Jekyll构建
-        run: touch public/.nojekyll
+      # 核心强化：确保.nojekyll文件存在且正确
+      - name: 强制生成并验证.nojekyll
+        run: |
+          # 在public目录生成.nojekyll（覆盖可能存在的旧文件）
+          echo "生成.nojekyll文件..."
+          touch public/.nojekyll
+          # 验证文件是否存在
+          if [ ! -f "public/.nojekyll" ]; then
+            echo "错误：.nojekyll文件生成失败！"
+            exit 1
+          fi
+          # 查看文件权限（确保可读）
+          ls -la public/.nojekyll
+          echo "确认：.nojekyll文件已正确生成"
 
-      # 步骤7：部署到GitHub Pages
+      # 部署到gh-pages分支（强制覆盖旧内容）
       - name: 部署到GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          force_orphan: true
+          force_orphan: true  # 强制创建全新的gh-pages分支，清除历史缓存
+          keep_files: false   # 不保留旧文件，确保.nojekyll是最新的
 
-      # 步骤8：部署到Vercel
+      # 其他平台部署步骤（不变）
       - name: 部署到Vercel
         uses: amondnet/vercel-action@v25
         with:
@@ -69,7 +75,6 @@ jobs:
           vercel-args: '--prod'
         continue-on-error: true
 
-      # 步骤9：部署到Cloudflare Pages
       - name: 部署到Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
