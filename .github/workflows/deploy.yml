@@ -1,59 +1,98 @@
 name: 自动部署到 GitHub/Vercel/Cloudflare
 on:
   push:
-    branches: [ main ]  # 推送 main 分支时触发
+    branches: [ main ]
+  workflow_dispatch:  # 允许手动触发，方便测试
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15  # 防止构建超时
+
     steps:
-      # 步骤1：拉取代码（包含子模块，如主题）
-      - name: 拉取 GitHub 代码
+      # 步骤1：拉取代码（增强子模块可靠性）
+      - name: 拉取代码及子模块
         uses: actions/checkout@v4
         with:
-          submodules: recursive  # 递归拉取子模块（确保主题完整）
-          fetch-depth: 0         # 拉取完整历史，避免 Hexo 生成错误
+          submodules: recursive
+          fetch-depth: 0
+          # 增加子模块拉取超时设置
+          submodules-timeout: 10
 
-      # 步骤2：安装 Node 环境（使用 LTS 版本，兼容性更好）
-      - name: 安装 Node.js
+      # 步骤2：强制确保 Stellar 主题存在（解决 CI 子模块拉取失败）
+      - name: 验证并修复 Stellar 主题
+        run: |
+          echo "检查主题目录状态..."
+          if [ ! -d "themes/stellar" ] || [ -z "$(ls -A themes/stellar)" ]; then
+            echo "主题缺失，开始强制克隆..."
+            rm -rf themes/stellar  # 清理无效目录
+            git clone https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
+          else
+            echo "主题已存在，版本信息："
+            git -C themes/stellar log --oneline -1  # 输出主题版本，便于调试
+          fi
+
+      # 步骤3：安装 Node.js（使用更稳定的 LTS 版本）
+      - name: 安装 Node.js 20.19.0
         uses: actions/setup-node@v4
         with:
-          node-version: 22.20.0  # 推荐 22.x LTS（比 20.x 兼容性更稳定）
-          cache: 'npm'        # 缓存依赖，加速构建
+          node-version: 20.19.0  # 22.x 过于前沿，20.x LTS 兼容性更优
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
-      # 步骤3：构建项目（优化 Hexo 依赖安装方式）
-      - name: 安装依赖并构建静态文件
+      # 步骤4：安装依赖（增加调试和兼容性处理）
+      - name: 安装依赖并检查版本
         run: |
-          npm install           # 安装 package.json 中的依赖（包括 hexo）
-          npx hexo clean        # 使用 npx 调用本地 hexo，无需全局安装
-          npx hexo generate     # 生成静态文件到 public 目录
+          echo "Node.js 版本: $(node -v)"
+          echo "npm 版本: $(npm -v)"
+          # 强制安装兼容版本的依赖（解决版本冲突）
+          npm install --force
+          # 输出依赖树，便于排查冲突
+          npm ls hexo hexo-theme-stellar
 
-      # 步骤4：部署到 GitHub Pages
+      # 步骤5：构建项目（增加详细日志和结果验证）
+      - name: 构建静态文件
+        run: |
+          npx hexo clean
+          # 生成时输出详细日志，捕捉主题加载错误
+          npx hexo generate --debug
+          # 验证构建结果
+          if [ ! -d "public" ] || [ -z "$(ls -A public)" ]; then
+            echo "错误：构建失败，public 目录为空！"
+            exit 1
+          else
+            echo "构建成功，public 目录内容："
+            ls -la public  # 输出构建结果，确认有效内容
+          fi
+
+      # 步骤6：部署到 GitHub Pages
       - name: 部署到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GH_TOKEN }}  # 需要在 GitHub 配置
+          github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          force_orphan: true  # 强制创建独立分支，减少历史体积
+          force_orphan: true
+          enable_jekyll: false  # 禁用 Jekyll，避免干扰 Hexo 生成的文件
 
-      # 步骤5：部署到 Vercel（优化参数，确保必填项）
+      # 步骤7：部署到 Vercel（修复重复配置，增加错误容忍）
       - name: 部署到 Vercel
         uses: amondnet/vercel-action@v25
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}        # 必须配置
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}      # 必须配置（个人/组织 ID）
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}  # 必须配置（项目 ID）
-          working-directory: ./public                      # 静态文件目录
-          vercel-args: '--prod'                            # 部署到生产环境
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}      # 重复声明以确保生效
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./public
+          vercel-args: '--prod'
+        continue-on-error: true  # 单个平台失败不影响整体
 
-      # 步骤6：部署到 Cloudflare Pages（优化参数）
+      # 步骤8：部署到 Cloudflare Pages
       - name: 部署到 Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}      # 必须配置（Cloudflare API 令牌）
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}    # 必须配置（账户 ID）
-          projectName: ${{ secrets.CF_PROJECT_NAME }} # 必须配置（Pages 项目名称）
-          directory: ./public                        # 静态文件目录
-          branch: main                               # 与 Cloudflare 关联的分支
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: ${{ secrets.CF_PROJECT_NAME }}
+          directory: ./public
+          branch: main
+        continue-on-error: true
