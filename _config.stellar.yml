@@ -726,6 +726,9 @@ plugins:
     js: https://unpkg.com/heti@0.9/umd/heti-addon.min.js
 
 
+  tabs: true  # 确保这一行存在且为 true
+
+
 style:
   prefers_theme: auto # auto / light / dark
   smooth_scroll: true # true / false 开启时如果目录过长可能无法准确定位

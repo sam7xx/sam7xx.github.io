@@ -724,6 +724,8 @@ plugins:
     enable: false # 此插件会和代码块冲突，仅适用于纯中文博主。
     css: https://unpkg.com/heti@0.9/umd/heti.min.css
     js: https://unpkg.com/heti@0.9/umd/heti-addon.min.js
+  
+  tabs: true  # 确保这一行存在且为 true
 
 
 style:
