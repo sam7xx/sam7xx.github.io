@@ -234,93 +234,102 @@ npm install @vercel/analytics --save
 {% folding 查看代码 %}
 
 ```yaml deploy.yaml
-name: 彻底禁用Jekyll的自动部署
+name: hexo部署流程
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: 拉取代码
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          submodules: 'recursive'
 
-      - name: 检查主题目录
+      - name: 检查是否忽略public目录（关键！）
         run: |
-          if [ ! -d "themes/stellar" ]; then
-            echo "错误：themes/stellar目录不存在！"
-            exit 1
+          echo "===== 检查.gitignore是否排除public ====="
+          if grep -q "public" .gitignore; then
+            echo "⚠️ 注意：.gitignore中包含public，会被忽略（正常现象）"
+          else
+            echo "✅ .gitignore中未忽略public"
           fi
+          # 显示.gitignore内容
+          cat .gitignore || echo "无.gitignore文件"
 
       - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 22.19.0
           cache: 'npm'
 
       - name: 安装依赖
         run: |
           npm install hexo-cli -g
-          npm install
+          npm install --force
+          npm install hexo-theme-stellar@latest --save  # 确保主题被安装
           cd themes/stellar && npm install && cd ../../
 
-      - name: 构建静态文件
+      - name: 构建public并记录内容
         run: |
           hexo clean
+          echo "===== 开始构建public ====="
           hexo generate
-
-      # 核心强化：确保.nojekyll文件存在且正确
-      - name: 强制生成并验证.nojekyll
-        run: |
-          # 在public目录生成.nojekyll（覆盖可能存在的旧文件）
-          echo "生成.nojekyll文件..."
-          touch public/.nojekyll
-          # 验证文件是否存在
-          if [ ! -f "public/.nojekyll" ]; then
-            echo "错误：.nojekyll文件生成失败！"
+          
+          # 记录public目录详情（关键调试信息）
+          echo "===== public目录状态 ====="
+          if [ ! -d "public" ]; then
+            echo "❌ public目录未生成！"
             exit 1
           fi
-          # 查看文件权限（确保可读）
-          ls -la public/.nojekyll
-          echo "确认：.nojekyll文件已正确生成"
+          
+          echo "public目录路径：$(pwd)/public"
+          echo "public目录大小：$(du -sh public)"
+          echo "public目录文件列表（前20个）："
+          ls -la public | head -n 20
+          echo "public/index.html内容（前10行）："
+          head -n 10 public/index.html || echo "❌ 无index.html"
 
-      # 部署到gh-pages分支（强制覆盖旧内容）
-      - name: 部署到GitHub Pages
+      # 新增步骤：设置带时间戳的环境变量
+      - name: 设置部署时间变量
+        run: |
+          echo "DEPLOY_TIMESTAMP=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+          echo "已设置部署时间：${{ env.DEPLOY_TIMESTAMP }}"
+
+      - name: 部署到gh-pages分支（带推送日志）
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./public  # 确认推送的是public目录下的内容
           publish_branch: gh-pages
-          force_orphan: true  # 强制创建全新的gh-pages分支，清除历史缓存
-          keep_files: false   # 不保留旧文件，确保.nojekyll是最新的
+          force_orphan: true
+          keep_files: false
+          enable_jekyll: false
+          # 使用环境变量中的时间戳
+          commit_message: "Deploy public content: ${{ env.DEPLOY_TIMESTAMP }}"
 
-      # 其他平台部署步骤（不变）
-      - name: 部署到Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./public
-          vercel-args: '--prod'
-        continue-on-error: true
-
-      - name: 部署到Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: ${{ secrets.CF_PROJECT_NAME }}
-          directory: ./public
-          branch: main
-        continue-on-error: true
-
+      - name: 验证gh-pages分支内容
+        run: |
+          echo "===== 克隆gh-pages分支验证 ====="
+          git clone -b gh-pages https://github.com/${{ github.repository }} gh-pages-check
+          
+          echo "===== gh-pages分支根目录内容 ====="
+          ls -la gh-pages-check
+          
+          echo "===== 检查是否有index.html ====="
+          if [ -f "gh-pages-check/index.html" ]; then
+            echo "✅ gh-pages分支存在index.html，部署成功！"
+            echo "访问地址：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          else
+            echo "❌ gh-pages分支无index.html，部署失败！"
+            exit 1
+          fi
 ```
 {% endfolding %}
 
@@ -335,7 +344,7 @@ git push origin main
 也可以写入脚本`deploy.sh`，放在博客根目录，更新博客后终端执行./deploy.sh即可完成代码推送至Github。
 {% folding 查看代码 %}
 
-```
+```sh deploy.sh
 #!/bin/bash
 set -euo pipefail  # 严格模式：遇错即停，防止未定义变量
 

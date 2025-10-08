@@ -1911,5 +1911,31 @@ rss: /atom.xml
 
 ### 20. 关于、留言板
 
-在博客源文件夹source中，新建`about`,`messages`文件夹，在相应文件中新建index.md，markdown内容即为展示内容。
+在博客源文件夹source中，新建`about messages`文件夹，在相应文件夹中新建index.md，或者直接在源文件夹下面新建`about.md`和`messages.md`,markdown内容即为展示内容,使用时直接用`/about /messages`指定路径。
+
+```yaml
+      # 这里配置子菜单，使用 nested 字段
+      nested:
+        - id: archives
+          title: 归档
+          url: /archives
+        - id: categories
+          title: 分类
+          url: /categories
+        - id: tags
+          title: 标签
+          url: /tags
+        - id: messages
+          title: 留言
+          url: /messages
+        - id: rss
+          title: RSS
+          url: /atom.xml
+        - id: friends
+          title: 友链
+          url: /friends
+        - id: about
+          title: 关于
+          url: /about
+```
 

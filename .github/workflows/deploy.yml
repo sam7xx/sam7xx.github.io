@@ -1,4 +1,4 @@
-name: 追踪public目录部署流程
+name: hexo部署流程
 on:
   push:
     branches: [ main ]
@@ -30,7 +30,7 @@ jobs:
       - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22.19.0
           cache: 'npm'
 
       - name: 安装依赖
@@ -60,6 +60,12 @@ jobs:
           echo "public/index.html内容（前10行）："
           head -n 10 public/index.html || echo "❌ 无index.html"
 
+      # 新增步骤：设置带时间戳的环境变量
+      - name: 设置部署时间变量
+        run: |
+          echo "DEPLOY_TIMESTAMP=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+          echo "已设置部署时间：${{ env.DEPLOY_TIMESTAMP }}"
+
       - name: 部署到gh-pages分支（带推送日志）
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -69,8 +75,8 @@ jobs:
           force_orphan: true
           keep_files: false
           enable_jekyll: false
-          # 输出详细推送日志
-          commit_message: "Deploy public content: $(date +'%Y-%m-%d %H:%M:%S')"
+          # 使用环境变量中的时间戳
+          commit_message: "Deploy public content: ${{ env.DEPLOY_TIMESTAMP }}"
 
       - name: 验证gh-pages分支内容
         run: |
