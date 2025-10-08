@@ -40,7 +40,7 @@ jobs:
       - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x  # 稳定LTS版本，兼容性好
+          node-version: 20.x  # 稳定LTS版本，兼容性好
           cache: 'npm'  # 启用npm缓存
           cache-dependency-path: 'package-lock.json'  # 仅缓存根目录依赖
 
