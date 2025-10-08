@@ -132,9 +132,12 @@ feed:
 
 # 标准 sitemap 配置
 sitemap:
-  path: sitemap.xml  # 仅保留路径配置，模板使用插件内置的
-  rel: true
-
+  path: sitemap.xml
+  url: https://sam7.top
+  # 注释掉 template 配置，使用插件默认模板
+  template: ./sitemap_template.xml
+  changefreq: monthly
+  priority: 0.6
 # 百度 sitemap 配置
 baidusitemap:
   path: baidusitemap.xml  # 百度专用站点地图

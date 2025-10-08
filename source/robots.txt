@@ -8,6 +8,3 @@ Allow: /
 
 # 指向站点地图（重要）
 Sitemap: https://sam7.top/sitemap.xml
-Sitemap: https://sam7.top/tag-sitemap.xml
-Sitemap: https://sam7.top/category-sitemap.xml
-Sitemap: https://sam7.top/post-sitemap.xml
