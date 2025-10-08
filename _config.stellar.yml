@@ -20,7 +20,7 @@ canonical:
   officialHosts: # 官方主机列表，每行一个，例如 xaoxuu.vercel.app
     - localhost
     - sam7.dpdns.org
-    - www.sam.abrdns.com
+    - crow7.dpdns.org
     - www.sam7.top
     - sam7xx.github.io
 

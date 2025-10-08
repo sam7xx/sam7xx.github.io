@@ -14,7 +14,7 @@ categories: 博客搭建
 
 hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Node.js比较旧，需前往[Node.js ](https://nodejs.cn/en/download)官网按指引安装最新稳定版本。
 
-由于我使用的是WSL子系统，这里我选择Linux系统和nvm安装方式。
+由于本博主使用的是WSL子系统，这里选择Linux系统和nvm安装方式。
 
 首先安装nvm Node.js版本管理器，再使用nvm工具包安装指定版本Node.js，Node.js自带npm软件包管理器，顺便安装yarn JavaScript软件包管理器。
 
@@ -106,9 +106,39 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 ### 3. 网站统计
 
+**网页底部文章统计**
+
+- 安装插件：npm i hexo-wordcount –save
+
+- 还需要需要在主题文件footer.ejs里将 `{post_count}` 和 `{word_count}` 替换为实际数据。Stellar 主题页脚渲染时，content 是字符串，可以用 JS 替换。
+
+  建议在ayoutDiv 函数里，渲染 markdown 前加如下替换：
+
+  ```ejs footer.ejs
+    // footer
+    el += '<div class="text">'
+    if (content) {
+      const postCount = site.posts.length;
+      const wordCount = typeof totalcount === 'function' ? totalcount(site) : 0;
+      let contentStr = content;
+      contentStr = contentStr.replace('{post_count}', postCount).replace('{word_count}', wordCount);
+      el += markdown(contentStr)
+    }
+  ```
+
+  然后在主题配置文件footer:content:增加如下代码，即可实现显示网站总文章字数统计。
+
+  ```yaml 主题配置文件
+  <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span
+  ```
+
+
+
 {% tabs active:1 align:center %}
 
-<!-- tab 图片 -->
+<!-- tab 显示效果 -->
+
+需要修改主题配置文件，在`footer：→ content：`位置添加如下。内容
 
 ![image-20251007081011784](https://u.sam7.top/4mae3A)
 
@@ -155,9 +185,70 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 ### 4. 评论系统
 
-[hexo博客引入Waline评论模块 - SkyReeves](https://skyreeves.github.io/post/69ee63d6.html)
+#### 4.1 waline启用
 
-#### 4.2 评论框颜色不跟随背景颜色
+stellar已集成waline插件，首先主题配置文件选择启用waline，具体配置见以下代码。
+
+然后跟着主页[快速上手 | Waline](https://waline.js.org/guide/get-started/) wiki一步步搭建到vercel。
+
+[SkyReeves](https://skyreeves.github.io/)博主写的很详细，参考[hexo博客引入Waline评论模块 - SkyReeves](https://skyreeves.github.io/post/69ee63d6.html)
+
+{% folding 查看代码 %}
+
+```yaml 主题配置文件
+comments:
+  service: waline # beaudar, utterances, giscus, twikoo, waline, artalk
+  comment_title: 快来参与讨论吧~
+  lazyload: true # true / false
+  custom_css: waline # artalk,twikoo,... 可以为没有全局启用的评论加载自定义样式
+
+  waline:
+    js: https://unpkg.com/@waline/client@v3/dist/waline.js #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.js
+    css: https://unpkg.com/@waline/client@v3/dist/waline.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.css
+    meta_css: https://unpkg.com/@waline/client@v3/dist/waline-meta.css 		        #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline-meta.css
+    # Waline server address url, you should set this to your own link
+    serverURL: https://waline.sam7.top
+    # If false, comment count will only be displayed in post page, not in home page
+    commentCount: true
+    # Pageviews count, Note: You should not enable both `waline.pageview` and `leancloud_visitors`.
+    pageview: false
+    locale:
+      # #自定义反应标题。如果像我一样不想要反应标题，可以在这一项里留空。
+      # reactionTitle:  
+      # #反应表情的文章描述
+      # reaction0: 爱你哟
+      # reaction1: oh~~
+      # reaction2: 嘚瑟~
+      # reaction3: 无语
+
+      placeholder: 
+       嗨，朋友，留个脚印再走呗。  
+
+    #反应表情组
+    reaction: 
+      - https://img.skyreeves.com/emojis/blobs/ablobcatheart.png
+      - https://img.skyreeves.com/emojis/blobs/ablobcatattentionreverse.png
+      - https://img.skyreeves.com/emojis/blobs/ablobcatrainbow.png
+      - https://img.skyreeves.com/emojis/blobs/blobcatsaitama.png
+      - https://img.skyreeves.com/emojis/blobs/blobcatflip.png
+    # Custom emoji
+    emoji:
+      - https://unpkg.com/@waline/emojis@1.1.0/weibo
+      - https://unpkg.com/@waline/emojis@1.1.0/alus
+      - https://unpkg.com/@waline/emojis@1.1.0/bilibili
+      - https://unpkg.com/@waline/emojis@1.1.0/qq
+      - https://unpkg.com/@waline/emojis@1.1.0/tieba
+      - https://unpkg.com/@waline/emojis@1.1.0/tw-emoji
+      - https://unpkg.com/@waline/emojis@1.1.0/bmoji
+```
+
+{% endfolding %}
+
+
+
+#### 4.2 评论框颜色跟随
+
+启用后会发现，评论区域部分元素无法显示，需要修改`waline.styl`文件，调整颜色对比度。
 
 {% box child:tabs %}
 {% tabs %}
@@ -343,35 +434,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 {% endtabs %}
 {% endbox %}
 
-### 5. 字数统计
-
-#### 5.1网页底部文章统计
-
-- 安装插件：npm i hexo-wordcount –save
-
-- 还需要需要在主题文件footer.ejs里将 `{post_count}` 和 `{word_count}` 替换为实际数据。Stellar 主题页脚渲染时，content 是字符串，可以用 JS 替换。
-
-  建议在ayoutDiv 函数里，渲染 markdown 前加如下替换：
-
-  ```ejs footer.ejs
-    // footer
-    el += '<div class="text">'
-    if (content) {
-      const postCount = site.posts.length;
-      const wordCount = typeof totalcount === 'function' ? totalcount(site) : 0;
-      let contentStr = content;
-      contentStr = contentStr.replace('{post_count}', postCount).replace('{word_count}', wordCount);
-      el += markdown(contentStr)
-    }
-  ```
-
-  然后在主题配置文件footer:content:增加如下代码，即可实现显示网站总文章字数统计。
-
-  ```yaml 主题配置文件
-  <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span>
-  ```
-
-#### 5.2 面包屑文章字数统计
+### 5.  面包屑文章字数统计
 
 主题布局文件article_banner.ejs中添加如下代码，即可实现功能。
 
@@ -534,23 +597,24 @@ function layoutDiv() {
 }
 %>
 <%- layoutDiv() %>
-
 ```
 
 {% endfolding %}
 
+![image-20251008112408678](https://u.sam7.top/aDG37B)
+
 ### 6. 动态图标配置
 
-在主题配置文件_config.stellar.yml中增加以下css文件，引入font-awesome图标库。
+在主题配置文件_config.stellar.yml中增加以下css文件，引入font-awesome图标库。在[font-awesome v7 CDN](https://www.bootcdn.cn/font-awesome/)里面找一个CDN。
 
 ``` yaml
 # 动态图标引入
 inject:
   head:
-    - <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    - <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.css" rel="stylesheet">  # fontawesome动态图标引入
 ```
 
- https://fontawesome.com/修改主题配置中footer
+ 图标格式张这样`<i class="fa-solid fa-github fa-brands fa-bounce"></i>`，然后就可以在想要添加图标的地方使用了，[Font Awesome](https://fontawesome.com/)主页搜索相应的图标，大部分都是免费的。
 
 ```yaml
 footer: 
@@ -561,79 +625,187 @@ footer:
       url : / 
 ```
 
-[font-awesome v7 CDN](https://www.bootcdn.cn/font-awesome/)
+![image-20251008112814230](https://u.sam7.top/jcdy4M)
 
-### 7. 图床设置
+### 7. 图片、图床配置
 
-[PicList](https://piclist.cn/)
+[ImgToLink+ ](https://imgtolinkx.com/)是一款免费、免登录图床软件，支持单个文件50M，返回短链。
 
-#### 7.1 
+[16图床，永久免费，无需登录的图床](https://111666.best/)免费的往往很容易挂掉，用作评论区上传图床临时用可以。
+
+![image-20251008104830714](https://u.sam7.top/azsQm6)
+
+![image-20251008104849158](https://u.sam7.top/ykdJx4)
+
+Cloudflare好像也有免费的image服务。
+
+#### 7.1 Piclist Github图床配置
+
+由于typora支持picgo和piclist图床上传，所以选用了目前还在持续更新的piclist。
+
+typora图片设置如下，插入图片时直接上传piclist图床，然后自动转义图片url。
+
+![image-20251008103203719](https://u.sam7.top/XQfetQ)
+
+[PicList](https://piclist.cn/)主页下载安装最新版，选择Github图床搭建，参考[PicGo/PicList + Github 搭建图床 | Theo Docs](https://doc.theojs.cn/notes/build-picture-bed)
+
+piclist设置
+
+- piclist设置图片最大800px宽度，大于800压缩至800，小于800不处理。
+
+- 使用https://cdn.jsdelivr.net/gh加速Github图床。
+- 上传成功直接复制url链接
 
 #### 7.2 waline评论图床上传
 
+开启waline评论区图床上传，图片能上传成功，但是的识别不了链接。 已经关掉了，PicList回传的不是json，只能选择URL、markdown格式。
+
  #### 7.3 fancybox设置
 
+stellar集成fancybox灯箱插件，可以默认全局打卡，可以在放大网页上面的图片，功能很多。
+
+[Stellar：表达类标签组件（33+个） - XAOXUU](https://xaoxuu.com/wiki/stellar/tag-plugins/express/#image-图片标签) stellar wiki介绍很详细。
+
+md语法图片格式支持
+
+```yml 主题配置文件
+plugins:
+
+  fancybox:
+    enable: true
+    loader: /js/plugins/fancybox-loader.js
+    js: https://gcore.jsdelivr.net/npm/@fancyapps/ui@6/dist/fancybox/fancybox.umd.js
+    css: https://gcore.jsdelivr.net/npm/@fancyapps/ui@6/dist/fancybox/fancybox.css
+    # 让 md 语法图片支持放大可以这样写: .md-text img:not([class]), .md-text .image img
+    # 可以处理评论区的图片（不支持 iframe 类评论系统）例如：
+    # 使用 twikoo 评论可以写: .tk-content img:not([class*="emo"])
+    # 使用 waline 评论可以写: #waline_container .vcontent img
+    selector: .timenode p>img, waline_container .vcontent img, .custom-image-container a, .md-text img:not([class]), .md-text .image img # 多个选择器用英文逗号隔开
 ```
-npm install markdown-it markdown-it-attrs --save
-```
+
+![image-20251008112911912](https://u.sam7.top/PwYb5s)
 
 #### 7.4 图床短链接设置
 
-[Url-Shorten-Worker/index.js at main · xyTom/Url-Shorten-Worker](https://github.com/xyTom/Url-Shorten-Worker/blob/main/index.js)
+为什么要用短链，部分平台（尤其是社交平台、论坛、旧版编辑器）对 URL 长度或格式有严格限制，包含特殊字符（如 `?` `&` `/`）的长链接，可能被平台误判为 “恶意链接” 而拦截，且原始图床链接可能泄露敏感信息。
 
-[Shorter URL](https://u.sam7.top/)
+piclist上传的图片链接也是一堆乱码，widowns文件系统目录`\`被转义，目前版本时间戳重命名失效，故搭建短链接网站。
 
-[用cloudflare搭建短链接网站 | 侯仲成的个人博客](https://blog.houzhongcheng.com/2025/05/30/用cloudflare搭建短链接网站.html)
+参考[xyTom/Url-Shorten-Worker](https://github.com/xyTom/Url-Shorten-Worker/) 主页wiki和[用cloudflare搭建短链接网站 ](https://blog.houzhongcheng.com/2025/05/30/用cloudflare搭建短链接网站.html)搭建。
+
+![image-20251008105931690](https://u.sam7.top/8QTfK6)
+
+![image-20251008110514066](https://u.sam7.top/i5HGpp)
+
+
 
 ### 8. 侧边栏配置
 
-#### 8.1 侧边栏底部间隙调整
+#### 8.1 左侧栏页脚图标
 
-在主题样式`custom.styl`中添加`$leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，单位px/rem）`
+stellar主题预留有7个位置，主题配置如下，footer下面添加以下内容。
 
-调整主内容界面宽度为1080px，侧边栏宽度最大为277px，元素内部和外部距离都调整为15px。
-
-```stylus custom.styl
-$leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，单位px/rem）
-
-// 可以动态变化的属性
-:root
-  --width-main: 1080px // 主内容区域宽度（默认1080px）
-  --fsp: $fs-body // 段落字体大小（关联正文基础大小）
-  --fsh2: 'calc(%s + 11px)' % var(--fsp) // h2标题大小（基于段落字体动态计算）
-  --fsh3: 'calc(%s + 7px)' % var(--fsp) // h3标题大小（基于段落字体动态计算）
-  --fsh4: 'calc(%s + 4px)' % var(--fsp) // h4标题大小（基于段落字体动态计算）
-  
-  --side-content-width: 255px // 侧边栏内容宽度（默认255px）
-  --gap-margin: 11px // 元素外部间距（元素间距离）
-  --gap-padding: 11px // 元素内部间距（内容到边框距离）
+```yaml 主题配置文件
+######## Footer ########
+footer: 
+  social:
+    github:
+      icon: '<i class="fa-solid fa-github fa-brands" style="font-size:1em;"></i>'
+      title: 'Github'
+      url : https://github.com/sam7xx 
+    rss: 
+      icon: '<i class="fa-solid fa-rss" style="color: #FF5722;font-size:1em;"></i>'
+      title: 'RSS'
+      url : /atom.xml
+    email: 
+      icon: '<i class="fa-solid fa-envelope fa-bounce" style="color: #B197FC;font-size:1em;"></i>'
+      title: 'Email'
+      url : "mailto://2690640537@qq.com"
+    theme:
+      icon: '<i class="fa-solid fa-circle-half-stroke fa-flip" style="color: #FFD600;font-size:1em;"></i>'
+      title: '主题切换'
+      url: 'javascript:void(0);'
+    message:
+      icon: '<i class="fa-solid fa-message fa-bounce" style="color:#FF9800;font-size:1em;"></i>'
+      title: '留言板'
+      url: '/messages'
+    about:
+      icon: '<i class="fa-solid fa-user" style="color:#4CAF50;font-size:1em;"></i>'
+      title: '关于作者'
+      url: '/about'
+    friends:
+      icon: '<i class="fa-solid fa-link" style="color:#2196F3;font-size:1em;"></i>'
+      title: '友链'
+      url: '/friends'
 ```
 
-同时在layout.styl中添加如下内容，高度随内容自适应，且底部有适度留白，兼顾功能和美观。
+#### 8.2 侧边栏组件
 
-```stylus layout.styl
-// 普通屏幕布局
-.l_body .l_left
-  margin-bottom: 16px; // 只保留少量底部留白（数值按需调整）
+参考主题wiki配置[Stellar：侧边栏组件的配置与使用（9个） - XAOXUU](https://xaoxuu.com/wiki/stellar/widgets/)
 
-// 手机端布局
-@media screen and (max-width: $device-mobile-max)
-  .l_body
-    .l_left
-      padding-bottom: 8px; // 少量底部内边距（按需调整）
+可以根据需要添加或者自定义喜欢的组件。[使用Hexo和Stellar搭建个人博客网站【超详细贴心保姆级教程💖】 - BoBoBlog](https://blog.bxzdyg.cn/p/使用Hexo和Stellar搭建个人博客网站/#接入API)
+
+在 `_data/widgets.yml` 文件中添加以下内容，需要自己创建：
+
+```yaml _data/widgets.yml
+# 欢迎语
+welcome:
+  layout: markdown
+  title: 🎉欢迎
+  content: |
+    本站托管于Cloudflare, 加载缓慢请耐心等待，欢迎大家畅所欲言。
+    <hr style="border: 1px solid black; background-color: black;">
+    <span id="jinrishici-sentence"></span>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 ```
 
-调整后界面如下图
+修改主题配置文件，在想要显示的页面添加welcome组件，
 
-![image-20251006213402017](https://u.sam7.top/R8jahB)
+```yaml 主题配置文件
+  home:
+    leftbar:  welcome, recent, music
+    rightbar: tagcloud
+  # 博客列表页配置
+  index_blog:
+    base_dir: blog # 只影响自动生成的页面路径
+    menu_id: post # 未在 front-matter 中指定 menu_id 时，layout 为 post 的页面默认使用这里配置的 menu_id
+    leftbar:  welcome, recent  # for categories/tags/archives
+    rightbar: tagcloud
+    nav_tabs:  # 近期发布 分类 标签 专栏 归档 and ...
+      # '朋友文章': /friends/rss/
+  # 博客专栏列表页配置
+```
 
 ### 9. 主导航栏配置
 
-#### 9.1启用主导航栏 
+#### 9.1 启用主导航栏菜单
+
+主题配置文件中设置如下，使用fontawesome图标。 
+
+```yaml 主题配置文件
+menubar:
+  columns: 5 # 一行多少个
+  items: # 可按照自己需求增加，符合以下格式即可
+    # id: 页面中高亮的 menu_id 
+    # theme: 高亮时的颜色，仅 svg 中 fill="currentColor" 时有效
+    # icon: 支持 svg/img 标签，可以定义在 icons.yml 文件中，也支持外部图片的 URL
+    # title: 标题
+    # url: 点击跳转到哪，支持相对路径和绝对路径
+    - id: post
+      theme: '#2196F3'
+      icon: '<i class="fa-solid fa-newspaper" style="font-size:1.25em;"></i>'
+      title: 博客
+      url: /blog
+    - id: note
+      theme: '#4CAF50'
+      icon: '<i class="fa-solid fa-pen-to-square" style="font-size:1.25em;"></i>'
+      title: 笔记
+      url: /note
+```
 
 #### 9.2 主导航栏下拉菜单设置
 
-要在 Hexo 主题（这里是 Stellar 主题）的菜单栏 “更多” 处增加下拉菜单，可按以下步骤操作：
+菜单栏位置不够放怎么办，那就增加一个下拉菜单吧。在 Hexo 主题（这里是 Stellar 主题）的菜单栏 “更多” 处增加下拉菜单，可按以下步骤操作：
 
 {% tabs active:1 %}
 
@@ -1003,7 +1175,9 @@ function layoutDiv() {
 
 ### 10. 顶部导航栏设置
 
-适配深色模式navbra.styl需修改为以下内容
+浏览器设置浅色模式，主题切换为深色，顶部导航栏看起来比较奇怪，适配深色模式navbra.styl修改，也不知道具体改啥了，索性全粘上来了。
+
+{% folding 查看代码 %}
 
 ```stylus navbar.styl
 .navbar
@@ -1136,150 +1310,71 @@ body.scrolled .navbar-blur
 
 ```
 
-
+{% endfolding %}
 
 ### 11. 页面布局调整
 
-深浅色主题、侧边栏、卡片、代码块颜色调整，将`theme_base.styl`主题基本颜色修改成如下内容。
+{% tabs %}
 
-```stylus theme_base.styl
-// 通用 hsla 函数
-x-hsla(h = var(--hue), s = var(--sat), l = var(--light), a = var(--alpha))
-  return unquote('hsla(%s %s %s / %s)' % (h s l a))
+<!-- 调整内容 -->
 
-// 设置不同透明度的主题色
-x-theme-alpha(a = 1)
-  return unquote('hsla(%s %s %s / %s)' % (var(--hue) var(--sat) var(--light) a))
+在主题样式`custom.styl`中添加`$leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，单位px/rem）`
 
-// 设置基础主题色
-x-set-theme-with-color($color)
-  --hue: hue($color)
-  --sat: saturation($color)
-  --light: lightness($color)
-  --alpha: alpha($color)
-  --theme: x-theme-alpha(1)
-  --theme-a10: x-theme-alpha(0.1)
-  --theme-a20: x-theme-alpha(0.2)
-  --theme-a30: x-theme-alpha(0.3)
+调整主内容界面宽度为1080px，侧边栏宽度最大为277px，元素内部和外部距离都调整为15px。
 
-// 设置链接颜色
-x-set-link-with-color($color)
-  $hue = hue($color)
-  $sat = saturation($color)
-  $light = lightness($color)
-  --link: x-hsla($hue, $sat, $light, 1)
-  --link-a20: x-hsla($hue, $sat, $light, 0.2)
+```stylus custom.styl
+$leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，单位px/rem）
 
-// 设置背景色
-x-set-bg-colors($scheme)
-  $hue = $c-base-hue
-  $sat = 0%
-  $light = $scheme == 'dark' ? 0% : 100%
-  --bg-a20: x-hsla($hue, $sat, $light, 0.2)
-  --bg-a50: x-hsla($hue, $sat, $light, 0.5)
-  --bg-a60: x-hsla($hue, $sat, $light, 0.6)
-  --bg-a75: x-hsla($hue, $sat, $light, 0.75)
-  --bg-a100: x-hsla($hue, $sat, $light, 1)
-
-// 设置文本及相关色
-x-set-text-colors($scheme, $p0 = 1, $p1 = 0.8, $p2 = 0.7, $p3 = 0.5, $p4 = 0.4)
-  $hue = $c-base-hue
-  $sat = 0%
-  $light = $scheme == 'dark' ? 100% : 0%
-  
-  --text: x-hsla($hue, $sat, $light, $p0)
-  --text-reverse: x-hsla($hue, $sat, $scheme == 'dark' ? 0% : 100%, $p0)
-  --text-p1: x-hsla($hue, $sat, $light, $p1)
-  --text-p2: x-hsla($hue, $sat, $light, $p2)
-  --text-p3: x-hsla($hue, $sat, $light, $p3)
-  --text-p4: x-hsla($hue, $sat, $light, $p4)
-
-  --text-meta: x-hsla($hue, $sat, $light, 0.2)
-  --text-code: x-hsla($hue, $sat, $light, 0.9)
-
-  --text-a10: x-hsla($hue, $sat, $light, 0.1)
-  --text-a20: x-hsla($hue, $sat, $light, 0.2)
-
-  $sat = $scheme == 'dark' ? 24% : 50%
-  $light = $scheme == 'dark' ? 72% : 12%
-  $alpha = $scheme == 'dark' ? 0.08 : 0.04
-  --block: x-hsla($hue, $sat, $light, $alpha)
-  --block-border: x-hsla($hue, $sat, $light, $alpha * 1.5)
-
-
-// ---------------- apply theme ----------------
-// 设置浅色模式
-dynamic-theme-light()
-  $hue = $c-base-hue
-  --background: x-hsla($hue, 20%, 98%, 1)
-  --card: $site-background-image ? hsla(white, 0.5) : white
-
-  x-set-bg-colors('light')
-  x-set-text-colors('light')
-
-// 设置深色模式
-dynamic-theme-dark()
-  $hue = $c-base-hue
-  --background: x-hsla($hue, 8%, 12%, 1)
-  @media screen and (max-width: $device-mobile-max)
-    --background: black
-  --card: $site-background-image ? hsla(white, 0.25) : x-hsla($hue, 10%, 24%, 1)
-
-  x-set-bg-colors('dark')
-  x-set-text-colors('dark')
-  --text-code: x-hsla(20, 75, 60, 1)
-
-
+// 可以动态变化的属性
 :root
-  // 主题色
-  x-set-theme-with-color($c-theme)
-  // 强调色
-  --accent: $c-accent
-  // 链接
-  x-set-link-with-color($c-link)
-
-  // dynamic colors
-  dynamic-theme-light()
-  @media (prefers-color-scheme: dark)
-    dynamic-theme-dark()
-
-
-:root[data-theme="light"]
-  dynamic-theme-light()
-:root[data-theme="dark"]
-  dynamic-theme-dark()
-
+  --width-main: 1080px // 主内容区域宽度（默认1080px）
+  --fsp: $fs-body // 段落字体大小（关联正文基础大小）
+  --fsh2: 'calc(%s + 11px)' % var(--fsp) // h2标题大小（基于段落字体动态计算）
+  --fsh3: 'calc(%s + 7px)' % var(--fsp) // h3标题大小（基于段落字体动态计算）
+  --fsh4: 'calc(%s + 4px)' % var(--fsp) // h4标题大小（基于段落字体动态计算）
+  
+  --side-content-width: 255px // 侧边栏内容宽度（默认255px）
+  --gap-margin: 11px // 元素外部间距（元素间距离）
+  --gap-padding: 11px // 元素内部间距（内容到边框距离）
 ```
 
-主题配置文件中修改如下
+同时在layout.styl中添加如下内容，高度随内容自适应，且底部有适度留白，兼顾功能和美观。
 
-```yaml 主题配置文件
-  leftbar:
-    # 可以设置：纯色/渐变色/图片作为背景
-    background-color:  var(--block) #var(--card) var(--block)
-    background-image: #url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.13/image/sidebar-bg1@small.jpg)
-    blur-px: 11px
-    blur-bg: var(--bg-a33)
-    background-opacity: 1
-  paginator:
-    prev: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/f049bbd4e88ec.svg
-    next: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/064b95430caf4.svg
-  error_page: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
-  site: # 使用 background-image 后，blur 设置才有效
-    background-color:  var(--background) #var(--bg-a11) var(--background)
-    background-image:  #url(https://t.alcy.cc/fj)
-    blur-px: 14px # 增加模糊度使背景不突兀
-    blur-bg:  var(--bg-a55)
-    blur-sat: 100% # 适当降低饱和度使背景不抢眼
+```stylus layout.styl
+// 普通屏幕布局
+.l_body .l_left
+  margin-bottom: 16px; // 只保留少量底部留白（数值按需调整）
+
+// 手机端布局
+@media screen and (max-width: $device-mobile-max)
+  .l_body
+    .l_left
+      padding-bottom: 8px; // 少量底部内边距（按需调整）
 ```
+
+<!-- 调整效果 -->
+
+![image-20251006213402017](https://u.sam7.top/R8jahB)
+
+{% endtabs %}
 
 
 
 ### 12. 添加音乐播放器
 
+参考 [stellar主题使用meetingjs接入aplayer音乐播放器 - BoBoBlog](https://blog.bxzdyg.cn/p/stellar-aplayer-metingjs/)
+
+首先需要安装音乐播放器插件`npm install --save hexo-tag-aplayer`,在根目录主题配置文件里面添加以下内容，开启metingjs。
+
+```yaml _config.yaml
+aplayer:
+  # 示例配置
+  cdn: https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js
+  style_cdn: https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css
+  meting: true
+  meting_cdn: https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js
 ```
-npm install --save hexo-tag-aplayer
-```
+在想要添加音乐播放器的位置添加以下代码块，这个一个网易云歌单。
 
 ```markdown
 {% meting "14222331844" "netease" "playlist" "autoplay"  "mutex:true" "listmaxheight:340px" "lrctype:0" "preload:none" "theme:#1cd0fd" "storagename:metingjs"%} 
@@ -1287,9 +1382,9 @@ npm install --save hexo-tag-aplayer
 
 {% meting "14222331844" "netease" "playlist" "autoplay"  "mutex:true" "listmaxheight:340px" "lrctype:0" "preload:none" "theme:#1cd0fd" "storagename:metingjs"%} 
 
-[stellar主题使用meetingjs接入aplayer音乐播放器 - BoBoBlog](https://blog.bxzdyg.cn/p/stellar-aplayer-metingjs/)
-
 修改主题样式文件`aplayer.styl`，修改播放器参数，播放器颜色跟随系统主题。
+
+{% folding 查看代码 %}
 
 ```stylus theme_base.styl
 .md-text
@@ -1550,9 +1645,9 @@ npm install --save hexo-tag-aplayer
 
 ```
 
+{% endfolding %}
 
-
-### 13. 背景图片设置
+### 13. 背景动态线条设置
 
 主题文件layout.ejs文件中添加以下代码
 
@@ -1567,9 +1662,15 @@ npm install --save hexo-tag-aplayer
 
 终端运行hexo clean 清除缓存，hexo g&hexo s渲染网页后本地预览。
 
+手机端显示很乱，影响阅览网页，已弃用。
+
 ### 14. 文章路由
 
-能够解决中文标题转义的现象，因为你直接给她转码了。并且创建文章自动添加abbrlink
+参考博主[BoBoBlog](https://blog.bxzdyg.cn/)文章
+
+[使用Hexo和Stellar搭建个人博客网站【超详细贴心保姆级教程💖】 - BoBoBlog](https://blog.bxzdyg.cn/p/使用Hexo和Stellar搭建个人博客网站/#文章路由（选）)
+
+能够解决中文网页标题转义的现象，并且创建文章自动添加abbrlink
 
 ```
 npm install hexo-abbrlink --save
@@ -1577,17 +1678,13 @@ npm install hexo-abbrlink --save
 
 在 `blog/_config.yml` 中找到对应 `permalink` 标签，进行修改即可：
 
-```
-url: https://yguang233.github.io/  # http://YGuang233.github.io
-#permalink: :year/:month/:day/:title/
-permalink: p/:abbrlink/
+```yaml _config.yaml
+url: sam7.top
+permalink: :year:month/:title/ #:year/:month/:day/:title/
 abbrlink:
-  alg: crc32  #算法： crc16(default) and crc32
-  rep: hex    #进制： dec(default) and hex
+  alg: crc16  #算法： crc16(default) and crc32
+  rep: dec    #进制： dec(default) and hex
 permalink_defaults:
-pretty_urls:
-  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
 ```
 
 使用了这个每使用命令新建一篇文章会在头代码上插入abbrlink:及对应的转码后的代码,
@@ -1603,22 +1700,17 @@ pretty_urls:
 | crc32 | hex  | https://yourname.github.io/p/8ddf18fb.html   |
 | crc32 | dec  | https://yourname.github.io/p/1690090958.html |
 
-如果你不想使用这个，就想让美丽的汉字显示在URL上，当然也没有问题,如果你还想自定义和指定路由可以采用下面的方式：
-
-在 `blog/_config.yml` 中找到对应 `permalink` 标签，进行修改即可：
-
-```
-permalink: :year/:month/:day/:title/
-```
-
-使用默认的或者更改一下
-
-```
-
-permalink: p/:title/
-```
-
 ### 15. 主题深浅色切换
+
+参考博主[BoBoBlog](https://blog.bxzdyg.cn/)，主题颜色设置为自动。
+
+```yaml 主题配置文件
+style:
+  prefers_theme: auto # auto / light / dark
+  smooth_scroll: true # true / false 开启时如果目录过长可能无法准确定位
+```
+
+#### 15.1 功能实现
 
 首先在 主题配置文件中`footer.social`处增加“主题切换”按钮配置，图标为半圆，点击可用于一键切换深浅色。
 
@@ -1685,34 +1777,201 @@ window.addEventListener('DOMContentLoaded', function () {
 
 {% endfolding %}
 
-### 16. AI摘要接入
+#### 15.2 主题颜色调整
 
-[洪墨AI - 网站AI摘要、知识库AI客服和搜索插件平台](https://ai.zhheo.com/)
+深浅色主题、侧边栏、卡片、代码块颜色调整，将`theme_base.styl`主题基本颜色修改成如下内容。
+
+{% folding 查看代码 %}
+
+```stylus theme_base.styl
+// 通用 hsla 函数
+x-hsla(h = var(--hue), s = var(--sat), l = var(--light), a = var(--alpha))
+  return unquote('hsla(%s %s %s / %s)' % (h s l a))
+
+// 设置不同透明度的主题色
+x-theme-alpha(a = 1)
+  return unquote('hsla(%s %s %s / %s)' % (var(--hue) var(--sat) var(--light) a))
+
+// 设置基础主题色
+x-set-theme-with-color($color)
+  --hue: hue($color)
+  --sat: saturation($color)
+  --light: lightness($color)
+  --alpha: alpha($color)
+  --theme: x-theme-alpha(1)
+  --theme-a10: x-theme-alpha(0.1)
+  --theme-a20: x-theme-alpha(0.2)
+  --theme-a30: x-theme-alpha(0.3)
+
+// 设置链接颜色
+x-set-link-with-color($color)
+  $hue = hue($color)
+  $sat = saturation($color)
+  $light = lightness($color)
+  --link: x-hsla($hue, $sat, $light, 1)
+  --link-a20: x-hsla($hue, $sat, $light, 0.2)
+
+// 设置背景色
+x-set-bg-colors($scheme)
+  $hue = $c-base-hue
+  $sat = 0%
+  $light = $scheme == 'dark' ? 0% : 100%
+  --bg-a20: x-hsla($hue, $sat, $light, 0.2)
+  --bg-a50: x-hsla($hue, $sat, $light, 0.5)
+  --bg-a60: x-hsla($hue, $sat, $light, 0.6)
+  --bg-a75: x-hsla($hue, $sat, $light, 0.75)
+  --bg-a100: x-hsla($hue, $sat, $light, 1)
+
+// 设置文本及相关色
+x-set-text-colors($scheme, $p0 = 1, $p1 = 0.8, $p2 = 0.7, $p3 = 0.5, $p4 = 0.4)
+  $hue = $c-base-hue
+  $sat = 0%
+  $light = $scheme == 'dark' ? 100% : 0%
+  
+  --text: x-hsla($hue, $sat, $light, $p0)
+  --text-reverse: x-hsla($hue, $sat, $scheme == 'dark' ? 0% : 100%, $p0)
+  --text-p1: x-hsla($hue, $sat, $light, $p1)
+  --text-p2: x-hsla($hue, $sat, $light, $p2)
+  --text-p3: x-hsla($hue, $sat, $light, $p3)
+  --text-p4: x-hsla($hue, $sat, $light, $p4)
+
+  --text-meta: x-hsla($hue, $sat, $light, 0.2)
+  --text-code: x-hsla($hue, $sat, $light, 0.9)
+
+  --text-a10: x-hsla($hue, $sat, $light, 0.1)
+  --text-a20: x-hsla($hue, $sat, $light, 0.2)
+
+  $sat = $scheme == 'dark' ? 24% : 50%
+  $light = $scheme == 'dark' ? 72% : 12%
+  $alpha = $scheme == 'dark' ? 0.08 : 0.04
+  --block: x-hsla($hue, $sat, $light, $alpha)
+  --block-border: x-hsla($hue, $sat, $light, $alpha * 1.5)
+
+
+// ---------------- apply theme ----------------
+// 设置浅色模式
+dynamic-theme-light()
+  $hue = $c-base-hue
+  --background: x-hsla($hue, 20%, 98%, 1)
+  --card: $site-background-image ? hsla(white, 0.5) : white
+
+  x-set-bg-colors('light')
+  x-set-text-colors('light')
+
+// 设置深色模式
+dynamic-theme-dark()
+  $hue = $c-base-hue
+  --background: x-hsla($hue, 8%, 12%, 1)
+  @media screen and (max-width: $device-mobile-max)
+    --background: black
+  --card: $site-background-image ? hsla(white, 0.25) : x-hsla($hue, 10%, 24%, 1)
+
+  x-set-bg-colors('dark')
+  x-set-text-colors('dark')
+  --text-code: x-hsla(20, 75, 60, 1)
+
+
+:root
+  // 主题色
+  x-set-theme-with-color($c-theme)
+  // 强调色
+  --accent: $c-accent
+  // 链接
+  x-set-link-with-color($c-link)
+
+  // dynamic colors
+  dynamic-theme-light()
+  @media (prefers-color-scheme: dark)
+    dynamic-theme-dark()
+
+
+:root[data-theme="light"]
+  dynamic-theme-light()
+:root[data-theme="dark"]
+  dynamic-theme-dark()
+
+```
+
+{% endfolding %}
+
+主题配置文件中修改如下
+
+```yaml 主题配置文件
+  leftbar:
+    # 可以设置：纯色/渐变色/图片作为背景
+    background-color:  var(--block) #var(--card) var(--block)
+    background-image: #url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.13/image/sidebar-bg1@small.jpg)
+    blur-px: 11px
+    blur-bg: var(--bg-a33)
+    background-opacity: 1
+  paginator:
+    prev: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/f049bbd4e88ec.svg
+    next: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/064b95430caf4.svg
+  error_page: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
+  site: # 使用 background-image 后，blur 设置才有效
+    background-color:  var(--background) #var(--bg-a11) var(--background)
+    background-image:  #url(https://t.alcy.cc/fj)
+    blur-px: 14px # 增加模糊度使背景不突兀
+    blur-bg:  var(--bg-a55)
+    blur-sat: 100% # 适当降低饱和度使背景不抢眼
+```
+
+#### 15.3  其他
+
+waline评论和aplayer播放器都有适配，由于篇幅问题，对应章节都有描述。
+
+### 16. AI摘要
+
+stellar集成tianti GPT，付费的，[洪墨AI](https://ai.zhheo.com/)这里购买添加key就好了，绑定网页。
+
+```yaml
+# AI 摘要
+  # https://github.com/qxchuckle/Post-Summary-AI
+  tianli_gpt: 
+    enable: true
+    js: https://jsd.onmicrosoft.cn/gh/qxchuckle/Post-Summary-AI@6.0/chuckle-post-ai.min.js
+    field: all # all, post, wiki
+    key: S-JAVXPRUNPV8LWXO4 # tianli_gpt key
+```
 
 ### 17. 字体设置
 
 [中文网字计划-提供便捷实用的全字符集中文渲染方案](https://chinese-font.netlify.app/zh-cn/)
 
-_config.yml 文件中，最后一行加入以下指令：
-
-```
-inject:
-  head:
-    - <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css">
-```
-
-在 _config.stellar.yml 中找到 style.font-family，修改以下内容：
-
-```
-style:
-    font-family:
-        logo: '"LXGW WenKai Screen", system-ui, ...'
-        body: '"LXGW WenKai Screen", system-ui, ...'
-```
-
 [Maple Mono NF-CN - ZeoSeven Fonts (ZSFT)](https://fonts.zeoseven.com/items/442/#embed)
 
-### 18.域名申请
+根目录配置文件中，最后一行加入以下指令：
+
+```yaml 根目录配置文件
+inject:
+  head:
+    - <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css"> #字体引入
+    - |
+      <link rel="preload" as="style" crossorigin href="https://fontsapi.zeoseven.com/442/main/result.css" onload="this.rel='stylesheet'" onerror="this.href='https://fontsapi-storage.zeoseven.com/442/main/result.css'" />
+      <noscript>
+        <link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
+      </noscript> 
+```
+
+在主题配置文件中找到 style.font-family，修改以下内容：
+
+```yaml 主题配置文件
+style:
+  prefers_theme: auto # auto / light / dark
+  smooth_scroll: true # true / false 开启时如果目录过长可能无法准确定位
+  font-size:
+    root: 16px # 改这个会影响全局所有文字的字号
+    body: 16px # 影响正文区域的字号，如果改成 px 则不受 root 影响
+    code: 75% # 相较于其所在行的文本大小，建议用百分比
+    codeblock: 0.8125rem # 13px
+  font-family:
+    body: '"LXGW WenKai Screen",system-ui, "Microsoft Yahei", "Segoe UI", Arial, sans-serif'
+    code: '"Maple Mono NF CN", Menlo, Monaco, Consolas, system-ui, monospace, sans-serif'
+    codeblock: '"Maple Mono NF CN", Menlo, Monaco, Consolas, system-ui, monospace, sans-serif'
+  text-align: left
+```
+
+### 18. 域名申请
 
 [Cloudflare 解析 ORG 域名 - YOLOのBLOG](https://blog.felicx.eu.org/1263441363.html)
 
@@ -1724,28 +1983,23 @@ style:
 
 [人人有份！免费领取一个永久域名并托管到Cloudflare做双向解析 - 知乎](https://zhuanlan.zhihu.com/p/1908463674936496903)
 
-Cloudns二级域名Cloudflare无法解析,搭建节点应该还有点用吧。
+Cloudns二级域名Cloudflare无法解析,Github也用不了 。
 
 [DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
 
-DigitalPlat域名只有一年使用期限，可以被cloudflare解析
+DigitalPlat域名只有一年使用期限，小于180天可以续期，可以被cloudflare解析。
 
 [使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
 
-Spaceship购买域名价格优惠不到5块一年，续费也是5块，我是在阿里云买的域名，第一年8块10年240块，有点贵了。
+Spaceship购买域名价格优惠不到5块一年，续费也是5块，博主是在阿里云买的域名，第一年8块10年240块，有点贵了。
 
 ### 19. RSS订阅
 
-（用于搜索引擎和友链抓起你的动态）
+参考博主[BoBoBlog](https://blog.bxzdyg.cn/)
 
-```
-npm i hexo-generator-feed
-yarn add hexo-generator-feed 
-```
+可用于搜索引擎和友链拉取动态`npm i hexo-generator-feed`安装插件，根目录下配置文件添加如下内容
 
-添加
-
-```
+```yaml _config.yml 
 blog/_config.yml
 feed:
   type: atom # RSS的类型(atom/rss2)
@@ -1757,10 +2011,10 @@ feed:
 #    content_limit_delim: ' ' #上面截取描述的分隔符,截取内容是以指定的这个分隔符作为截取结束的标志.在达到规定的内容长度之前最后出现的这个分隔符之前的内容，防止从中间截断
 ```
 
-在你的主题配置中如：
+然后在主题配置文件中加入以下内容，添加左侧栏footer小图标：
 
-```
-blog/_config.stellar.ymlfooter:
+```yaml _config.stellar.yml 
+footer:
   social:
 	rss:
       icon: '<i class="fa-solid fa-rss fa-shake"></i>'
@@ -1768,4 +2022,8 @@ blog/_config.stellar.ymlfooter:
       
 rss: /atom.xml
 ```
+
+### 20. 关于、留言板
+
+在博客源文件夹source中，新建`about`,`messages`文件夹，在相应文件中新建index.md，markdown内容即为展示内容。
 

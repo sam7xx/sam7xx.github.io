@@ -11,13 +11,13 @@ date: 2025-10-07 12:17:21
 ### 0. 前言
 Hexo 部署是将本地生成的静态博客内容发布到服务器或托管平台的过程，常见的部署目标包括 GitHub Pages、Netlify、Vercel、Cloudflare Pages 等。以下是详细的部署步骤和常见问题解决方案，实现一次推送完成GitHub Pages、Vercel、Cloudflare Pages 三个平台部署。
 ### 1. 部署前提
-- **Github/Vercel/Cloudflare 账号**免费额度个人博客够用了。
+- **Github/Vercel/Cloudflare **账号,免费额度个人博客够用了。
 - 一个 **Git 仓库**（GitHub、GitLab 均可），存放你的 Hexo 源代码（非 `public` 目录，需包含 `_config.yml`、`package.json`、`source` 等核心文件）。
 - 本地已完成 Hexo 博客搭建，能通过 `hexo g` 生成 `public` 目录（确保本地构建正常）。
 
-### 2. 部署到 GitHub Pages（最常用）
+### 2. 部署到 GitHub Pages
 适合个人博客，免费但有时候不太稳定，当备用站使用，具体操作步骤如下：
-- 在Github新建仓库，命名为  `yourname.github.io`，确保仓库为公共仓库。
+- 在Github新建仓库，仓库名为  `yourname.github.io`，确保仓库为公共仓库。
 然后在仓库设置中打开Github Pages功能。
 - 然后在博客文件夹下安装部署插件`npm install hexo-deployer-git --save`
 
@@ -29,13 +29,13 @@ deploy:
    branch: main  # 部署分支（默认 main 或 master，根据仓库设置调整）
    message: "Hexo deploy: {{ now('YYYY-MM-DD HH:mm:ss') }}"  # 提交信息（可选）
 ```
-- 执行部署` hexo clean && hexo g && hexo d  # 清理、生成、部署` 部署成功后，访问 `https://yourname.github.io` 即可看到博客，也可以重定向绑定自己的域名，由Cloudflare托管。
+- 终端执行` hexo clean && hexo g && hexo d  # 清理、生成、部署` ，部署成功后，访问 `https://yourname.github.io` 即可看到博客，也可以重定向绑定自己的域名，由Cloudflare托管。
 
-### 3. 部署到 Cloudflare Pages（推荐国内访问）
+### 3. 部署到 Cloudflare Pages
 
-Cloudflare Pages 提供全球 CDN 加速，国内访问速度较快，目前作为主站使用：
+Cloudflare Pages 提供全球 CDN 加速，国内访问速度较快，目前作为主站使用。
 
-#### 3.1 推送Hexo源码到 GitHub/Gitlab (关键)
+#### 3.1 推送Hexo源码到 GitHub
 
 确保仓库包含完整的 Hexo 源代码（包括 `package.json`、`_config.yml` 等），而非仅 `public` 目录，使用Github部署仓库修改即可。
 Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先将本地代码推送到远程仓库：
@@ -69,7 +69,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
    git push origin main #执行推送，如果不再提示认证失败，说明配置成功。
    ```
 
-#### 3.2 Cloudflare 控制台创建 Pages 项目
+#### 3.2 Cloudflare 创建 Pages
 
    - 注册Cloudflare账号，登录后进入 [Cloudflare Pages](https://dash.cloudflare.com/) → 点击 **Create a project** → 关联你的 Git 仓库。
    - **构建配置**：
@@ -94,8 +94,9 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
    ```
    推送修改后，Cloudflare 会自动重新构建，确保资源路径正确。
 
-
 ### 4. 部署到 Netlify/Vercel
+
+#### 4.1 Netlify部署
 
 这两个平台均支持自动构建部署，比Cloudflare简单，大概步骤类似，默认设置点点点搞定，目前Vercel作为备用站：
 - 在 Netlify/Vercel 控制台导入 Hexo 源代码仓库。
@@ -110,7 +111,88 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
    平台会自动安装依赖（`npm install`）并执行构建，完成后提供临时域名，支持绑定自定义域名。
 
-### 5.  **GitHub Actions** 配置自动化工作流
+#### 4.2 集成 Vercel 分析工具 
+
+在 Hexo 中集成 Vercel 分析工具 `@vercel/analytics` 需要通过修改主题模板，将分析代码注入到所有页面中（因为 Hexo 是静态站点生成器，需确保代码被打包到最终生成的 HTML 里）。具体步骤如下：
+
+步骤 1：安装依赖
+
+在 Hexo 项目根目录（即 `_config.yml` 所在目录）执行以下命令，安装 `@vercel/analytics`：
+
+```bash
+npm install @vercel/analytics --save
+```
+
+步骤 2：创建分析代码注入脚本
+
+由于 Hexo 不直接支持在模板中导入 npm 包，需要先将 `@vercel/analytics` 的核心代码提取为可在浏览器中运行的脚本，再注入到页面中。
+
+1. 在 Hexo 项目的 `source/js/` 目录下（如果没有 `js` 目录则创建），新建 `vercel-analytics.js` 文件，内容如下：
+
+   ```js
+   // 从 @vercel/analytics 包中提取核心逻辑（适配浏览器环境）
+   (function() {
+     const script = document.createElement('script');
+     script.src = 'https://cdn.vercel-insights.com/v1/script.js';
+     script.defer = true;
+     // 替换为你的 Vercel 项目 ID（可选，不填则自动关联当前部署的项目）
+     // script.dataset.project = '你的项目ID'; 
+     document.head.appendChild(script);
+   })();
+   ```
+
+   说明：这是 Vercel 官方提供的 CDN 方式，无需依赖本地 npm 包，更适合静态站点（比直接导入 npm 包更简单）。
+
+步骤 3：修改主题模板，注入脚本
+
+需要将上述脚本添加到所有页面的 `<head>` 或 `<body>` 中（推荐放在 `<head>` 底部，不阻塞页面渲染）。
+
+1. 找到你正在使用的 Hexo 主题的布局文件，通常在 `themes/[你的主题名]/layout/` 目录下，常见的全局模板文件有：
+
+   - `_partial/head.ejs`（头部模板，所有页面都会加载）
+   - `_partial/footer.ejs`（底部模板）
+
+   以主流主题（如 Next、Stellar 等）为例，推荐修改 `head.ejs`：
+
+2. 编辑 `themes/[你的主题名]/layout/_partial/head.ejs`，在文件末尾添加以下代码（引入刚才创建的脚本）：
+
+   ```ejs
+   <!-- 引入 Vercel Analytics 脚本 -->
+   <% if (!is_amp()) { %> <!-- 非 AMP 页面才加载 -->
+     <script src="/js/vercel-analytics.js"></script>
+   <% } %>
+   ```
+
+   说明：
+
+   - `is_amp()` 是 Hexo 的内置函数，用于排除 AMP 页面（避免冲突），如果你的主题不支持 AMP，可以直接写 `<script src="/js/vercel-analytics.js"></script>`。
+   - 路径 `/js/vercel-analytics.js` 对应步骤 2 中创建的 `source/js/vercel-analytics.js`（Hexo 会将 `source` 目录下的文件直接复制到生成的静态文件中）。
+
+步骤 4：构建并部署
+
+1. 本地测试是否生效：
+
+   ```bash
+   hexo clean && hexo g && hexo s
+   ```
+
+   启动后访问 `http://localhost:4000`，打开浏览器开发者工具（F12）的「Network」面板，查看是否加载了 `vercel-analytics.js` 和 `script.js`（来自 Vercel CDN），若有则说明注入成功。
+
+2. 部署到 Vercel：
+
+   将代码提交到关联 Vercel 的 Git 仓库，Vercel 会自动构建部署：
+
+   ```bash
+   git add .
+   git commit -m "Add Vercel Analytics to Hexo"
+   git push origin main
+   ```
+
+步骤 5：验证数据
+
+部署成功后，登录 [Vercel 控制台](https://vercel.com/)，进入你的 Hexo 项目，左侧菜单点击「Analytics」，即可查看访问数据（通常有 5-10 分钟延迟）。
+
+### 5.  **GitHub Actions** 工作流配置
 
 要实现一次代码推送后自动部署到 **GitHub Pages、Vercel、Cloudflare Pages** 三个平台，可通过 **GitHub Actions** 配置统一的工作流。以下是针对这三个平台的详细自动化部署方案：
 
@@ -129,13 +211,15 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 | Vercel           | Vercel 令牌（Token）+ 项目 ID+USER ID                 | Vercel 控制台 → 账户设置 → `Tokens`；项目设置 → `General` 中获取项目 ID;菜单中找到 Account→ Genera→ USER ID |
 | Cloudflare Pages | Cloudflare API 令牌 + 账户 ID + 项目名称              | Cloudflare 控制台 → 我的个人资料 → `API Tokens`（创建含 `Pages:Edit` 权限的令牌）；账户 ID 在 Workers 和 Pages 页面获取；项目名称为 Cloudflare Pages 中创建的项目名 |
 
-#### 5.2 配置 GitHub Actions 工作流
+#### 5.2 配置 GitHub Actions
 
 - 进入 GitHub 仓库 → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`，添加以下凭证：
 
   - `GH_TOKEN`：GitHub Pages 的 PAT
 
   - `VERCEL_TOKEN`：Vercel 令牌
+
+  - `VERCEL_ORG_ID`：Vercel组织/用户ID
 
   - `VERCEL_PROJECT_ID`：Vercel 项目 ID
 
@@ -145,67 +229,100 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
   - `CF_PROJECT_NAME`：Cloudflare Pages 项目名称
 
-- 创建工作流配置文件，在项目根目录创建 `.github/workflows/deploy.yml`，内容如下（以 Hexo 项目为例，其他静态项目可调整构建命令）：
+- 创建工作流配置文件，在项目根目录创建 `.github/workflows/deploy.yml`，内容如下：
 
-```yaml
-name: 自动部署到 GitHub/Vercel/Cloudflare
+{% folding 查看代码 %}
+
+```yaml deploy.yaml
+name: 彻底禁用Jekyll的自动部署
 on:
   push:
-    branches: [ main ]  # 推送 main 分支时触发
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+
     steps:
-      # 步骤1：拉取代码
-      - name: 拉取 GitHub 代码
+      - name: 拉取代码
         uses: actions/checkout@v4
         with:
-          submodules: true  # 若使用主题子模块（如 Hexo 主题），必须启用
+          fetch-depth: 0
 
-      # 步骤2：安装 Node 环境
-      - name: 安装 Node.js
+      - name: 检查主题目录
+        run: |
+          if [ ! -d "themes/stellar" ]; then
+            echo "错误：themes/stellar目录不存在！"
+            exit 1
+          fi
+
+      - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x  # 适配大多数静态项目的 Node 版本
-          cache: 'npm'        # 缓存依赖，加速构建
+          node-version: 22.x
+          cache: 'npm'
 
-      # 步骤3：构建项目（以 Hexo 为例，其他项目修改对应命令）
-      - name: 安装依赖并构建静态文件
+      - name: 安装依赖
         run: |
+          npm install hexo-cli -g
           npm install
-          npm install -g hexo-cli  # Hexo 需全局安装
-          hexo clean  # 清理缓存
-          hexo generate  # 生成静态文件（输出到 public 目录）
+          cd themes/stellar && npm install && cd ../../
 
-      # 步骤4：部署到 GitHub Pages
-      - name: 部署到 GitHub Pages
+      - name: 构建静态文件
+        run: |
+          hexo clean
+          hexo generate
+
+      # 核心强化：确保.nojekyll文件存在且正确
+      - name: 强制生成并验证.nojekyll
+        run: |
+          # 在public目录生成.nojekyll（覆盖可能存在的旧文件）
+          echo "生成.nojekyll文件..."
+          touch public/.nojekyll
+          # 验证文件是否存在
+          if [ ! -f "public/.nojekyll" ]; then
+            echo "错误：.nojekyll文件生成失败！"
+            exit 1
+          fi
+          # 查看文件权限（确保可读）
+          ls -la public/.nojekyll
+          echo "确认：.nojekyll文件已正确生成"
+
+      # 部署到gh-pages分支（强制覆盖旧内容）
+      - name: 部署到GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public  # 静态文件目录
-          publish_branch: gh-pages  # GitHub Pages 目标分支
+          publish_dir: ./public
+          publish_branch: gh-pages
+          force_orphan: true  # 强制创建全新的gh-pages分支，清除历史缓存
+          keep_files: false   # 不保留旧文件，确保.nojekyll是最新的
 
-      # 步骤5：部署到 Vercel
-      - name: 部署到 Vercel
+      # 其他平台部署步骤（不变）
+      - name: 部署到Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}  # 可选，个人账号可不填
-          working-directory: ./public  # 部署静态文件目录
-          vercel-args: '--prod'  # 部署到生产环境
+          working-directory: ./public
+          vercel-args: '--prod'
+        continue-on-error: true
 
-      # 步骤6：部署到 Cloudflare Pages
-      - name: 部署到 Cloudflare Pages
+      - name: 部署到Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ secrets.CF_PROJECT_NAME }}
-          directory: ./public  # 静态文件目录
-          branch: main  # 关联的 GitHub 分支
+          directory: ./public
+          branch: main
+        continue-on-error: true
+
 ```
+{% endfolding %}
 
 - 推送代码触发自动部署
 
@@ -215,53 +332,110 @@ git add .github/workflows/deploy.yml
 git commit -m "Add auto-deploy workflow to 3 platforms"
 git push origin main
 ```
+也可以写入脚本`deploy.sh`，放在博客根目录，更新博客后终端执行./deploy.sh即可完成代码推送至Github。
+{% folding 查看代码 %}
+
+```
+#!/bin/bash
+set -euo pipefail  # 严格模式：遇错即停，防止未定义变量
+
+# ==============================================
+# 配置区（根据项目调整）
+# ==============================================
+REMOTE_BRANCH="main"               # 远程目标分支
+# ==============================================
+
+# 输出格式化函数（带颜色标识）
+info() { echo -e "\033[34mℹ️ $1\033[0m"; }
+success() { echo -e "\033[32m✅ $1\033[0m"; }
+warning() { echo -e "\033[33m⚠️ $1\033[0m"; }
+error() { echo -e "\033[31m❌ $1\033[0m" && exit 1; }
+
+# 1. 检查项目是否有变更（任何文件的修改/新增/删除）
+check_project_changes() {
+    info "检查Hexo项目是否有变更..."
+    # 检查工作区和暂存区是否有变化（忽略.gitignore中的文件）
+    if git diff --quiet --exit-code && git diff --cached --quiet --exit-code; then
+        warning "项目未检测到任何变更，无需提交推送"
+        exit 0
+    fi
+}
+
+# 2. 同步远程最新代码（避免推送冲突）
+sync_remote() {
+    info "同步远程$REMOTE_BRANCH分支最新代码..."
+    if ! git pull origin "$REMOTE_BRANCH"; then
+        error "拉取远程代码冲突！请手动解决后再运行脚本：\ngit pull origin $REMOTE_BRANCH"
+    fi
+}
+
+# 3. 提交所有变更并推送
+commit_and_deploy() {
+    info "提交所有项目变更..."
+    
+    # 添加所有变更（.gitignore会自动过滤不需要的文件）
+    git add . || error "添加文件到暂存区失败"
+    
+    # 生成包含变更类型的提交信息
+    local change_count
+    change_count=$(git status --porcelain | wc -l | tr -d ' ')  # 统计变更文件数
+    local commit_msg="Hexo项目更新 ($change_count 个文件): $(date +'%Y-%m-%d %H:%M:%S')"
+    git commit -m "$commit_msg" || error "提交失败（可能存在未解决的冲突）"
+    
+    # 推送至远程，触发三平台部署
+    info "推送至远程$REMOTE_BRANCH分支，触发自动化部署..."
+    git push origin "$REMOTE_BRANCH" || error "推送失败（检查网络或权限）"
+    
+    success "所有变更已推送！三平台自动化部署将自动触发"
+}
+
+# 主流程
+main() {
+    info "===== Hexo全项目自动部署工具 ====="
+    check_project_changes
+    sync_remote
+    commit_and_deploy
+    info "==================================="
+}
+
+main "$@"
+```
+{% endfolding %}
 
 - 查看部署状态
-
 - 部署进度：GitHub 仓库 → `Actions` → 选择当前工作流 → 查看实时日志。
 - 结果验证：
   - GitHub Pages：访问 `https://<用户名>.github.io/<仓库名>`
   - Vercel：访问 Vercel 项目分配的域名（如 `<项目名>.vercel.app`）
   - Cloudflare Pages：访问 Cloudflare 分配的域名（如 `<项目名>.pages.dev`）
 
-- 关键说明
+- **部署失败排查**：
 
-**Cloudflare Pages 特殊配置**：
+    查看 GitHub Actions 日志中的错误信息，常见问题：
 
-1. - 若项目需要构建命令（如动态生成），可在 `cloudflare/pages-action` 中添加 `buildCommand: "npm run build"`（但静态文件已提前生成，通常无需此步）。
-   - 确保 Cloudflare API 令牌包含 `Pages:Edit` 权限，否则部署会失败。
-
-2. **部署失败排查**：
-
-   查看 GitHub Actions 日志中的错误信息，常见问题：
-
-   - 凭证错误（Secrets 名称或值不正确）
-   - 构建命令失败（依赖安装错误，需检查 `package.json`）
-   - 静态文件目录错误（确保 `publish_dir` 与实际输出目录一致）
+    - 凭证错误（Secrets 名称或值不正确）
+    - 构建命令失败（依赖安装错误，需检查 `package.json`）
+    - 静态文件目录错误（确保 `publish_dir` 与实际输出目录一致）
 
 通过此配置，每次向 `main` 分支推送代码时，GitHub Actions 会自动完成构建并同步部署到三个平台，实现 “一次推送，多平台联动更新”。
 
-编辑
+#### 5.3  常见问题与解决
 
-#### 5.3  部署失败的常见问题与解决
-
-- **`hexo d` 提示无权限**
-   - 原因：Git 仓库认证失败。
-   - 解决：使用 SSH 地址（`git@github.com:yourname/yourrepo.git`）而非 HTTPS，或配置 Git 凭证。
-   
 - **部署后页面空白 / 样式丢失**
    - 原因：`_config.yml` 中 `url` 配置错误，或静态资源路径引用问题。
    - 解决：确保 `url` 与实际域名一致（如 `url: https://yourname.github.io`），并执行 `hexo clean` 重新生成。
-   
+
 - **平台构建失败（提示缺少依赖）**
    - 原因：`package.json` 未提交到仓库，或依赖未正确声明。
    - 解决：确保 `package.json` 和 `package-lock.json` 已提交，必要时在构建命令前加 `npm install`（如 `npm install && hexo generate`）。
-   
+
 - **部署后 404 错误**
    - 原因：部署分支或输出目录配置错误。
    - 解决：确认 GitHub Pages 指向的分支正确（如 `main`），或 Cloudflare/Netlify 的输出目录为 `public`。
-   
+
 - **Github 自动部署jekyll构建问题**
+
+   ![image-20251008100720419](https://u.sam7.top/k5JJSc)
 
    - 原因：Github默认使用jekyll主题构建，识别到主题不是jekyll报错。
    - 解决：可以生成一个.nojekyll文件来禁用jekyll部署，再工作流中增加public文件下.nojekyll
@@ -277,13 +451,11 @@ git push origin main
 
    通过以上步骤，能从工作流配置、仓库设置、缓存清理三个层面彻底禁用 Jekyll，确保 GitHub Pages 直接托管 Hexo 生成的静态文件。核心逻辑是：**确保 `.nojekyll` 被正确部署到 `gh-pages` 分支的根目录，且 GitHub 识别到该文件**。
 
-### 6. 心得
+### 6. **笔记**
 
-- **区分源代码与静态文件**
-
-   - 本地 Git 仓库应跟踪 Hexo 源代码（`_config.yml`、`source`、`themes` 等），而非 `public` 目录（可在 `.gitignore` 中忽略）。
+- - 本地 Git 仓库应跟踪 Hexo 源代码（`_config.yml`、`source`、`themes` 等），而非 `public` 目录（可在 `.gitignore` 中忽略）。
    - 部署平台通过源代码自动构建生成 `public` 目录，避免手动上传静态文件。
-
+   
 - **定期备份配置**
 
    重要配置文件（`_config.yml`、主题配置 `_config.stellar.yml` 等）建议备份，避免误删。
