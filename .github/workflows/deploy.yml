@@ -1,4 +1,4 @@
-name: 修复stellar主题依赖并部署
+name: 追踪public目录部署流程
 on:
   push:
     branches: [ main ]
@@ -10,88 +10,81 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: 拉取代码（含主题子模块）
+      - name: 拉取代码
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: 'recursive'  # 确保主题子模块被拉取
-          lfs: true
+          submodules: 'recursive'
 
-      - name: 检查主题目录是否存在
+      - name: 检查是否忽略public目录（关键！）
         run: |
-          echo "===== 主题目录检查 ====="
-          if [ ! -d "themes/stellar" ]; then
-            echo "❌ 错误：未找到themes/stellar目录，尝试手动克隆主题..."
-            # 若子模块拉取失败，手动克隆stellar主题
-            git clone https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
+          echo "===== 检查.gitignore是否排除public ====="
+          if grep -q "public" .gitignore; then
+            echo "⚠️ 注意：.gitignore中包含public，会被忽略（正常现象）"
+          else
+            echo "✅ .gitignore中未忽略public"
           fi
-          # 确认主题目录存在
-          [ -d "themes/stellar" ] && echo "✅ stellar主题目录存在" || { echo "❌ 主题目录仍缺失"; exit 1; }
-          # 显示主题目录内容，确认完整性
-          echo "===== 主题目录内容 ====="
-          ls -la themes/stellar
+          # 显示.gitignore内容
+          cat .gitignore || echo "无.gitignore文件"
 
       - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x  # 稳定版本，避免兼容性问题
+          node-version: 20.x
           cache: 'npm'
 
-      - name: 强制安装核心依赖（含主题）
+      - name: 安装依赖
         run: |
-          echo "===== 安装Hexo CLI ====="
-          npm install hexo-cli -g --verbose
-          
-          echo "===== 安装根目录依赖 ====="
-          # 强制安装hexo和stellar主题作为项目依赖
-          npm install hexo@8.0.0 --save --verbose  # 明确指定与日志匹配的hexo版本
-          npm install hexo-theme-stellar@latest --save --verbose  # 关键：安装stellar主题依赖
-          
-          echo "===== 安装主题内部依赖 ====="
-          cd themes/stellar && npm install --verbose && cd ../../
+          npm install hexo-cli -g
+          npm install --force
+          npm install hexo-theme-stellar@latest --save  # 确保主题被安装
+          cd themes/stellar && npm install && cd ../../
 
-      - name: 验证主题是否被正确识别
+      - name: 构建public并记录内容
         run: |
-          echo "===== 验证主题依赖 ====="
-          npm list hexo-theme-stellar  # 确认主题已安装
+          hexo clean
+          echo "===== 开始构建public ====="
+          hexo generate
           
-          echo "===== 检查Hexo配置 ====="
-          # 确保配置中指定了stellar主题（若未指定，临时添加）
-          if ! grep -q "theme: stellar" _config.yml; then
-            echo "警告：_config.yml中未设置theme: stellar，临时添加..."
-            echo "theme: stellar" >> _config.yml
-          fi
-          cat _config.yml | grep "theme:"  # 确认主题配置
-
-      - name: 生成public目录（带调试）
-        run: |
-          hexo clean --debug
-          echo "===== 生成静态文件 ====="
-          hexo generate --debug
-          
-          # 检查public目录
-          if [ ! -d "public" ] || [ -z "$(ls -A public)" ]; then
-            echo "❌ 错误：public目录未生成或为空"
+          # 记录public目录详情（关键调试信息）
+          echo "===== public目录状态 ====="
+          if [ ! -d "public" ]; then
+            echo "❌ public目录未生成！"
             exit 1
           fi
-          echo "===== public目录内容 ====="
-          ls -la public
+          
+          echo "public目录路径：$(pwd)/public"
+          echo "public目录大小：$(du -sh public)"
+          echo "public目录文件列表（前20个）："
+          ls -la public | head -n 20
+          echo "public/index.html内容（前10行）："
+          head -n 10 public/index.html || echo "❌ 无index.html"
 
-      - name: 部署到GitHub Pages
+      - name: 部署到gh-pages分支（带推送日志）
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./public  # 确认推送的是public目录下的内容
           publish_branch: gh-pages
           force_orphan: true
           keep_files: false
+          enable_jekyll: false
+          # 输出详细推送日志
+          commit_message: "Deploy public content: $(date +'%Y-%m-%d %H:%M:%S')"
 
-      - name: 部署后验证
+      - name: 验证gh-pages分支内容
         run: |
-          git clone -b gh-pages https://github.com/${{ github.repository }} temp-gh
-          if [ ! -f "temp-gh/index.html" ]; then
-            echo "❌ 部署失败：gh-pages分支无index.html"
-            exit 1
+          echo "===== 克隆gh-pages分支验证 ====="
+          git clone -b gh-pages https://github.com/${{ github.repository }} gh-pages-check
+          
+          echo "===== gh-pages分支根目录内容 ====="
+          ls -la gh-pages-check
+          
+          echo "===== 检查是否有index.html ====="
+          if [ -f "gh-pages-check/index.html" ]; then
+            echo "✅ gh-pages分支存在index.html，部署成功！"
+            echo "访问地址：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
           else
-            echo "✅ 部署成功"
+            echo "❌ gh-pages分支无index.html，部署失败！"
+            exit 1
           fi
