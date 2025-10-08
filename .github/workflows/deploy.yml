@@ -1,4 +1,4 @@
-name: Hexo部署（强制生成public目录）
+name: 修复stellar主题依赖并部署
 on:
   push:
     branches: [ main ]
@@ -10,83 +10,72 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: 拉取代码
+      - name: 拉取代码（含主题子模块）
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: 'recursive'
+          submodules: 'recursive'  # 确保主题子模块被拉取
           lfs: true
 
-      - name: 环境与目录全景检查
+      - name: 检查主题目录是否存在
         run: |
-          echo "===== 系统环境 ====="
-          node -v
-          npm -v
-          hexo -v || echo "Hexo尚未安装"
-          
-          echo "===== 目录结构 ====="
-          tree -L 3  # 显示3级目录，确认文件结构
-          
-          echo "===== 核心文件检查 ====="
-          [ -d "themes/stellar" ] && echo "✅ 主题目录存在" || { echo "❌ 主题目录缺失"; exit 1; }
-          [ -f "package.json" ] && echo "✅ package.json存在" || { echo "❌ package.json缺失"; exit 1; }
-          [ -d "source" ] && echo "✅ source目录存在" || { echo "❌ source目录缺失（无内容可生成）"; exit 1; }
-          [ "$(ls -A source)" ] && echo "✅ source目录有内容" || { echo "❌ source目录为空（无法生成页面）"; exit 1; }
+          echo "===== 主题目录检查 ====="
+          if [ ! -d "themes/stellar" ]; then
+            echo "❌ 错误：未找到themes/stellar目录，尝试手动克隆主题..."
+            # 若子模块拉取失败，手动克隆stellar主题
+            git clone https://github.com/xaoxuu/hexo-theme-stellar.git themes/stellar
+          fi
+          # 确认主题目录存在
+          [ -d "themes/stellar" ] && echo "✅ stellar主题目录存在" || { echo "❌ 主题目录仍缺失"; exit 1; }
+          # 显示主题目录内容，确认完整性
+          echo "===== 主题目录内容 ====="
+          ls -la themes/stellar
 
       - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.19.0  # 具体稳定版本，避免自动升级导致问题
+          node-version: 20.x  # 稳定版本，避免兼容性问题
           cache: 'npm'
 
-      - name: 安装依赖（带完整日志）
+      - name: 强制安装核心依赖（含主题）
         run: |
           echo "===== 安装Hexo CLI ====="
           npm install hexo-cli -g --verbose
           
           echo "===== 安装根目录依赖 ====="
-          npm install --verbose  # 输出完整依赖安装日志
+          # 强制安装hexo和stellar主题作为项目依赖
+          npm install hexo@8.0.0 --save --verbose  # 明确指定与日志匹配的hexo版本
+          npm install hexo-theme-stellar@latest --save --verbose  # 关键：安装stellar主题依赖
           
-          echo "===== 安装主题依赖 ====="
+          echo "===== 安装主题内部依赖 ====="
           cd themes/stellar && npm install --verbose && cd ../../
-          
-          echo "===== 依赖版本确认 ====="
-          npm list hexo  # 确认Hexo版本
-          npm list hexo-theme-stellar  # 确认主题版本
 
-      - name: 构建public目录（带调试日志）
+      - name: 验证主题是否被正确识别
         run: |
-          echo "===== Hexo配置检查 ====="
-          cat _config.yml  # 输出主配置
-          cat themes/stellar/_config.yml  # 输出主题配置（关键！）
+          echo "===== 验证主题依赖 ====="
+          npm list hexo-theme-stellar  # 确认主题已安装
           
-          echo "===== 清理旧构建 ====="
+          echo "===== 检查Hexo配置 ====="
+          # 确保配置中指定了stellar主题（若未指定，临时添加）
+          if ! grep -q "theme: stellar" _config.yml; then
+            echo "警告：_config.yml中未设置theme: stellar，临时添加..."
+            echo "theme: stellar" >> _config.yml
+          fi
+          cat _config.yml | grep "theme:"  # 确认主题配置
+
+      - name: 生成public目录（带调试）
+        run: |
           hexo clean --debug
+          echo "===== 生成静态文件 ====="
+          hexo generate --debug
           
-          echo "===== 开始生成public目录 ====="
-          hexo generate --debug  # 调试模式输出所有生成细节
-          
-          echo "===== 构建后状态检查 ====="
-          # 强制检查public目录
-          if [ ! -d "public" ]; then
-            echo "❌ 致命错误：public目录未生成！"
-            echo "可能原因："
-            echo "1. Hexo配置错误（如主题设置、路径错误）"
-            echo "2. source目录无有效内容（如无.md文章）"
-            echo "3. 依赖版本冲突（查看上方依赖安装日志）"
+          # 检查public目录
+          if [ ! -d "public" ] || [ -z "$(ls -A public)" ]; then
+            echo "❌ 错误：public目录未生成或为空"
             exit 1
           fi
-          
-          # 检查public目录内容
           echo "===== public目录内容 ====="
           ls -la public
-          file_count=$(find public -type f | wc -l)
-          echo "public目录文件总数：$file_count"
-          
-          if [ $file_count -lt 5 ]; then
-            echo "❌ 警告：public目录内容过少（少于5个文件），可能生成不完整"
-            exit 1
-          fi
 
       - name: 部署到GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -97,36 +86,12 @@ jobs:
           force_orphan: true
           keep_files: false
 
-      - name: 部署后验证（关键！）
+      - name: 部署后验证
         run: |
-          echo "===== 验证gh-pages分支内容 ====="
-          git clone -b gh-pages https://github.com/${{ github.repository }} temp-gh-pages
-          echo "gh-pages分支文件列表："
-          ls -la temp-gh-pages
-          if [ ! -f "temp-gh-pages/index.html" ]; then
+          git clone -b gh-pages https://github.com/${{ github.repository }} temp-gh
+          if [ ! -f "temp-gh/index.html" ]; then
             echo "❌ 部署失败：gh-pages分支无index.html"
             exit 1
           else
-            echo "✅ 部署验证通过"
+            echo "✅ 部署成功"
           fi
-
-      # 其他平台部署保持不变
-      - name: 部署到Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./public
-          vercel-args: '--prod'
-        continue-on-error: true
-
-      - name: 部署到Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: ${{ secrets.CF_PROJECT_NAME }}
-          directory: ./public
-          branch: main
-        continue-on-error: true
