@@ -106,7 +106,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 ### 3. 网站统计
 
-**网页底部文章统计**
+**网页底部文章统计 **参考博主[BoBoBlog](https://blog.bxzdyg.cn/)文章
 
 - 安装插件：npm i hexo-wordcount –save
 
@@ -170,7 +170,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
           show_runtime();
           </script>
           <!--不蒜子计数器-->
-          <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+          <script async src="https://cdn.bootcdn.net/ajax/libs/busuanzi/2.3.0/bsz.pure.mini.js"></script>
           <!--添加一个访问量-->
           总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次
           <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span>
@@ -1173,144 +1173,24 @@ function layoutDiv() {
 
 ![image-20251007111137401](https://u.sam7.top/W4yZJe)
 
-### 10. 顶部导航栏设置
+### 10. 顶部导航栏显示异常
 
-浏览器设置浅色模式，主题切换为深色，顶部导航栏看起来比较奇怪，适配深色模式navbra.styl修改，也不知道具体改啥了，索性全粘上来了。
+浏览器设置浅色模式，主题切换为深色，顶部导航栏字体看起来比较奇怪，navbra.styl修改，`.navbar-blur `取消模糊效果。
 
-{% folding 查看代码 %}
+![image-20251008154634368](https://u.sam7.top/AKRE74)
 
 ```stylus navbar.styl
-.navbar
-  z-index: 800  // 合理层级，高于普通内容但低于弹窗等组件
-  top: 0  // 简化定位，从顶部开始
-  position: sticky
-  position: -webkit-sticky
-  display: block
-  min-height: 56px
-  width: 100%
-  box-sizing: border-box
-  background: transparent
-  // 添加过渡效果，减少滚动时的突兀感
-  transition: transform 0.2s ease, opacity 0.2s ease
-
-// 关键容器样式，避免与其他元素重叠
+// 顶栏容器样式（替代newblur()的背景）
 .navbar-blur 
-  margin: 12px auto  // 上下留出空间，避免紧贴其他元素
-  max-width: calc(100% - 24px)  // 限制最大宽度，避免边缘溢出
-  width: min(1200px, 100%)  // 响应式宽度
+  margin: 0 1rem
   border-radius: 64px
   position: relative
-  padding: 6px 0
-  background: var(--card)
-  border: var(--card-border, 1px solid transparent)
-  // 添加细微阴影区分层级，减少干涉感
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03)
-
-.navbar-container 
-  max-width: 100%
-  margin: 0 auto
-  border-radius: 64px
-  overflow: visible
-  scrollbar(0, 0)
-  padding: 0 16px
-  background: transparent
-
-.navbar nav
-  display: inline-flex
-  font-size: $fs-14
-  z-index: 1
-  min-height: 44px
-  align-items: center
-  background: transparent
-  >p
-    margin: 0
-  a
-    padding: .375rem 0.875rem
-    margin: 0.25rem
-    line-height: 1.8
-    color: var(--text-p1)
-    border-radius: 32px
-    font-weight: 500
-    white-space: nowrap
-    position: relative
-    z-index: 1
-    trans1 all
-    &:hover
-      background: var(--bg-a50)
-    &.active, &:hover
-      color: var(--text)
-    &.active
-      background: var(--bg-a60)
-      :root[data-theme="dark"] &
-        background: rgba(white, 0.25)
-      @media (prefers-color-scheme: dark)
-        background: rgba(white, 0.25)
-      :root[data-theme="light"] &
-        background: var(--bg-a60)
-        
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06)
-      cursor default
-      pointer-events: none
-
-  a+a
-    margin-left: 4px
-
-// 滚动时的适配处理
-// 当页面滚动超过一定距离时微调样式，减少与内容区的干涉
-body.scrolled .navbar
-  min-height: 52px
-
-body.scrolled .navbar-blur
-  margin: 8px auto
-  padding: 4px 0
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05)
-
-// 移动端优化，避免与底部导航或顶部状态栏干涉
-@media screen and (max-width: $device-mobile-iphone-max)
-  .navbar-blur
-    margin: 8px 12px
-    border-radius: 32px  // 小屏幕使用更圆润的边角
-    padding: 4px 0
-  
-  .navbar-container
-    padding: 0 8px
-  
-  body.scrolled .navbar-blur
-    margin: 4px 8px
-
-// 主题变量保持与卡片一致
-:root[data-theme="dark"] .navbar
-  --gap-margin: 8px
-  --bg-a50: rgba(255, 255, 255, 0.1)
-  --bg-a60: rgba(255, 255, 255, 0.15)
-  --text: #ffffff
-  --text-p1: rgba(255, 255, 255, 0.8)
-
-:root[data-theme="light"] .navbar
-  --gap-margin: 8px
-  --bg-a50: rgba(0, 0, 0, 0.05)
-  --bg-a60: rgba(0, 0, 0, 0.08)
-  --text: #000000
-  --text-p1: rgba(0, 0, 0, 0.7)
-
-// 系统主题适配
-@media (prefers-color-scheme: dark)
-  :root:not([data-theme]) .navbar
-    --bg-a50: rgba(255, 255, 255, 0.1)
-    --bg-a60: rgba(255, 255, 255, 0.15)
-    --text: #ffffff
-    --text-p1: rgba(255, 255, 255, 0.8)
-
-@media (prefers-color-scheme: light)
-  :root:not([data-theme]) .navbar
-    --bg-a50: rgba(0, 0, 0, 0.05)
-    --bg-a60: rgba(0, 0, 0, 0.08)
-    --text: #000000
-    --text-p1: rgba(0, 0, 0, 0.7)
-
+  // 新增背景样式：使用主题卡片色+轻微透明度，不依赖模糊
+  background: var(--card, rgba(255, 255, 255, 0.9))  // 主背景（优先用主题变量）
+  border: var(--card-border, 1px solid rgba(0, 0, 0, 0.05))  // 边框（可选，增强轮廓）
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05)  // 轻微阴影，区分层级
+  // 如需半透明效果可调整alpha值，如：background: rgba(255, 255, 255, 0.85)
 ```
-
-{% endfolding %}
 
 ### 11. 页面布局调整
 
@@ -1973,25 +1853,31 @@ style:
 
 ### 18. 域名申请
 
-[Cloudflare 解析 ORG 域名 - YOLOのBLOG](https://blog.felicx.eu.org/1263441363.html)
+- 【EU.ORG】免费域名
 
-[终身免费 ORG 顶级域名申请 - YOLOのBLOG](https://blog.felicx.eu.org/2502663362.html)
+    [Cloudflare 解析 ORG 域名 - YOLOのBLOG](https://blog.felicx.eu.org/1263441363.html)
 
-已经过去几周了，EU.ORG申请的域名还没通过审核，石沉大海了，新注册账号都没有通过。
+    [终身免费 ORG 顶级域名申请 - YOLOのBLOG](https://blog.felicx.eu.org/2502663362.html)
 
-[免费域名"US.KG" 白嫖申请攻略 - 薩魔5mg](https://sm5mg.github.io/posts/e6c9a182.html)
+    提交域名申请已经过去几周了，还没通过审核，石沉大海了，新注册账号都没有通过。
 
-[人人有份！免费领取一个永久域名并托管到Cloudflare做双向解析 - 知乎](https://zhuanlan.zhihu.com/p/1908463674936496903)
+- [Cloudns]免费二级域名
 
-Cloudns二级域名Cloudflare无法解析,Github也用不了 。
+  [人人有份！免费领取一个永久域名并托管到Cloudflare做双向解析 - 知乎](https://zhuanlan.zhihu.com/p/1908463674936496903)
 
-[DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
+  Cloudns二级域名Cloudflare无法解析,Github也用不了 。
 
-DigitalPlat域名只有一年使用期限，小于180天可以续期，可以被cloudflare解析。
+- [DigitalPlat]免费域名
 
-[使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
+​	[DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
 
-Spaceship购买域名价格优惠不到5块一年，续费也是5块，博主是在阿里云买的域名，第一年8块10年240块，有点贵了。
+​	[使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
+
+​	DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，可以被cloudflare解析。
+
+- 购买域名
+
+  国内价格对比了几家都差不太多，阿里云要便宜些，top域名比较便宜第一年8块10年240块，有活动可以更优惠。
 
 ### 19. RSS订阅
 

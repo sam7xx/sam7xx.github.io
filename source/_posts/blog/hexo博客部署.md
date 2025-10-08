@@ -403,7 +403,11 @@ main "$@"
 {% endfolding %}
 
 - 查看部署状态
+
 - 部署进度：GitHub 仓库 → `Actions` → 选择当前工作流 → 查看实时日志。
+
+    ![image-20251008140032841](https://u.sam7.top/dJ8twb)
+
 - 结果验证：
   - GitHub Pages：访问 `https://<用户名>.github.io/<仓库名>`
   - Vercel：访问 Vercel 项目分配的域名（如 `<项目名>.vercel.app`）

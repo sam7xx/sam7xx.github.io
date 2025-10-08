@@ -1,4 +1,4 @@
-name: 彻底禁用Jekyll的自动部署
+name: Hexo部署
 on:
   push:
     branches: [ main ]
@@ -10,61 +10,76 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: 拉取代码
+      - name: 拉取代码（包含子模块）
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          submodules: 'recursive'  # 若主题是子模块，必须添加这行
 
-      - name: 检查主题目录
+      - name: 检查关键目录（增强错误排查）
         run: |
+          echo "当前目录结构："
+          ls -la
+          echo "----------------------------------------"
+          echo "主题目录检查："
           if [ ! -d "themes/stellar" ]; then
-            echo "错误：themes/stellar目录不存在！"
+            echo "错误：themes/stellar目录不存在！请检查主题是否正确安装"
             exit 1
+          else
+            echo "主题目录存在：$(ls -la themes/stellar)"
           fi
 
-      - name: 安装Node.js
+      - name: 安装兼容版本的Node.js（关键修复）
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 22.x  # 22.x可能
           cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            themes/stellar/package-lock.json  # 缓存主题依赖
 
-      - name: 安装依赖
+      - name: 安装依赖（详细日志）
         run: |
+          echo "安装Hexo CLI..."
           npm install hexo-cli -g
-          npm install
-          cd themes/stellar && npm install && cd ../../
+          echo "安装根目录依赖..."
+          npm install --verbose  # 输出详细日志，便于排查依赖问题
+          echo "安装主题依赖..."
+          cd themes/stellar && npm install --verbose && cd ../../
 
-      - name: 构建静态文件
+      - name: 构建静态文件（添加错误捕获）
         run: |
+          echo "清理旧构建..."
           hexo clean
-          hexo generate
+          echo "开始生成静态文件（public目录）..."
+          hexo generate --debug  # 开启调试模式，输出详细构建日志
+          # 关键检查：确认public目录生成
+          if [ ! -d "public" ]; then
+            echo "错误：hexo generate未生成public目录！构建失败"
+            exit 1
+          else
+            echo "public目录生成成功，内容："
+            ls -la public  # 输出public目录内容，确认是否有文件
+          fi
 
-      # 核心强化：确保.nojekyll文件存在且正确
-      - name: 强制生成并验证.nojekyll
+      - name: 生成.nojekyll文件
         run: |
-          # 在public目录生成.nojekyll（覆盖可能存在的旧文件）
-          echo "生成.nojekyll文件..."
           touch public/.nojekyll
-          # 验证文件是否存在
           if [ ! -f "public/.nojekyll" ]; then
             echo "错误：.nojekyll文件生成失败！"
             exit 1
           fi
-          # 查看文件权限（确保可读）
-          ls -la public/.nojekyll
-          echo "确认：.nojekyll文件已正确生成"
 
-      # 部署到gh-pages分支（强制覆盖旧内容）
-      - name: 部署到GitHub Pages
+      - name: 部署到GitHub Pages（仅当public目录存在时执行）
+        if: success()  # 仅当前面步骤都成功时执行
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          force_orphan: true  # 强制创建全新的gh-pages分支，清除历史缓存
-          keep_files: false   # 不保留旧文件，确保.nojekyll是最新的
+          force_orphan: true
+          keep_files: false
 
-      # 其他平台部署步骤（不变）
       - name: 部署到Vercel
         uses: amondnet/vercel-action@v25
         with:
