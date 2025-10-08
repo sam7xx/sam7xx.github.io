@@ -1865,7 +1865,9 @@ style:
 
   [人人有份！免费领取一个永久域名并托管到Cloudflare做双向解析 - 知乎](https://zhuanlan.zhihu.com/p/1908463674936496903)
 
-  Cloudns二级域名Cloudflare无法解析,Github也用不了 。
+  Cloudns二级域名Cloudflare和Vercel无法解析，只能在Cloudns使用DNS记录。
+
+  Github可以重定向，域名没有时间限制，但证书只有三个月，不知道会不会续签。
 
 - [DigitalPlat]免费域名
 
@@ -1873,7 +1875,7 @@ style:
 
 ​	[使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
 
-​	DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，可以被cloudflare解析。
+​	DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，虽然是二级域名，但可以被cloudflare、vercel托管。
 
 - 购买域名
 
