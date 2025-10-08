@@ -125,6 +125,9 @@ function generate_canonical() {
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
+  <meta name="msvalidate.01" content="E721DC152CA85AB52EB03F923EDA4DFC" />
+  <meta name="baidu-site-verification" content="codeva-HI3R1accIr" />
+
   <title><%- generate_title() %></title>
 
   <% if (theme.open_graph && theme.open_graph.enable) { %>
@@ -140,8 +143,7 @@ function generate_canonical() {
   <% } %>
 
   <link rel="stylesheet" href="<%- url_for(`${theme.stellar.main_css}?v=${stellar_info('version')}`) %>">
-  <meta name="msvalidate.01" content="E721DC152CA85AB52EB03F923EDA4DFC" />
-
+ 
   <% if (config.favicon) { %>
     <%- favicon_tag(config.favicon) %>
   <% } %>
