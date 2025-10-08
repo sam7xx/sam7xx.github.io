@@ -1,108 +1,96 @@
-name: 强制生成public目录并部署
+name: Hexo自动部署
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ main ]  # 主分支推送时触发
+  workflow_dispatch:  # 允许手动触发
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # 延长超时时间，避免构建被中断
+    timeout-minutes: 25  # 合理超时时间
 
     steps:
-      - name: 拉取代码（含完整历史和子模块）
+      # 步骤1：拉取代码（含子模块）
+      - name: 拉取仓库代码
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          submodules: 'recursive'  # 强制拉取主题子模块
-          lfs: true  # 若有大文件，确保拉取完整
+          fetch-depth: 0  # 完整拉取历史
+          submodules: 'recursive'  # 拉取主题子模块
+          lfs: true  # 支持大文件
 
-      - name: 环境信息诊断
+      # 步骤2：检查必要文件
+      - name: 验证项目结构
         run: |
-          echo "操作系统版本: $(lsb_release -a)"
-          echo "Node.js 版本: $(node -v || true)"
-          echo "npm 版本: $(npm -v || true)"
-          echo "当前目录: $(pwd)"
-          echo "目录结构: $(tree -L 3 || true)"  # 显示3级目录，排查文件缺失
+          echo "当前目录内容："
+          ls -la
+          
+          # 检查主题目录
+          if [ ! -d "themes/stellar" ]; then
+            echo "❌ 错误：未找到 themes/stellar 主题目录"
+            exit 1
+          fi
+          
+          # 检查根目录依赖文件
+          if [ ! -f "package.json" ]; then
+            echo "❌ 错误：未找到 package.json"
+            exit 1
+          fi
 
-      - name: 安装指定Node.js版本（兼容Hexo）
+      # 步骤3：安装Node.js（稳定版本）
+      - name: 安装Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x  # 本地构建版本22.19.0
-          cache: 'npm'
-          cache-dependency-path: |
-            **/package-lock.json  # 缓存所有依赖
+          node-version: 22.x  # 稳定LTS版本，兼容性好
+          cache: 'npm'  # 启用npm缓存
+          cache-dependency-path: 'package-lock.json'  # 仅缓存根目录依赖
 
-      - name: 清理并强制安装依赖（关键步骤）
+      # 步骤4：安装依赖
+      - name: 安装项目依赖
         run: |
-          # 清理npm缓存，解决依赖冲突
-          npm cache clean --force
+          # 安装Hexo CLI
+          npm install hexo-cli -g
           
-          # 强制安装根目录依赖（覆盖可能的版本冲突）
-          echo "安装根目录依赖..."
-          npm install --force --verbose || {
-            echo "根目录依赖安装失败，尝试降级npm版本..."
-            npm install -g npm@9  # 降级npm到稳定版
-            npm install --force --verbose
-          }
+          # 安装根目录依赖
+          npm install --force
           
-          # 强制安装主题依赖
-          if [ -d "themes/stellar" ]; then
-            echo "安装主题依赖..."
-            cd themes/stellar && npm install --force --verbose && cd ../../
-          else
-            echo "错误：主题目录themes/stellar不存在，无法继续"
-            exit 1
-          fi
+          # 安装主题依赖
+          cd themes/stellar && npm install --force && cd ../../
 
-      - name: 构建静态文件（带重试机制）
+      # 步骤5：构建静态文件（核心步骤）
+      - name: 生成public目录
         run: |
           # 清理旧构建
-          hexo clean || { echo "清理失败，继续尝试构建"; }
+          hexo clean
           
-          # 首次构建
-          echo "第一次尝试生成public目录..."
-          hexo generate --debug || {
-            # 构建失败时重试一次
-            echo "第一次构建失败，重试..."
-            hexo clean
-            hexo generate --debug || {
-              echo "第二次构建失败，输出错误日志..."
-              # 输出Hexo配置和错误日志
-              cat _config.yml || true
-              cat themes/stellar/_config.yml || true
-              exit 1
-            }
-          }
+          # 生成静态文件
+          echo "开始构建public目录..."
+          hexo generate
           
-          # 最终检查：public目录必须存在
+          # 验证构建结果
           if [ ! -d "public" ]; then
-            echo "致命错误：经过两次尝试，仍未生成public目录！"
-            echo "可能原因："
-            echo "1. Hexo或主题配置错误"
-            echo "2. 依赖安装不完整"
-            echo "3. 源代码中缺少必要的文章或页面"
+            echo "❌ 错误：构建失败，未生成public目录"
             exit 1
-          else
-            echo "public目录生成成功！内容如下："
-            ls -la public  # 显示生成的文件列表
-            # 检查是否有实际内容（至少10个文件/目录）
-            if [ $(ls -1 public | wc -l) -lt 10 ]; then
-              echo "警告：public目录内容过少，可能构建不完整"
-            fi
           fi
+          
+          if [ ! -f "public/index.html" ]; then
+            echo "❌ 错误：public目录中缺少index.html"
+            exit 1
+          fi
+          
+          echo "✅ public目录生成成功，内容如下："
+          ls -la public
 
+      # 步骤6：部署到GitHub Pages
       - name: 部署到GitHub Pages
-        if: success()  # 只有构建成功才部署
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          force_orphan: true
+          force_orphan: true  # 强制刷新分支
           keep_files: false
 
-      # 其他平台部署保持不变
+      # 步骤7：部署到Vercel（可选）
       - name: 部署到Vercel
         uses: amondnet/vercel-action@v25
         with:
@@ -111,8 +99,9 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./public
           vercel-args: '--prod'
-        continue-on-error: true
+        continue-on-error: true  # 非关键步骤，失败不影响整体
 
+      # 步骤8：部署到Cloudflare Pages（可选）
       - name: 部署到Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
@@ -121,4 +110,4 @@ jobs:
           projectName: ${{ secrets.CF_PROJECT_NAME }}
           directory: ./public
           branch: main
-        continue-on-error: true
+        continue-on-error: true  # 非关键步骤，失败不影响整体
