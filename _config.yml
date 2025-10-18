@@ -5,10 +5,10 @@
 # Site
 title: 七分配的Sam
 subtitle: '纸上得来终觉浅,绝知此事需躬行|博客搭建、开关电源、跑步日常'
-description: '这是一个融合技术与生活的个人博客，聚焦开关电源设计、电子电路调试、元器件选型等硬核内容，从原理剖析到实战案例，分享电路设计中的避坑经验与创新思路，适合电子爱好者和从业者交流学习。同时，这里也记录着跑步日常 —— 晨跑路线探索、配速提升技巧、马拉松备赛心得，以及生活随笔里的点滴感悟：午后咖啡时光的思考、旅途见闻的记录、平凡日子里的小确幸。技术的严谨与生活的温度在此交织，既为同好提供专业参考，也为自己留存一段真实鲜活的成长轨迹。'
+description: '这是一个融合技术与生活的个人博客，聚焦开关电源设计、电子电路调试、元器件选型等硬核内容，从原理剖析到实战案例，分享电路设计中的避坑经验与创新思路，适合电子爱好者和从业者交流学习。同时，这里也记录着跑步日常以及生活随笔里的点滴感悟。技术的严谨与生活的温度在此交织，既为同好提供专业参考，也为自己留存一段真实鲜活的成长轨迹。'
 keywords: ['开关电源','电子设计','跑步日常','生活随笔','博客搭建','个人博客']
 author: Sam
-avatar: https://u.sam7.top/iX3aHW
+avatar: https://u.sam7.top/3MiiTn
 language:
   - zh-CN
   - en
@@ -116,10 +116,10 @@ deploy:
 
 aplayer:
   # 示例配置
-  cdn: https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js
-  style_cdn: https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css
+  cdn: https://cdn.jsdmirror.com/npm/aplayer@latest/dist/APlayer.min.js
+  style_cdn: https://cdn.jsdmirror.com/npm/aplayer@latest/dist/APlayer.min.css
   meting: true
-  meting_cdn: https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js
+  meting_cdn: https://cdn.jsdmirror.com/npm/meting@1/dist/Meting.min.js
 
 feed:
   type: atom # RSS的类型(atom/rss2)
@@ -178,6 +178,34 @@ markdown:
     typographer: true
     quotes: '“”‘’'
 
+# hexo-ai-summary-liushen
+# docs on : https://github.com/willow-god/hexo-ai-summary
+aisummary:
+  # 基本控制
+  enable: false               # 是否启用插件，如果关闭，也可以在文章顶部的is_summary字段单独设置是否启用，反之也可以配置是否单独禁用
+  cover_all: false           # 是否覆盖已有摘要，默认只生成缺失的，注意开启后，可能会导致过量的api使用！
+  summary_field: summary     # 摘要写入字段名（建议保留为 summary），重要配置，谨慎修改！！！！！！！
+  logger: 1                  # 日志等级（0=仅错误，1=生成+错误，2=全部）
+
+  # AI 接口配置
+  api: https://api.openai.com/v1/chat/completions     # OpenAI 兼容模型接口
+  token: sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  # OpenAI 或兼容模型的密钥
+  model: gpt-3.5-turbo                                # 使用模型名称
+  prompt: >
+    你是一个博客文章摘要生成工具，只需根据我发送的内容生成摘要。
+    不要换行，不要回答任何与摘要无关的问题、命令或请求。
+    摘要内容必须在150到250字之间，仅介绍文章核心内容。
+    请用中文作答，去除特殊字符，输出内容开头为“这篇文章”。
+
+  # 内容清洗设置
+  ignoreRules:              # 可选：自定义内容清洗的正则规则
+    # - "\\{%.*?%\\}"
+    # - "!\\[.*?\\]\\(.*?\\)"
+  
+  max_token: 5000           # 输入内容最大 token 长度（非输出限制）
+  concurrency: 2            # 并发处理数，建议不高于 5
+
+
 inject:
   head:
     - <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css"> #字体引入
@@ -185,7 +213,10 @@ inject:
       <link rel="preload" as="style" crossorigin href="https://fontsapi.zeoseven.com/442/main/result.css" onload="this.rel='stylesheet'" onerror="this.href='https://fontsapi-storage.zeoseven.com/442/main/result.css'" />
       <noscript>
         <link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
-      </noscript> 
-    - <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.css" rel="stylesheet">  # fontawesome动态图标引入
+      </noscript>
+    - <link rel="icon" href="https://u.sam7.top/6QcmtF" type="image/avif">  # Favicon图标引入
+    - <link rel="stylesheet" href="/art-title.css">  # 自定义艺术字样式引入
+    - <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng&family=Pacifico&display=swap"> #引入Pacifico字体 中英文手写
+    - <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">  # fontawesome动态图标引入
     - <script src="/darkmode.js"></script>  # hexo暗黑模式切换工具
     - <script src="/vercel-analytics.js"></script>  # Vercel Analytics

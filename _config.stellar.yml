@@ -12,6 +12,7 @@ preconnect:
   - https://cdn.jsdelivr.net
   - https://gcore.jsdelivr.net
   - https://unpkg.com
+  - https://cdn.jsdmirror.com
 
 # 一旦设置源站地址，非源站地址将不会被SEO收录，并且访问时弹出提示
 # 如果访问地址不在备用站主机列表，则警告信息为非法克隆
@@ -276,10 +277,10 @@ comments:
   # https://giscus.app/zh-CN
   giscus:
     src: https://giscus.app/client.js
-    data-repo: sam7xx/sam7xx.github.io # [在此输入仓库]
-    data-repo-id: R_kgDOO7x7jQ # [在此输入仓库 ID]
+    data-repo:  # [在此输入仓库]
+    data-repo-id:  # [在此输入仓库 ID]
     data-category: Announcements # [在此输入分类名]
-    data-category-id: DIC_kwDOO7x7jc4Cu25Y
+    data-category-id: 
     data-mapping: pathname
     data-strict: 0
     data-reactions-enabled: 1
@@ -299,9 +300,9 @@ comments:
   # Waline
   # https://waline.js.org/
   waline:
-    js: https://unpkg.com/@waline/client@v3/dist/waline.js #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.js
-    css: https://unpkg.com/@waline/client@v3/dist/waline.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.css
-    meta_css: https://unpkg.com/@waline/client@v3/dist/waline-meta.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline-meta.css
+    js: https://cdn.jsdmirror.com/npm/@waline/client@v3/dist/waline.js #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.js
+    css: https://cdn.jsdmirror.com/npm/@waline/client@v3/dist/waline.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.css
+    meta_css: https://cdn.jsdmirror.com/npm/@waline/client@v3/dist/waline-meta.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline-meta.css
     # Waline server address url, you should set this to your own link
     serverURL: https://waline.sam7.top
     # If false, comment count will only be displayed in post page, not in home page
@@ -355,8 +356,8 @@ comments:
   # Artalk
   # https://artalk.js.org/
   artalk:
-    css: https://unpkg.com/artalk@2.9/dist/Artalk.css
-    js: https://unpkg.com/artalk@2.9/dist/Artalk.js
+    css: https://cdn.jsdmirror.com/npm/artalk@2.9/dist/Artalk.css
+    js: https://cdn.jsdmirror.com/npm/artalk@2.9/dist/Artalk.js
     server: # 后端服务地址
     site: '' # 站点名称
     darkMode: auto # 其它模式都有问题，慎用，否则后果自负
@@ -451,15 +452,15 @@ footer:
           }
           show_runtime();
           </script>
-          <!--不蒜子计数器-->
-          <script async src="https://cdn.bootcdn.net/ajax/libs/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+          <!--不蒜子计数器 https://ohevan.com/vercount-website-counter-busuanzi-alternative.html-->
+          <script defer src="https://vercount.one/js"></script>
           <!--添加一个访问量-->
           总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次
           <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span>
           </center>
           <div style="display: flex;justify-content: center;align-items: center;margin: 10px;">
-            <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/iNxx4M" data-src="https://u.sam7.top/iNxx4M" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
-            <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img class="lazy entered loaded" src="https://u.sam7.top/43dwwK" data-src="https://u.sam7.top/43dwwK" alt="只要保留原作者姓名并在基于原作创作的新作品适用同类型的许可协议，即可基于非商业目的对原作重新编排、改编或者再创作。" style="width:100px;height:35px" data-ll-status="loaded"></a>
+            <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/miGrfX" data-src="https://u.sam7.top/miGrfX" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
+            <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img class="lazy entered loaded" src="https://u.sam7.top/2BJDeW" data-src="https://u.sam7.top/2BJDeW" alt="只要保留原作者姓名并在基于原作创作的新作品适用同类型的许可协议，即可基于非商业目的对原作重新编排、改编或者再创作。" style="width:100px;height:35px" data-ll-status="loaded"></a>
           </div>
 
 
@@ -546,10 +547,10 @@ tag_plugins:
 
 # 基础依赖
 dependencies:
-  jquery: https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js
-  marked: https://gcore.jsdelivr.net/npm/marked@16/lib/marked.umd.min.js
+  jquery: https://cdn.jsdmirror.cn/npm/jquery@3.7/dist/jquery.min.js
+  marked: https://cdn.jsdmirror.cn/npm/marked@16/lib/marked.umd.min.js
   lazyload:
-    js: https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js
+    js: https://cdn.jsdmirror.com/npm/vanilla-lazyload@19.1/dist/lazyload.min.js
     transition: fade # blur, fade
     fix_ratio: true # true / false
 
@@ -626,15 +627,15 @@ plugins:
   preload:
     enable: true
     service: flying_pages # flying_pages
-    flying_pages: https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js
+    flying_pages: https://cdn.jsdmirror.cn/npm/flying-pages@2/flying-pages.min.js
 
   # https://fancyapps.com/docs/ui/fancybox/
   # available for {% image xxx %}
   fancybox:
     enable: true
     loader: /js/plugins/fancybox-loader.js
-    js: https://gcore.jsdelivr.net/npm/@fancyapps/ui@6/dist/fancybox/fancybox.umd.js
-    css: https://gcore.jsdelivr.net/npm/@fancyapps/ui@6/dist/fancybox/fancybox.css
+    js: https://cdn.jsdmirror.com/npm/@fancyapps/ui@6/dist/fancybox/fancybox.umd.js
+    css: https://cdn.jsdmirror.cn/npm/@fancyapps/ui@6/dist/fancybox/fancybox.css
     # 让 md 语法图片支持放大可以这样写: .md-text img:not([class]), .md-text .image img
     # 可以处理评论区的图片（不支持 iframe 类评论系统）例如：
     # 使用 twikoo 评论可以写: .tk-content img:not([class*="emo"])
@@ -645,7 +646,7 @@ plugins:
   swiper:
     enable: true
     css: https://unpkg.com/swiper@10.3/swiper-bundle.min.css
-    js: https://unpkg.com/swiper@10.3/swiper-bundle.min.js
+    js: https://cdn.jsdmirror.cn/npm/swiper@10.3/swiper-bundle.min.js
 
   # https://scrollrevealjs.org/api/reveal.html
   scrollreveal:
@@ -688,7 +689,7 @@ plugins:
   katex:
     enable: #true # hexo-renderer-markdown-it-plus 默认开启 katex，此选项仅用于引入样式
     inject: |
-      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/katex@0.16/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
   
   # MathJax
   # 需在Markdown文件开头加入mathjax: true
@@ -711,7 +712,7 @@ plugins:
     enable: # true # 可以在特定文章的 front-matter 中设置 mermaid: true 来开启，也可以在这里设置全局开启
     style_optimization: false # use custom style in stellar
     # js: https://unpkg.com/mermaid@9.0.0/dist/mermaid.min.js
-    js: https://gcore.jsdelivr.net/npm/mermaid@v9/dist/mermaid.min.js
+    js: https://cdn.jsdmirror.com/npm/mermaid@9.0.0/dist/mermaid.min.js
     # Available themes: default | dark | forest | neutral
     theme: neutral
   
@@ -726,8 +727,8 @@ plugins:
   # https://github.com/sivan/heti
   heti:
     enable: false # 此插件会和代码块冲突，仅适用于纯中文博主。
-    css: https://unpkg.com/heti@0.9/umd/heti.min.css
-    js: https://unpkg.com/heti@0.9/umd/heti-addon.min.js
+    css: https://cdn.jsdmirror.cn/npm/heti@0.9/umd/heti.min.css
+    js: https://cdn.jsdmirror.cn/npm/heti@0.9/umd/heti-addon.min.js
 
 
   tabs: true  # 确保这一行存在且为 true
@@ -763,10 +764,10 @@ style:
     link: 'hsl(207 90% 54%)' # 超链接颜色
   animated_avatar:
     animate: auto # auto, always
-    background: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp
+    background: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp
   codeblock:
     scrollbar: 4px
-    highlightjs_theme: https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.9/build/styles/atom-one-dark.min.css
+    highlightjs_theme: https://cdn.jsdmirror.com/gh/highlightjs/cdn-release@11.9/build/styles/atom-one-dark.min.css
   loading:
     loading: 正在加载
     error: 加载失败，请稍后重试。
@@ -780,9 +781,9 @@ style:
     blur-bg: var(--bg-a33)
     background-opacity: 1
   paginator:
-    prev: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/f049bbd4e88ec.svg
-    next: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/arrow/064b95430caf4.svg
-  error_page: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
+    prev: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/arrow/f049bbd4e88ec.svg
+    next: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/arrow/064b95430caf4.svg
+  error_page: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
   site: # 使用 background-image 后，blur 设置才有效
     background-color:  var(--background) #var(--bg-a11) var(--background)
     background-image:  #url(https://t.alcy.cc/fj)
@@ -799,13 +800,13 @@ style:
 
 
 default:
-  avatar: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg
-  link: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/link/8f277b4ee0ecd.svg
-  cover: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg
-  image: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg
-  project: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2779789.png
-  banner: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/banner/books.jpg
-  topic: https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/10433048.png
+  avatar: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg
+  link: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/link/8f277b4ee0ecd.svg
+  cover: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg
+  image: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/image/2659360.svg
+  project: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/image/2779789.png
+  banner: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/banner/books.jpg
+  topic: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/image/10433048.png
   loading: https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd
   # loading: https://github.githubassets.com/images/mona-loading-dark.gif
   image_onerror: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2rem' height='2rem' viewBox='0 0 24 24'%3E%3C!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --%3E%3Cpath fill='%23F44336' d='M22 12.698c-.002 1.47-.013 2.718-.096 3.743c-.097 1.19-.296 2.184-.74 3.009a4.2 4.2 0 0 1-.73.983c-.833.833-1.893 1.21-3.237 1.39C15.884 22 14.2 22 12.053 22h-.106c-2.148 0-3.83 0-5.144-.177c-1.343-.18-2.404-.557-3.236-1.39c-.738-.738-1.12-1.656-1.322-2.795c-.2-1.12-.236-2.512-.243-4.241Q1.999 12.737 2 12v-.054c0-2.148 0-3.83.177-5.144c.18-1.343.557-2.404 1.39-3.236s1.893-1.21 3.236-1.39c1.168-.157 2.67-.175 4.499-.177a.697.697 0 1 1 0 1.396c-1.855.002-3.234.018-4.313.163c-1.189.16-1.906.464-2.436.994S3.72 5.8 3.56 6.99C3.397 8.2 3.395 9.788 3.395 12v.784l.932-.814a2.14 2.14 0 0 1 2.922.097l3.99 3.99a1.86 1.86 0 0 0 2.385.207l.278-.195a2.79 2.79 0 0 1 3.471.209l2.633 2.37c.265-.557.423-1.288.507-2.32c.079-.972.09-2.152.091-3.63a.698.698 0 0 1 1.396 0' opacity='.5'/%3E%3Cpath fill='%23F44336' fill-rule='evenodd' d='M17.5 11c-2.121 0-3.182 0-3.841-.659S13 8.621 13 6.5s0-3.182.659-3.841S15.379 2 17.5 2s3.182 0 3.841.659S22 4.379 22 6.5s0 3.182-.659 3.841S19.621 11 17.5 11m-1.47-7.03a.75.75 0 1 0-1.06 1.06l1.47 1.47l-1.47 1.47a.75.75 0 0 0 1.06 1.06l1.47-1.47l1.47 1.47a.75.75 0 1 0 1.06-1.06L18.56 6.5l1.47-1.47a.75.75 0 0 0-1.06-1.06L17.5 5.44z' clip-rule='evenodd'/%3E%3C/svg%3E"

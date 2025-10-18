@@ -10,9 +10,9 @@ categories: 博客搭建
 
 ### 1. 构建工具安装准备
 
-#### 1.1 Node.js环境搭建 
+#### 1.1 Node.js环境搭建
 
-hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Node.js比较旧，需前往[Node.js ](https://nodejs.cn/en/download)官网按指引安装最新稳定版本。
+hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Node.js比较旧，需前往[Node.js](https://nodejs.cn/en/download)官网按指引安装最新稳定版本。
 
 由于本博主使用的是WSL子系统，这里选择Linux系统和nvm安装方式。
 
@@ -65,7 +65,7 @@ npm install -g @vue/cli # 全局安装 使用 -g 参数将包安装到系统范�
 
 #### 2.1 hexo安装以及初始化
 
-根据[Hexo](https://hexo.io/zh-cn/)官网安装指引，全局安装` npm install -g hexo@8.0.0`
+根据[Hexo](https://hexo.io/zh-cn/)官网安装指引，全局安装`npm install -g hexo@8.0.0`
 
 ```sh
 hexo init blog #初始化blog目录，目录一定为空。
@@ -92,7 +92,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 本站使用[Stellar](https://xaoxuu.com/wiki/stellar/comments/)主题构建，Stellar 是一个内置文档系统的简约商务风 Hexo 主题，支持丰富的标签和动态数据组件，帮助您简单从容地应对各种表达需求，十分推荐内容创作者使用 Stellar 开始您全新的博客之旅。
 
-{% link https://xaoxuu.com/wiki/stellar desc:true %}
+{% link <https://xaoxuu.com/wiki/stellar> "stellar主题文档" desc:true %}
 
 `npm i hexo-theme-stellar`安装稳定版本，安装路径位于`blog/node_modules/`文件夹内。
 
@@ -106,7 +106,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 ### 3. 网站统计
 
-**网页底部文章统计 **参考博主[BoBoBlog](https://blog.bxzdyg.cn/)文章
+**网页底部文章统计**参考博主[BoBoBlog](https://blog.bxzdyg.cn/)文章
 
 - 安装插件：npm i hexo-wordcount –save
 
@@ -132,7 +132,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
   <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span
   ```
 
-
+**网页访问统计**由于不蒜子老是挂，现在使用的是Vercount插件，不蒜子的优化版本。[Vercount: 一个比不蒜子更好的网站计数器 | EvanNotFound's Blog](https://ohevan.com/vercount-website-counter-busuanzi-alternative.html)
 
 {% tabs active:1 align:center %}
 
@@ -140,7 +140,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 需要修改主题配置文件，在`footer：→ content：`位置添加如下。内容
 
-![image-20251007081011784](https://u.sam7.top/4mae3A)
+![image-20251018141423327](https://u.sam7.top/NYCBsQ)
 
 <!-- tab 修改内容 -->
 
@@ -169,15 +169,15 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
           }
           show_runtime();
           </script>
-          <!--不蒜子计数器-->
-          <script async src="https://cdn.bootcdn.net/ajax/libs/busuanzi/2.3.0/bsz.pure.mini.js"></script>
+          <!--不蒜子计数器 https://ohevan.com/vercount-website-counter-busuanzi-alternative.html-->
+          <script defer src="https://vercount.one/js"></script>
           <!--添加一个访问量-->
           总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次
           <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span>
           </center>
           <div style="display: flex;justify-content: center;align-items: center;margin: 10px;">
-            <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://blog.bxzdyg.cn/assets/website/Written-By-Human-white.png" data-src="https://blog.bxzdyg.cn/assets/website/Written-By-Human-white.png" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
-            <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img class="lazy entered loaded" src="http://cdn.jsdelivr.net/gh/sam7xx/piclist@main/2025/by-nc-sa-eu.webp" data-src="https://blog.bxzdyg.cn/assets/website/by-nc-sa-eu.png" alt="只要保留原作者姓名并在基于原作创作的新作品适用同类型的许可协议，即可基于非商业目的对原作重新编排、改编或者再创作。" style="width:100px;height:35px" data-ll-status="loaded"></a>
+            <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/miGrfX" data-src="https://u.sam7.top/miGrfX" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
+            <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img class="lazy entered loaded" src="https://u.sam7.top/2BJDeW" data-src="https://u.sam7.top/2BJDeW" alt="只要保留原作者姓名并在基于原作创作的新作品适用同类型的许可协议，即可基于非商业目的对原作重新编排、改编或者再创作。" style="width:100px;height:35px" data-ll-status="loaded"></a>
           </div>
 ```
 
@@ -207,7 +207,7 @@ comments:
     css: https://unpkg.com/@waline/client@v3/dist/waline.css #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline.css
     meta_css: https://unpkg.com/@waline/client@v3/dist/waline-meta.css 		        #https://gcore.jsdelivr.net/npm/@waline/client@3.1/dist/waline-meta.css
     # Waline server address url, you should set this to your own link
-    serverURL: https://waline.sam7.top
+    serverURL: 
     # If false, comment count will only be displayed in post page, not in home page
     commentCount: true
     # Pageviews count, Note: You should not enable both `waline.pageview` and `leancloud_visitors`.
@@ -280,7 +280,7 @@ comments:
   --waline-dark-grey: #333333; /* 加深深灰色，增强与背景对比 */
   
   /* 主题色强化 - 使工具栏按钮更突出 */
-  --waline-theme-color: #333d4c; /* 稍深的主题色，增强按钮识别度 */
+  --waline-theme-color: #1859bbff; /* 稍深的主题色，增强按钮识别度 */
   --waline-active-color: #5d932b; /* 更鲜明的活跃色，突出点击状态 */
   
   /* 布局颜色 - 增强工具栏区域区分 */
@@ -291,7 +291,7 @@ comments:
   --waline-border-color: #cccccc; /* 稍深的边框，使工具栏元素边界更清晰 */
   --waline-disable-bgcolor: #f0f0f0;
   --waline-disable-color: #888888; /* 禁用状态颜色加深，明确不可用状态 */
-  --waline-code-bgcolor: #f8f8f8; /* 代码工具栏背景调整 */
+  --waline-code-bgcolor: #adaaaaff; /* 代码工具栏背景调整 */
   
   /* 特殊颜色 */
   --waline-bq-color: #f0f0f0;
@@ -354,13 +354,13 @@ comments:
     --waline-border-color: #383838; /* 更粗的视觉边框效果 */
     --waline-disable-bgcolor: #333333;
     --waline-disable-color: #999999; /* 禁用状态与可用状态明显区分 */
-    --waline-code-bgcolor: #1e1e1e; /* 代码块背景与主背景区分 */
+    --waline-code-bgcolor: #050810; /* 代码块背景与主背景区分 */
     
     /* 特殊颜色 - 增强区块感 */
     --waline-bq-color: #252525; /* 引用区块明显区分 */
     
     /* 主题色 - 在深色背景上更突出 */
-    --waline-theme-color: #5a6270;
+    --waline-theme-color: #2983beff;
     --waline-active-color: #7dd147; /* 更鲜艳的活跃色 */
     --waline-badge-color: #4da6ff; /* 徽章颜色更明亮 */
     
@@ -390,7 +390,7 @@ comments:
     
     /* 输入框强化 */
     .wl-editor {
-      background-color: #1e1e1e !important;
+      background-color: #050810 !important;
       border: 1px solid #383838 !important;
       color: #f0f0f0 !important;
     }
@@ -601,11 +601,11 @@ function layoutDiv() {
 
 {% endfolding %}
 
-![image-20251008112408678](https://u.sam7.top/aDG37B)
+![image-20251018133145461](https://u.sam7.top/ntjjmz)
 
 ### 6. 动态图标配置
 
-在主题配置文件_config.stellar.yml中增加以下css文件，引入font-awesome图标库。在[font-awesome v7 CDN](https://www.bootcdn.cn/font-awesome/)里面找一个CDN。
+在主题配置文件_config.stellar.yml中增加以下CSS文件，引入font-awesome图标库。在[font-awesome v7 CDN](https://www.bootcdn.cn/font-awesome/)里面找一个CDN。
 
 ``` yaml
 # 动态图标引入
@@ -625,19 +625,19 @@ footer:
       url : / 
 ```
 
-![image-20251008112814230](https://u.sam7.top/jcdy4M)
+![image-20251008112814230](https://u.sam7.top/WjAEkb)
 
-### 7. 图片、图床配置
+### 7. 图床、图片配置
 
-[ImgToLink+ ](https://imgtolinkx.com/)是一款免费、免登录图床软件，支持单个文件50M，返回短链。
+- [ImgToLink+](https://imgtolinkx.com/)是一款免费、免登录图床软件，支持单个文件50M，返回短链。
 
-[16图床，永久免费，无需登录的图床](https://111666.best/)免费的往往很容易挂掉，用作评论区上传图床临时用可以。
+![image-20251018221547852](https://u.sam7.top/QZjdN7)
 
-![image-20251008104830714](https://u.sam7.top/azsQm6)
+- [16图床，永久免费，无需登录的图床](https://111666.best/)免费的往往很容易挂掉，用作评论区上传图床临时用可以。
 
-![image-20251008104849158](https://u.sam7.top/ykdJx4)
+  ![image-20251018221644226](https://u.sam7.top/siiZmD)
 
-Cloudflare好像也有免费的image服务。
+- Cloudflare好像也有免费的image服务。
 
 #### 7.1 Piclist Github图床配置
 
@@ -645,28 +645,46 @@ Cloudflare好像也有免费的image服务。
 
 typora图片设置如下，插入图片时直接上传piclist图床，然后自动转义图片url。
 
-![image-20251008103203719](https://u.sam7.top/XQfetQ)
+![image-20251018222011517](https://u.sam7.top/mTDhyZ)
 
 [PicList](https://piclist.cn/)主页下载安装最新版，选择Github图床搭建，参考[PicGo/PicList + Github 搭建图床 | Theo Docs](https://doc.theojs.cn/notes/build-picture-bed)
 
-piclist设置
+piclist相关设置
 
 - piclist设置图片最大800px宽度，大于800压缩至800，小于800不处理。
 
-- 使用https://cdn.jsdelivr.net/gh加速Github图床。
+- 使用`https://cdn.jsdmirror.com/gh`加速Github图床。
 - 上传成功直接复制url链接
+- 开启时间戳重命名
+- 添加图片水印
+- 使用短链接
+- 图片格式转换成压缩率更高的AVIF格式
 
-#### 7.2 waline评论图床上传
+#### 7.2 搭建图床短链接
 
-开启waline评论区图床上传，图片能上传成功，但是的识别不了链接。 已经关掉了，PicList回传的不是json，只能选择URL、markdown格式。
+为什么要用短链，部分平台（尤其是社交平台、论坛、旧版编辑器）对 URL 长度或格式有严格限制，包含特殊字符（如 `?` `&` `/`）的长链接，可能被平台误判为 “恶意链接” 而拦截，且原始图床链接可能泄露敏感信息。
 
- #### 7.3 fancybox设置
+piclist上传的图片链接也是一堆乱码，widowns文件系统目录`\`被转义，可以按时间戳重命名图像名称，也可以搭建短链接网站。
 
-stellar集成fancybox灯箱插件，可以默认全局打卡，可以在放大网页上面的图片，功能很多。
+参考[xyTom/Url-Shorten-Worker](https://github.com/xyTom/Url-Shorten-Worker/) 主页wiki和[用cloudflare搭建短链接网站](https://blog.houzhongcheng.com/2025/05/30/用cloudflare搭建短链接网站.html)搭建。
+
+![image-20251018112143204](https://u.sam7.top/erBf5k)
+
+![image-20251018105813478](https://u.sam7.top/AEF2tc)
+
+#### 7.3 waline评论图床上传
+
+开启waline评论区图床上传，图片能上传成功，但是的识别不了链接。
+
+已经关掉了，PicList回传的不是json，只能选择URL、markdown格式。
+
+#### 7.4 fancybox设置
+
+stellar集成fancybox灯箱插件，可以在放大网页上面的图片，功能很多。
 
 [Stellar：表达类标签组件（33+个） - XAOXUU](https://xaoxuu.com/wiki/stellar/tag-plugins/express/#image-图片标签) stellar wiki介绍很详细。
 
-md语法图片格式支持
+md语法图片格式支持默认全局打开，有个问题就是点击文章海报图片也会放大。
 
 ```yml 主题配置文件
 plugins:
@@ -682,22 +700,6 @@ plugins:
     # 使用 waline 评论可以写: #waline_container .vcontent img
     selector: .timenode p>img, waline_container .vcontent img, .custom-image-container a, .md-text img:not([class]), .md-text .image img # 多个选择器用英文逗号隔开
 ```
-
-![image-20251008112911912](https://u.sam7.top/PwYb5s)
-
-#### 7.4 图床短链接设置
-
-为什么要用短链，部分平台（尤其是社交平台、论坛、旧版编辑器）对 URL 长度或格式有严格限制，包含特殊字符（如 `?` `&` `/`）的长链接，可能被平台误判为 “恶意链接” 而拦截，且原始图床链接可能泄露敏感信息。
-
-piclist上传的图片链接也是一堆乱码，widowns文件系统目录`\`被转义，目前版本时间戳重命名失效，故搭建短链接网站。
-
-参考[xyTom/Url-Shorten-Worker](https://github.com/xyTom/Url-Shorten-Worker/) 主页wiki和[用cloudflare搭建短链接网站 ](https://blog.houzhongcheng.com/2025/05/30/用cloudflare搭建短链接网站.html)搭建。
-
-![image-20251008105931690](https://u.sam7.top/8QTfK6)
-
-![image-20251008110514066](https://u.sam7.top/i5HGpp)
-
-
 
 ### 8. 侧边栏配置
 
@@ -738,6 +740,8 @@ footer:
       title: '友链'
       url: '/friends'
 ```
+
+![image-20251018133033178](https://u.sam7.top/GGHPGQ)
 
 #### 8.2 侧边栏组件
 
@@ -780,7 +784,7 @@ welcome:
 
 #### 9.1 启用主导航栏菜单
 
-主题配置文件中设置如下，使用fontawesome图标。 
+主题配置文件中设置如下，使用fontawesome图标。
 
 ```yaml 主题配置文件
 menubar:
@@ -802,6 +806,10 @@ menubar:
       title: 笔记
       url: /note
 ```
+
+效果展示
+
+![image-20251018225127149](https://u.sam7.top/hGbYrj)
 
 #### 9.2 主导航栏下拉菜单设置
 
@@ -1171,13 +1179,102 @@ function layoutDiv() {
 
 图标也不能正常显示，凑合用吧。
 
-![image-20251007111137401](https://u.sam7.top/W4yZJe)
+![image-20251018130238736](https://u.sam7.top/Bh3YjH)
+
+#### 9.3 网站设置
+
+- 根目录配置文件中，修改以下内容。
+
+```yaml 根目录配置文件
+title: #博客名称
+subtitle: '纸上得来终觉浅,绝知此事需躬行|文本2' #鼠标移至副标题区域即可显示文本2内容
+description: '博客描述'
+keywords: ['','','','','',''] #关键词，方便搜索引擎抓取
+author: Sam #作者名字
+avatar: https://u.sam7.top/3MiiTn #头像
+language:
+  - zh-CN
+  - en
+timezone: 'Asia/Shanghai' #时区
+
+```
+
+- 网站标题艺术字设置
+
+  - 在主题source目录下新建`art-title.css`,新增以下内容
+
+    ```css art-title.css
+    div.main {
+      /* 中英文统一手写字体（保持风格一致） */
+      font-family: "Ma Shan Zheng", "Pacifico", cursive !important;
+      font-size: 36px !important;
+      font-weight: normal !important;
+      line-height: 1.3 !important;
+    
+      /* 红色到紫色渐变（主色调调整） */
+      background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #8e44ad, #f39c12) !important;
+      background-size: 70% 70% !important; /* 适配渐变流动动画 */
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      color: transparent !important; /* 核心：文字透明显示渐变 */
+    
+      /* 阴影增强层次感 */
+      text-shadow: 0 2px 5px rgba(0,0,0,0.15) !important;
+    
+      /* 渐变流动动画 */
+      animation: gradientShift 7s ease infinite !important;
+      display: inline-block !important;
+    }
+    
+    /* 动画关键帧 */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* 悬停强化效果 */
+    div.main:hover {
+      text-shadow: 0 3px 8px rgba(0,0,0,0.2) !important;
+      transform: scale(1.05) !important;
+      transition: all 0.3s ease !important;
+    }
+    ```
+
+  - 然后在根目录配置文件增加以下内容，将中英文手写字体和art-title.css引入head标签内。
+
+``` yaml 根目录配置文件
+inject:
+  head:
+  	- <link rel="stylesheet" href="/art-title.css">  # 自定义艺术字样式引入
+    - <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng&family=Pacifico&display=swap"> #引入Pacifico字体 中英文手写
+```
+
+
+
+
+
+#### 9.4 网页标签小图标设置
+
+- 让豆包生成一个logo图标，修改为成128x128px，像素小加载快。
+
+  ![创建极简线条风标识](https://u.sam7.top/6QcmtF)
+
+- 然后在根目录配置文件增加以下内容，将Favicon图标引入head标签内。
+
+  ```yaml 根目录配置文件
+  inject:
+    head:
+    	- <link rel="icon" href="https://u.sam7.top/6QcmtF" type="image/avif">  # Favicon图标引入
+  ```
+
+  
 
 ### 10. 顶部导航栏显示异常
 
-浏览器设置浅色模式，主题切换为深色，顶部导航栏字体看起来比较奇怪，navbra.styl修改，`.navbar-blur `取消模糊效果。
+浏览器设置浅色模式，主题切换为深色，顶部导航栏字体看起来比较奇怪，navbra.styl修改，`.navbar-blur`取消模糊效果。
 
-![image-20251008154634368](https://u.sam7.top/AKRE74)
+![image-20251018130314321](https://u.sam7.top/pGMf3Y)
 
 ```stylus navbar.styl
 // 顶栏容器样式（替代newblur()的背景）
@@ -1194,13 +1291,7 @@ function layoutDiv() {
 
 ### 11. 页面布局调整
 
-{% tabs %}
-
-<!-- 调整内容 -->
-
-在主题样式`custom.styl`中添加`$leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，单位px/rem）`
-
-调整主内容界面宽度为1080px，侧边栏宽度最大为277px，元素内部和外部距离都调整为15px。
+- 在主题样式`custom.styl`中添加`$leftbar-bottom-margin = 20px）`,调整主内容界面宽度为1080px，侧边栏宽度最大为277px，元素内部和外部距离都调整为15px。
 
 ```stylus custom.styl
 $leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，单位px/rem）
@@ -1218,7 +1309,7 @@ $leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，�
   --gap-padding: 11px // 元素内部间距（内容到边框距离）
 ```
 
-同时在layout.styl中添加如下内容，高度随内容自适应，且底部有适度留白，兼顾功能和美观。
+- 同时还需要在layout.styl中添加如下内容，高度随内容自适应，且底部有适度留白，兼顾功能和美观。
 
 ```stylus layout.styl
 // 普通屏幕布局
@@ -1232,13 +1323,9 @@ $leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，�
       padding-bottom: 8px; // 少量底部内边距（按需调整）
 ```
 
-<!-- 调整效果 -->
+- 调整后页面整体效果如下
 
-![image-20251006213402017](https://u.sam7.top/R8jahB)
-
-{% endtabs %}
-
-
+<img src="https://u.sam7.top/ZdpH23" alt="image-20251018132921523" style="zoom: 67%;" />
 
 ### 12. 添加音乐播放器
 
@@ -1254,13 +1341,14 @@ aplayer:
   meting: true
   meting_cdn: https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js
 ```
-在想要添加音乐播放器的位置添加以下代码块，这个一个网易云歌单。
+
+在想要添加音乐播放器的位置添加以下代码块，这是一个md格式的网易云歌单，有时候会和toc有冲突，无法实现跳转。
 
 ```markdown
 {% meting "14222331844" "netease" "playlist" "autoplay"  "mutex:true" "listmaxheight:340px" "lrctype:0" "preload:none" "theme:#1cd0fd" "storagename:metingjs"%} 
 ```
 
-{% meting "14222331844" "netease" "playlist" "autoplay"  "mutex:true" "listmaxheight:340px" "lrctype:0" "preload:none" "theme:#1cd0fd" "storagename:metingjs"%} 
+![image-20251018130415394](https://u.sam7.top/MKB4bw)
 
 修改主题样式文件`aplayer.styl`，修改播放器参数，播放器颜色跟随系统主题。
 
@@ -1538,7 +1626,7 @@ aplayer:
 - `color` ：线条颜色, 默认: `'0,0,0'`；三个数字分别为(R,G,B)
 - `opacity`: 线条透明度（0~1）, 默认: `0.5`
 - `count`: 线条的总数量, 默认: `150`
-- `zIndex:` 背景的z-index属性，css属性用于控制所在层的位置, 默认: `-1`
+- `zIndex:` 背景的z-index属性，CSS属性用于控制所在层的位置, 默认: `-1`
 
 终端运行hexo clean 清除缓存，hexo g&hexo s渲染网页后本地预览。
 
@@ -1552,7 +1640,7 @@ aplayer:
 
 能够解决中文网页标题转义的现象，并且创建文章自动添加abbrlink
 
-```
+```bash
 npm install hexo-abbrlink --save
 ```
 
@@ -1575,10 +1663,10 @@ permalink_defaults:
 
 | 算法  | 进制 | 生成链接示例                                 |
 | ----- | ---- | -------------------------------------------- |
-| crc16 | hex  | https://yourname.github.io/p/66c8.html       |
-| crc16 | dec  | https://yourname.github.io/p/65535.html      |
-| crc32 | hex  | https://yourname.github.io/p/8ddf18fb.html   |
-| crc32 | dec  | https://yourname.github.io/p/1690090958.html |
+| crc16 | hex  | <https://yourname.github.io/p/66c8.html>       |
+| crc16 | dec  | <https://yourname.github.io/p/65535.html>      |
+| crc32 | hex  | <https://yourname.github.io/p/8ddf18fb.html>   |
+| crc32 | dec  | <https://yourname.github.io/p/1690090958.html> |
 
 ### 15. 主题深浅色切换
 
@@ -1727,6 +1815,20 @@ x-set-text-colors($scheme, $p0 = 1, $p1 = 0.8, $p2 = 0.7, $p3 = 0.5, $p4 = 0.4)
   --block: x-hsla($hue, $sat, $light, $alpha)
   --block-border: x-hsla($hue, $sat, $light, $alpha * 1.5)
 
+// 设置图片滤镜 - 深色模式图片背景为#31383A，对比度更低
+x-set-image-filters($scheme)
+  if $scheme == 'dark'
+    --image-filter: invert(1) hue-rotate(180deg)
+    --image-brightness: 0.65  // 降低亮度，使背景接近#31383A
+    --image-contrast: 0.85    // 进一步降低对比度
+    --image-saturate: 0.9     // 稍微降低饱和度
+    --image-filter-value: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.9)
+  else
+    --image-filter: none
+    --image-brightness: 1
+    --image-contrast: 1
+    --image-saturate: 1
+    --image-filter-value: none
 
 // ---------------- apply theme ----------------
 // 设置浅色模式
@@ -1737,6 +1839,7 @@ dynamic-theme-light()
 
   x-set-bg-colors('light')
   x-set-text-colors('light')
+  x-set-image-filters('light')
 
 // 设置深色模式
 dynamic-theme-dark()
@@ -1748,8 +1851,8 @@ dynamic-theme-dark()
 
   x-set-bg-colors('dark')
   x-set-text-colors('dark')
+  x-set-image-filters('dark')
   --text-code: x-hsla(20, 75, 60, 1)
-
 
 :root
   // 主题色
@@ -1764,11 +1867,89 @@ dynamic-theme-dark()
   @media (prefers-color-scheme: dark)
     dynamic-theme-dark()
 
-
 :root[data-theme="light"]
   dynamic-theme-light()
+
 :root[data-theme="dark"]
   dynamic-theme-dark()
+
+// ========== 图片主题变化解决方案 ==========
+
+// 深色模式下的图片滤镜应用 - 背景为#31383A，对比度更低，保护左侧栏
+:root[data-theme="dark"]
+  // 应用滤镜到内容区域的图片
+  .post-content img,
+  .article-content img,
+  .entry-content img,
+  .markdown-body img,
+  .content img,
+  .post-body img,
+  [class*="content"] img:not(.no-theme):not(.emoji)
+    filter: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.9)
+    transition: filter 0.3s ease
+  
+  // 保护左侧栏和其他UI元素
+  .sidebar img,
+  .widget img,
+  .navbar img,
+  .header img,
+  .footer img,
+  .avatar,
+  .logo,
+  .site-brand img,
+  .site-logo img,
+  .author-avatar img,
+  .no-theme
+    filter: none !important
+
+  // 对于需要更浅背景的图片
+  img[data-light-bg],
+  .light-bg-img
+    filter: invert(1) hue-rotate(180deg) brightness(0.8) contrast(0.9) saturate(0.95) !important
+  
+  // 对于需要保持较深背景的图片
+  img[data-dark-bg],
+  .dark-bg-img
+    filter: invert(1) hue-rotate(180deg) brightness(0.5) contrast(0.8) saturate(0.85) !important
+
+// 表情图片不随主题变化
+.emoji,
+.emoticon,
+[class*="emoji"],
+[class*="emoticon"],
+img[src*="emoji"],
+img[src*="emoticon"],
+img[data-emoji]
+  filter: none !important
+
+// 方法2: 使用CSS变量（如果浏览器支持）
+img.theme-aware:not(.emoji)
+  filter: var(--image-filter-value)
+  transition: filter 0.3s ease
+
+// 方法3: 为特定类型的图片添加主题支持
+.themed-image:not(.emoji)
+  :root[data-theme="dark"] &
+    filter: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.9)
+    transition: filter 0.3s ease
+  
+  :root[data-theme="light"] &
+    filter: none
+    transition: filter 0.3s ease
+
+// 确保左侧栏图片不受影响
+.sidebar,
+.widget,
+.navbar,
+.header,
+.footer
+  img
+    filter: none !important
+
+// 额外选项：如果需要完全禁用某些图片的主题变化
+.no-theme,
+[data-no-theme]
+  filter: none !important
 
 ```
 
@@ -1859,7 +2040,7 @@ style:
 
     [终身免费 ORG 顶级域名申请 - YOLOのBLOG](https://blog.felicx.eu.org/2502663362.html)
 
-    提交域名申请已经过去几周了，还没通过审核，石沉大海了，新注册账号都没有通过。
+    提交域名申请已经过去一个月了，还没通过审核，石沉大海了。
 
 - [Cloudns]免费二级域名
 
@@ -1871,11 +2052,11 @@ style:
 
 - [DigitalPlat]免费域名
 
-​	[DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
+ [DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
 
-​	[使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
+ [使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
 
-​	DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，虽然是二级域名，但可以被cloudflare、vercel托管。
+ DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，虽然是二级域名，但可以被cloudflare、vercel托管。
 
 - 购买域名
 
@@ -1887,7 +2068,7 @@ style:
 
 可用于搜索引擎和友链拉取动态`npm i hexo-generator-feed`安装插件，根目录下配置文件添加如下内容
 
-```yaml _config.yml 
+```yaml _config.yml
 blog/_config.yml
 feed:
   type: atom # RSS的类型(atom/rss2)
@@ -1901,7 +2082,7 @@ feed:
 
 然后在主题配置文件中加入以下内容，添加左侧栏footer小图标：
 
-```yaml _config.stellar.yml 
+```yaml _config.stellar.yml
 footer:
   social:
 	rss:

@@ -9,19 +9,25 @@ date: 2025-10-07 12:17:21
 ---
 
 ### 0. 前言
+
 Hexo 部署是将本地生成的静态博客内容发布到服务器或托管平台的过程，常见的部署目标包括 GitHub Pages、Netlify、Vercel、Cloudflare Pages 等。以下是详细的部署步骤和常见问题解决方案，实现一次推送完成GitHub Pages、Vercel、Cloudflare Pages 三个平台部署。
+
 ### 1. 部署前提
-- **Github/Vercel/Cloudflare **账号,免费额度个人博客够用了。
+
+- **Github/Vercel/Cloudflare**账号,免费额度个人博客够用了。
 - 一个 **Git 仓库**（GitHub、GitLab 均可），存放你的 Hexo 源代码（非 `public` 目录，需包含 `_config.yml`、`package.json`、`source` 等核心文件）。
 - 本地已完成 Hexo 博客搭建，能通过 `hexo g` 生成 `public` 目录（确保本地构建正常）。
 
 ### 2. 部署到 GitHub Pages
+
 适合个人博客，免费但有时候不太稳定，当备用站使用，具体操作步骤如下：
+
 - 在Github新建仓库，仓库名为  `yourname.github.io`，确保仓库为公共仓库。
 然后在仓库设置中打开Github Pages功能。
 - 然后在博客文件夹下安装部署插件`npm install hexo-deployer-git --save`
 
 - 修改 `_config.yml`主题配置文件`deploy`信息，详细配置如下。
+
 ```yaml 主题配置文件
 deploy:
    type: git
@@ -29,7 +35,8 @@ deploy:
    branch: main  # 部署分支（默认 main 或 master，根据仓库设置调整）
    message: "Hexo deploy: {{ now('YYYY-MM-DD HH:mm:ss') }}"  # 提交信息（可选）
 ```
-- 终端执行` hexo clean && hexo g && hexo d  # 清理、生成、部署` ，部署成功后，访问 `https://yourname.github.io` 即可看到博客，也可以重定向绑定自己的域名，由Cloudflare托管。
+
+- 终端执行`hexo clean && hexo g && hexo d  # 清理、生成、部署` ，部署成功后，访问 `https://yourname.github.io` 即可看到博客，也可以重定向绑定自己的域名，由Cloudflare托管。
 
 ### 3. 部署到 Cloudflare Pages
 
@@ -56,6 +63,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
    Thumbs.db
    EOF
    ```
+
 - **提交并推送代码到远程仓库**：
 
    ```bash 终端
@@ -71,27 +79,30 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
 #### 3.2 Cloudflare 创建 Pages
 
-   - 注册Cloudflare账号，登录后进入 [Cloudflare Pages](https://dash.cloudflare.com/) → 点击 **Create a project** → 关联你的 Git 仓库。
-   - **构建配置**：
-     - 框架预设：没有Hexo选项，空着。
-     - 构建命令：`npm install && npm run build`这里执行安装`package.json`里面的插件和命令。
-     - 输出目录：`public`
-     - 环境变量：`NODE_VERSION=22`控制nodejs版本与你构建一致
-     - 根目录：留空默认/
+- 注册Cloudflare账号，登录后进入 [Cloudflare Pages](https://dash.cloudflare.com/) → 点击 **Create a project** → 关联你的 Git 仓库。
+- **构建配置**：
+  - 框架预设：没有Hexo选项，空着。
+  - 构建命令：`npm install && npm run build`这里执行安装`package.json`里面的插件和命令。
+  - 输出目录：`public`
+  - 环境变量：`NODE_VERSION=22`控制nodejs版本与你构建一致
+  - 根目录：留空默认/
 
 #### 3.3 部署与访问
 
 点击 **Save and Deploy**，等待构建完成后，通过 Cloudflare 分配的域名（如 `xxx.pages.dev`）访问。
 若你有自己的域名（如 `blog.example.com`），可绑定到 Cloudflare Pages，实现全球代理发送你的网站：
+
 - 将域名解析到 Cloudflare， 在 Cloudflare 控制台 → **Websites** → 点击 **Add a site**，输入你的域名（如 `example.com`），按提示完成 DNS 解析配置（将域名服务器改为 Cloudflare 提供的服务器）。
 
 - 在 Pages 项目中绑定域名，进入你的 Pages 项目 → **Custom domains** → **Set up a custom domain** → 输入子域名（如 `blog.example.com`）→ 点击 **Add custom domain**。Cloudflare 会自动添加 DNS 记录（CNAME 指向 `项目名.pages.dev`），并配置免费 SSL 证书（几分钟后生效）。
 
 - 更新 Hexo 配置，为避免静态资源路径错误，需修改 Hexo 根目录的 `_config.yml`：
+
    ```yaml
    url: https://blog.example.com  # 改为你的自定义域名
    root: /  # 保持默认
    ```
+
    推送修改后，Cloudflare 会自动重新构建，确保资源路径正确。
 
 ### 4. 部署到 Netlify/Vercel
@@ -99,19 +110,20 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 #### 4.1 Netlify部署
 
 这两个平台均支持自动构建部署，比Cloudflare简单，大概步骤类似，默认设置点点点搞定，目前Vercel作为备用站：
+
 - 在 Netlify/Vercel 控制台导入 Hexo 源代码仓库。
 
 - **配置构建参数**
   
-   - 框架预设：`hexo`
-   - 构建命令：`hexo generate`
-   - 输出目录：`public`
-   
+  - 框架预设：`hexo`
+  - 构建命令：`hexo generate`
+  - 输出目录：`public`
+
 - **部署**
 
    平台会自动安装依赖（`npm install`）并执行构建，完成后提供临时域名，支持绑定自定义域名。
 
-#### 4.2 集成 Vercel 分析工具 
+#### 4.2 集成 Vercel 分析工具
 
 在 Hexo 中集成 Vercel 分析工具 `@vercel/analytics` 需要通过修改主题模板，将分析代码注入到所有页面中（因为 Hexo 是静态站点生成器，需确保代码被打包到最终生成的 HTML 里）。具体步骤如下：
 
@@ -331,6 +343,7 @@ jobs:
             exit 1
           fi
 ```
+
 {% endfolding %}
 
 - 推送代码触发自动部署
@@ -341,6 +354,7 @@ git add .github/workflows/deploy.yml
 git commit -m "Add auto-deploy workflow to 3 platforms"
 git push origin main
 ```
+
 也可以写入脚本`deploy.sh`，放在博客根目录，更新博客后终端执行./deploy.sh即可完成代码推送至Github。
 {% folding 查看代码 %}
 
@@ -403,13 +417,14 @@ main() {
 }
 main "$@"
 ```
+
 {% endfolding %}
 
 - 查看部署状态
 
 - 部署进度：GitHub 仓库 → `Actions` → 选择当前工作流 → 查看实时日志。
 
-    ![image-20251008140032841](https://u.sam7.top/dJ8twb)
+    ![image-20251017221817925](https://u.sam7.top/t362xw)
 
 - 结果验证：
   - GitHub Pages：访问 `https://<用户名>.github.io/<仓库名>`
@@ -420,33 +435,33 @@ main "$@"
 
     查看 GitHub Actions 日志中的错误信息，常见问题：
 
-    - 凭证错误（Secrets 名称或值不正确）
-    - 构建命令失败（依赖安装错误，需检查 `package.json`）
-    - 静态文件目录错误（确保 `publish_dir` 与实际输出目录一致）
+  - 凭证错误（Secrets 名称或值不正确）
+  - 构建命令失败（依赖安装错误，需检查 `package.json`）
+  - 静态文件目录错误（确保 `publish_dir` 与实际输出目录一致）
 
 通过此配置，每次向 `main` 分支推送代码时，GitHub Actions 会自动完成构建并同步部署到三个平台，实现 “一次推送，多平台联动更新”。
 
 #### 5.3  常见问题与解决
 
 - **部署后页面空白 / 样式丢失**
-   - 原因：`_config.yml` 中 `url` 配置错误，或静态资源路径引用问题。
-   - 解决：确保 `url` 与实际域名一致（如 `url: https://yourname.github.io`），并执行 `hexo clean` 重新生成。
+  - 原因：`_config.yml` 中 `url` 配置错误，或静态资源路径引用问题。
+  - 解决：确保 `url` 与实际域名一致（如 `url: https://yourname.github.io`），并执行 `hexo clean` 重新生成。
 
 - **平台构建失败（提示缺少依赖）**
-   - 原因：`package.json` 未提交到仓库，或依赖未正确声明。
-   - 解决：确保 `package.json` 和 `package-lock.json` 已提交，必要时在构建命令前加 `npm install`（如 `npm install && hexo generate`）。
+  - 原因：`package.json` 未提交到仓库，或依赖未正确声明。
+  - 解决：确保 `package.json` 和 `package-lock.json` 已提交，必要时在构建命令前加 `npm install`（如 `npm install && hexo generate`）。
 
 - **部署后 404 错误**
-   - 原因：部署分支或输出目录配置错误。
-   - 解决：确认 GitHub Pages 指向的分支正确（如 `main`），或 Cloudflare/Netlify 的输出目录为 `public`。
+  - 原因：部署分支或输出目录配置错误。
+  - 解决：确认 GitHub Pages 指向的分支正确（如 `main`），或 Cloudflare/Netlify 的输出目录为 `public`。
 
 - **Github 自动部署jekyll构建问题**
 
-   ![image-20251008100720419](https://u.sam7.top/k5JJSc)
+   ![image-20251017222248947](https://u.sam7.top/ZsxpAJ)
 
-   - 原因：Github默认使用jekyll主题构建，识别到主题不是jekyll报错。
-   - 解决：可以生成一个.nojekyll文件来禁用jekyll部署，再工作流中增加public文件下.nojekyll
-   - 根目录也添加 `.nojekyll`（双重保险）,虽然工作流已在 `public` 目录生成 `.nojekyll`，但可在仓库根目录也添加一个，防止 GitHub 误读：
+  - 原因：Github默认使用jekyll主题构建，识别到主题不是jekyll报错。
+  - 解决：可以生成一个.nojekyll文件来禁用jekyll部署，再工作流中增加public文件下.nojekyll
+  - 根目录也添加 `.nojekyll`（双重保险）,虽然工作流已在 `public` 目录生成 `.nojekyll`，但可在仓库根目录也添加一个，防止 GitHub 误读：
 
    ```bash
    # 本地仓库根目录执行
@@ -461,7 +476,7 @@ main "$@"
 ### 6. **笔记**
 
 - - 本地 Git 仓库应跟踪 Hexo 源代码（`_config.yml`、`source`、`themes` 等），而非 `public` 目录（可在 `.gitignore` 中忽略）。
-   - 部署平台通过源代码自动构建生成 `public` 目录，避免手动上传静态文件。
+  - 部署平台通过源代码自动构建生成 `public` 目录，避免手动上传静态文件。
   
 - **定期备份配置**
 
@@ -483,12 +498,11 @@ main "$@"
    git commit -m "Update blog content"
    git push origin main
    ```
+
    推送后，在 Cloudflare Pages 控制台的 **Deployments** 页面会看到新的构建任务，完成后博客会自动更新。
    通过以上步骤，可顺利将 Hexo 博客部署到主流平台。若遇到具体错误，可结合部署日志（如平台提供的构建日志）定位问题，重点检查配置文件和依赖是否正确。
 
-### **7. 总结**
+### 7. 总结
 
 以上几种部署 Hexo 的核心流程是：**Git 仓库关联 → 配置构建参数 → 自动构建部署**。其优势在于依托于Cloudflare Pages 免费、全球 CDN 加速、自动部署和简单的域名绑定。按上述步骤操作，即使是新手也能顺利完成部署，且国内访问速度优于 GitHub Pages。若遇到具体错误，可在 Cloudflare Pages 的 **Deployments** 页面查看详细日志，针对性解决即可。
-
-
 
