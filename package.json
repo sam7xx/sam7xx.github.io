@@ -14,7 +14,7 @@
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
     "axios": "^1.12.2",
-    "core-js": "^3.45.1",
+    "core-js": "^3.46.0",
     "eslint": "^9.36.0",
     "glob": "^11.0.3",
     "hexo": "^8.0.0",
