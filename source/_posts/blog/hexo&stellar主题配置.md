@@ -614,7 +614,7 @@ inject:
     - <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.css" rel="stylesheet">  # fontawesome动态图标引入
 ```
 
- 图标格式张这样`<i class="fa-solid fa-github fa-brands fa-bounce"></i>`，然后就可以在想要添加图标的地方使用了，[Font Awesome](https://fontawesome.com/)主页搜索相应的图标，大部分都是免费的。
+ 图标格式张这样`<i class="fa-solid fa-github fa-brands fa-bounce"></i>`，然后就可以在想要添加图标的地方使用了，[Font Awesome](https://fontawesome.com/)主页搜索相应特性的图标，大部分都是免费的。
 
 ```yaml
 footer: 
@@ -1191,7 +1191,7 @@ subtitle: '纸上得来终觉浅,绝知此事需躬行|文本2' #鼠标移至副
 description: '博客描述'
 keywords: ['','','','','',''] #关键词，方便搜索引擎抓取
 author: Sam #作者名字
-avatar: https://u.sam7.top/3MiiTn #头像
+avatar: /path/x.avif #头像
 language:
   - zh-CN
   - en
@@ -1254,7 +1254,7 @@ inject:
 
 
 
-#### 9.4 网页标签小图标设置
+#### 9.4 网页小图标
 
 - 让豆包生成一个logo图标，修改为成128x128px，像素小加载快。
 
@@ -1268,7 +1268,9 @@ inject:
     	- <link rel="icon" href="https://u.sam7.top/6QcmtF" type="image/avif">  # Favicon图标引入
   ```
 
-  
+- 效果展示
+
+  <img src="https://u.sam7.top/XrwW8K" alt="效果展示" style="zoom:200%;" />
 
 ### 10. 顶部导航栏显示异常
 
@@ -1354,7 +1356,7 @@ aplayer:
 
 {% folding 查看代码 %}
 
-```stylus theme_base.styl
+```stylus aplayer.styl
 .md-text
   .aplayer
     border-radius: $border-card
@@ -1615,22 +1617,209 @@ aplayer:
 
 {% endfolding %}
 
-### 13. 背景动态线条设置
+### 13. 背景动态设置
 
-主题文件layout.ejs文件中添加以下代码
+#### 13.1 随机线条效果
+
+​	主题文件layout.ejs文件中添加以下代码
 
 ```ejs layout.ejs
 <script type="text/javascript"color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 ```
 
 - `color` ：线条颜色, 默认: `'0,0,0'`；三个数字分别为(R,G,B)
+
+
 - `opacity`: 线条透明度（0~1）, 默认: `0.5`
 - `count`: 线条的总数量, 默认: `150`
 - `zIndex:` 背景的z-index属性，CSS属性用于控制所在层的位置, 默认: `-1`
 
-终端运行hexo clean 清除缓存，hexo g&hexo s渲染网页后本地预览。
+​	终端运行hexo clean 清除缓存，hexo g&hexo s渲染网页后本地预览。
 
-手机端显示很乱，影响阅览网页，已弃用。
+​	手机端显示很乱，影响阅览网页，已弃用。
+
+#### 13.2 随机樱花效果
+
+参考以下文章，修改成可以替换任意图像元素效果。
+
+[Hexo添加雪花动态效果背景 | 花猪のBlog](https://cnhuazhu.top/butterfly/2021/02/24/Hexo魔改/Hexo添加雪花动态效果背景/)
+
+[Hexo添加樱花动态效果背景 | 花猪のBlog](https://cnhuazhu.top/butterfly/2021/02/19/Hexo魔改/Hexo添加樱花动态效果背景/)
+
+base64图片太长了，占用空间大，提取base64编码转换成图片，上传图床。
+
+![result](https://u.sam7.top/2NkzEk)
+
+新建sakura.js文件
+
+{% folding 代码折叠 %}
+
+```js sakura.js
+class Sakura {
+    constructor(x, y, s, r, fn, image) {
+        this.x = x;
+        this.y = y;
+        this.s = s;
+        this.r = r;
+        this.fn = fn;
+        this.image = image;
+    }
+
+    draw(cxt) {
+        cxt.save();
+        cxt.translate(this.x, this.y);
+        cxt.rotate(this.r);
+        const size = 40 * this.s;
+        cxt.drawImage(this.image, -size/2, -size/2, size, size);
+        cxt.restore();
+    }
+
+    update() {
+        this.x = this.fn.x(this.x, this.y);
+        this.y = this.fn.y(this.y, this.x);
+        this.r = this.fn.r(this.r);
+        
+        if (this.x > window.innerWidth || this.x < 0 || this.y > window.innerHeight || this.y < 0) {
+            this.reset();
+        }
+    }
+
+    reset() {
+        this.r = getRandom('fnr')();
+        if (Math.random() > 0.4) {
+            this.x = getRandom('x');
+            this.y = 0;
+        } else {
+            this.x = window.innerWidth;
+            this.y = getRandom('y');
+        }
+        this.s = getRandom('s');
+        this.r = getRandom('r');
+    }
+}
+
+let stop = null;
+
+// 检测是否为移动设备
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+           window.innerWidth <= 768;
+}
+
+function getRandom(option) {
+    switch (option) {
+        case 'x': return Math.random() * window.innerWidth;
+        case 'y': return Math.random() * window.innerHeight;
+        case 's': return Math.random() * 0.5 + 0.3;
+        case 'r': return Math.random() * Math.PI * 2;
+        case 'fnx': return (x, y) => x + (Math.random() - 0.5) * 2 - 1;
+        case 'fny': return (y, x) => y + 1.5 + Math.random();
+        case 'fnr': return (r) => r + Math.random() * 0.03;
+        default: return 0;
+    }
+}
+
+function startSakura(image) {
+    if (stop) {
+        cancelAnimationFrame(stop);
+        const canvas = document.getElementById('canvas_sakura');
+        if (canvas) canvas.remove();
+    }
+
+    const canvas = document.createElement('canvas');
+    const cxt = canvas.getContext('2d');
+    const sakuras = [];
+    
+    // 移动端优化
+    const isMobile = isMobileDevice();
+    const sakuraCount = isMobile ? 15 : 25; // 移动端减少樱花数量
+    
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.style.cssText = 'position:fixed;left:0;top:0;pointer-events:none;z-index:9999;';
+    canvas.id = 'canvas_sakura';
+    document.body.appendChild(canvas);
+
+    // 创建樱花实例
+    for (let i = 0; i < sakuraCount; i++) {
+        sakuras.push(new Sakura(
+            getRandom('x'),
+            getRandom('y'),
+            getRandom('s'),
+            getRandom('r'),
+            {
+                x: getRandom('fnx'),
+                y: getRandom('fny'),
+                r: getRandom('fnr')
+            },
+            image
+        ));
+    }
+
+    function animate() {
+        cxt.clearRect(0, 0, canvas.width, canvas.height);
+        sakuras.forEach(sakura => {
+            sakura.update();
+            sakura.draw(cxt);
+        });
+        stop = requestAnimationFrame(animate);
+    }
+
+    stop = requestAnimationFrame(animate);
+}
+
+function toggleSakura(imageUrl) {
+    if (stop) {
+        cancelAnimationFrame(stop);
+        stop = null;
+        const canvas = document.getElementById('canvas_sakura');
+        if (canvas) canvas.remove();
+        return false; // 返回false表示已停止
+    } else {
+        // 移动端检测 - 如果性能可能有问题，可以在这里禁用
+        if (isMobileDevice()) {
+            const enableOnMobile = confirm("在移动设备上运行樱花特效可能会影响性能。是否继续？");
+            if (!enableOnMobile) return false;
+        }
+        
+        // 加载图片并启动
+        const img = new Image();
+        img.onload = function() {
+            startSakura(img);
+        };
+        img.src = imageUrl;
+        return true; // 返回true表示已启动
+    }
+}
+
+// 窗口调整大小时重置canvas
+window.addEventListener('resize', () => {
+    const canvas = document.getElementById('canvas_sakura');
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+});
+
+// 页面卸载时清理资源
+window.addEventListener('beforeunload', () => {
+    if (stop) {
+        cancelAnimationFrame(stop);
+    }
+});
+
+// 在这里添加你的图片路径并启动特效
+// 将下面的 'your-sakura-image-url.jpg' 替换为你的樱花图片URL
+toggleSakura('https://u.sam7.top/2NkzEk');
+
+// 导出函数供外部调用
+window.toggleSakura = toggleSakura;
+window.isMobileDevice = isMobileDevice;
+
+
+```
+
+{% endfolding %}
 
 ### 14. 文章路由
 
@@ -2052,11 +2241,11 @@ style:
 
 - [DigitalPlat]免费域名
 
- [DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
+​	 [DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
 
- [使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
+ 	[使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
 
- DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，虽然是二级域名，但可以被cloudflare、vercel托管。
+ 	DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，虽然是二级域名，但可以被cloudflare、vercel托管。
 
 - 购买域名
 

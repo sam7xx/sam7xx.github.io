@@ -82,3 +82,15 @@ tagtree:
   expand_all: false # 是否展开所有节点
   expand_active: true # 是否展开当前节点
   show_tagcon: true # 是否显示标签 icon
+
+# 欢迎语
+welcome:
+  layout: markdown
+  title: 🎉欢迎
+  content: |
+    本站托管于Cloudflare, 加载缓慢请耐心等待，欢迎大家畅所欲言。
+    <hr style="border: 1px solid black; background-color: black;">
+    <span id="jinrishici-sentence"></span>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+
+    

@@ -116,10 +116,10 @@ deploy:
 
 aplayer:
   # 示例配置
-  cdn: https://cdn.jsdmirror.com/npm/aplayer@latest/dist/APlayer.min.js
-  style_cdn: https://cdn.jsdmirror.com/npm/aplayer@latest/dist/APlayer.min.css
+  # cdn: https://cdn.jsdmirror.com/npm/aplayer@latest/dist/APlayer.min.js
+  # style_cdn: https://cdn.jsdmirror.com/npm/aplayer@latest/dist/APlayer.min.css
   meting: true
-  meting_cdn: https://cdn.jsdmirror.com/npm/meting@1/dist/Meting.min.js
+  # meting_cdn: https://cdn.jsdmirror.cn/npm/meting@latest/dist/Meting.min.js
 
 feed:
   type: atom # RSS的类型(atom/rss2)
@@ -134,38 +134,44 @@ feed:
 sitemap:
   path: sitemap.xml
   url: https://sam7.top
-  # 注释掉 template 配置，使用插件默认模板
-  template: ./sitemap_template.xml
+  template: 
   changefreq: monthly
   priority: 0.6
 # 百度 sitemap 配置
 baidusitemap:
   path: baidusitemap.xml  # 百度专用站点地图
+  url: https://sam7.top
+  template: 
+  changefreq: monthly
+  priority: 0.6
 
 autonofollow:
   enable: true
   exclude:
     - https://sam7.top  # 信任的站点，不加nofollow
 
-# seo_autopush:
-#   # 是否启用插件
-#   enable: true
-#   # 推送的搜索引擎（支持百度、谷歌等，按需添加）
-#   providers:
-#     # 百度搜索资源平台推送（需先在百度验证站点）
-#     baidu:
-#       # 百度站点的 token（从百度搜索资源平台获取）
-#       token: "你的百度站点token"
-#       # 推送类型：自动推送（auto）或手动推送（manual），默认 auto
-#       type: "auto"
-#     # 谷歌搜索控制台推送（可选）
-#     google:
-#       # 谷歌站点的 API 密钥（从谷歌云平台获取）
-#       apiKey: "你的谷歌API密钥"
-#       # 谷歌站点的站点ID（从谷歌搜索控制台获取）
-#       siteId: "你的谷歌站点ID"
-#   # 是否只在生产环境（hexo generate）时推送（推荐 true，避免开发时重复推送）
-#   onlyProduction: true
+seo_autopush:
+  # 是否启用插件
+  enable: true
+  # 推送的搜索引擎（支持百度、谷歌等，按需添加）
+  providers:
+    # 百度搜索资源平台推送（需先在百度验证站点）
+    baidu:
+      # 百度站点的 token（从百度搜索资源平台获取）
+      token: "http://data.zz.baidu.com/urls?site=https://sam7.top&token=tGYHTZ0Y3H4R8W95"
+      # 推送类型：自动推送（auto）或手动推送（manual），默认 auto
+      type: "auto"
+    # 谷歌搜索控制台推送（可选）
+    google:
+      # 谷歌站点的 API 密钥（从谷歌云平台获取）
+      apiKey: "AIzaSyDLkLMbOFcgfqcafAMp7SZQyrLPozSsvEA"
+      # 谷歌站点的站点ID（从谷歌搜索控制台获取）
+      siteId: "sc-domain%3Asam7.top"
+    bing:
+      apiKey: "eb4738e2f5994ce799df669035f59dc5"  # 第二步获取的密钥
+      siteUrl: "https://sam7.top"  # 已验证的站点URL（需与必应管理工具中一致）
+  # 是否只在生产环境（hexo generate）时推送（推荐 true，避免开发时重复推送）
+  onlyProduction: true
 
 all_minifier: true
 
@@ -215,8 +221,9 @@ inject:
         <link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
       </noscript>
     - <link rel="icon" href="https://u.sam7.top/6QcmtF" type="image/avif">  # Favicon图标引入
-    - <link rel="stylesheet" href="/art-title.css">  # 自定义艺术字样式引入
+    - <link rel="stylesheet" href="/css/art-title.css">  # 自定义艺术字样式引入
     - <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng&family=Pacifico&display=swap"> #引入Pacifico字体 中英文手写
     - <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">  # fontawesome动态图标引入
-    - <script src="/darkmode.js"></script>  # hexo暗黑模式切换工具
-    - <script src="/vercel-analytics.js"></script>  # Vercel Analytics
+    - <script src="/js/darkmode.js"></script>  # hexo暗黑模式切换工具
+    - <script src="/js/vercel-analytics.js"></script>  # Vercel Analytics
+    - <script src="/js/sakura.js"></script>  # 樱花特效

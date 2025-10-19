@@ -109,7 +109,7 @@ site_tree:
   index_blog:
     base_dir: blog # 只影响自动生成的页面路径
     menu_id: post # 未在 front-matter 中指定 menu_id 时，layout 为 post 的页面默认使用这里配置的 menu_id
-    leftbar:  welcome, recent  # for categories/tags/archives
+    leftbar:  welcome, recent, music # for categories/tags/archives
     rightbar: tagcloud
     nav_tabs:  # 近期发布 分类 标签 专栏 归档 and ...
       # '朋友文章': /friends/rss/
@@ -396,7 +396,7 @@ footer:
       url: '/messages'
     about:
       icon: '<i class="fa-solid fa-user" style="color:#4CAF50;font-size:1em;"></i>'
-      title: '关于作者'
+      title: '关于'
       url: '/about'
     friends:
       icon: '<i class="fa-solid fa-link" style="color:#2196F3;font-size:1em;"></i>'

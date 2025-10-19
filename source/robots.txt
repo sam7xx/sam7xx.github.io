@@ -8,3 +8,5 @@ Allow: /
 
 # 指向站点地图（重要）
 Sitemap: https://sam7.top/sitemap.xml
+Sitemap: https://sam7.top/atom.xml
+Sitemap: https://sam7.top/baidusitemap.xml

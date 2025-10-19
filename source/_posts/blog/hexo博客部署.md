@@ -420,6 +420,35 @@ main "$@"
 
 {% endfolding %}
 
+```bash
+$ ./deploy.sh
+ℹ️ ===== Hexo全项目自动部署工具 =====
+ℹ️ 检查Hexo项目是否有变更...
+ℹ️ 同步远程main分支最新代码...
+From github.com:xxxxx/xxxxx.github.io
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+ℹ️ 提交所有项目变更...
+[main 62bbb8f] Hexo项目更新 (10 个文件): 2025-10-19 10:56:44
+ 10 files changed, 865 insertions(+), 182 deletions(-)
+ create mode 100644 db.json
+ create mode 100644 themes/stellar/source/art-title.css
+ℹ️ 推送至远程main分支，触发自动化部署...
+Enumerating objects: 41, done.
+Counting objects: 100% (41/41), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (20/20), done.
+Writing objects: 100% (22/22), 184.16 KiB | 416.00 KiB/s, done.
+Total 22 (delta 15), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (15/15), completed with 15 local objects.
+To github.com:xxxxx/xxxxx.github.io.git
+   206a451..62bbb8f  main -> main
+✅ 所有变更已推送！三平台自动化部署将自动触发
+ℹ️ ===================================
+```
+
+
+
 - 查看部署状态
 
 - 部署进度：GitHub 仓库 → `Actions` → 选择当前工作流 → 查看实时日志。
