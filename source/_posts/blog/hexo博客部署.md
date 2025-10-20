@@ -534,4 +534,3 @@ To github.com:xxxxx/xxxxx.github.io.git
 ### 7. 总结
 
 以上几种部署 Hexo 的核心流程是：**Git 仓库关联 → 配置构建参数 → 自动构建部署**。其优势在于依托于Cloudflare Pages 免费、全球 CDN 加速、自动部署和简单的域名绑定。按上述步骤操作，即使是新手也能顺利完成部署，且国内访问速度优于 GitHub Pages。若遇到具体错误，可在 Cloudflare Pages 的 **Deployments** 页面查看详细日志，针对性解决即可。
-

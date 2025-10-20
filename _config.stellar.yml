@@ -660,7 +660,7 @@ plugins:
   # AI 摘要
   # https://github.com/qxchuckle/Post-Summary-AI
   tianli_gpt: 
-    enable: false # true / false
+    enable: true
     js: https://jsd.onmicrosoft.cn/gh/qxchuckle/Post-Summary-AI@6.0/chuckle-post-ai.min.js
     field: all # all, post, wiki
     key: S-JAVXPRUNPV8LWXO4 # tianli_gpt key

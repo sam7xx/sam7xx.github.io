@@ -1,12 +1,12 @@
 ---
 title: 博客搭建hexo & stellar安装配置
 abbrlink: 51727
-date: 2025-09-20 18:19:42
-tags: [hexo配置,stellar主题]
+tags:
+  - hexo配置
+  - stellar主题
 categories: 博客搭建
+date: 2025-09-20 18:19:42
 ---
-
-
 
 ### 1. 构建工具安装准备
 
@@ -1241,7 +1241,7 @@ timezone: 'Asia/Shanghai' #时区
     }
     ```
 
-  - 然后在根目录配置文件增加以下内容，将中英文手写字体和art-title.css引入head标签内。
+  - 然后在根目录配置文件增加以下内容，将中英文手写字体和art-title.CSS引入head标签内。
 
 ``` yaml 根目录配置文件
 inject:
@@ -1249,8 +1249,6 @@ inject:
   	- <link rel="stylesheet" href="/art-title.css">  # 自定义艺术字样式引入
     - <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng&family=Pacifico&display=swap"> #引入Pacifico字体 中英文手写
 ```
-
-
 
 
 
@@ -1621,7 +1619,7 @@ aplayer:
 
 #### 13.1 随机线条效果
 
-​	主题文件layout.ejs文件中添加以下代码
+ 主题文件layout.ejs文件中添加以下代码
 
 ```ejs layout.ejs
 <script type="text/javascript"color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
@@ -1634,9 +1632,9 @@ aplayer:
 - `count`: 线条的总数量, 默认: `150`
 - `zIndex:` 背景的z-index属性，CSS属性用于控制所在层的位置, 默认: `-1`
 
-​	终端运行hexo clean 清除缓存，hexo g&hexo s渲染网页后本地预览。
+ 终端运行hexo clean 清除缓存，hexo g&hexo s渲染网页后本地预览。
 
-​	手机端显示很乱，影响阅览网页，已弃用。
+ 手机端显示很乱，影响阅览网页，已弃用。
 
 #### 13.2 随机樱花效果
 
@@ -2241,11 +2239,11 @@ style:
 
 - [DigitalPlat]免费域名
 
-​	 [DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
+  [DigitalPlat免费二级域名注册和Cloudflare托管教程-CSDN博客](https://blog.csdn.net/loutengyuan/article/details/149096491)
 
- 	[使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
-
- 	DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，虽然是二级域名，但可以被cloudflare、vercel托管。
+  [使用Cloudflate搭建自己的免费代理节点](https://blog.eimoon.com/p/使用cloudflate搭建自己的免费代理节点/)
+  
+  DigitalPlat最多可以申请两个域名，只有一年使用期限，小于180天可以续期，虽然是二级域名，但可以被cloudflare、vercel托管。
 
 - 购买域名
 
@@ -2310,4 +2308,3 @@ rss: /atom.xml
           title: 关于
           url: /about
 ```
-
