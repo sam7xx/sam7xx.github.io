@@ -194,9 +194,9 @@ inject:
         <link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
       </noscript>
     - <link rel="icon" href="https://u.sam7.top/6QcmtF" type="image/avif">  # Favicon图标引入
+    - <link rel="stylesheet" href="/css/art-title.css">  # 自定义艺术字样式引入
     - <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng&family=Pacifico&display=swap"> #引入Pacifico字体 中英文手写
     - <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">  # fontawesome动态图标引入
     - <script src="/js/darkmode.js"></script>  # hexo暗黑模式切换工具
     - <script src="/js/vercel-analytics.js"></script>  # Vercel Analytics
-    - <script src="/js/sakura.js"></script>  # 樱花特效
-    - <script src="/js/summary.js"></script>  # hexo摘要生成工具
+   #- <script src="/js/sakura.js"></script>  # 樱花特效
