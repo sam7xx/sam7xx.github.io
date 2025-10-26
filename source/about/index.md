@@ -344,31 +344,31 @@ comments: false
   .about-page {
     padding: 10px;
   }
-  
+
   .profile-card {
     flex-direction: column;
     text-align: center;
     padding: 15px;
     margin-top: 30px;
   }
-  
+
   .avatar-container {
     margin-right: 0;
     margin-bottom: 12px;
   }
-  
+
   .skills-grid,
   .learning-grid,
   .interests-grid,
   .purpose-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .contact-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .contact-btn {
     width: 180px;
     justify-content: center;
@@ -379,16 +379,16 @@ comments: false
   .profile-content h1 {
     font-size: 1.2em;
   }
-  
+
   .section {
     padding: 15px 12px;
   }
-  
+
   .interest-item {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .interest-icon {
     margin-right: 0;
     margin-bottom: 8px;
@@ -398,13 +398,13 @@ comments: false
 /* 平滑过渡效果 */
 * {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-</style>
+  }
+  </style>
 
 <!-- 个人简介 -->
 <div class="profile-card">
 <div class="avatar-container">
-    <img src="https://u.sam7.top/iX3aHW" alt="作者头像" class="avatar" onerror="this.style.display='none'">
+    <img src="https://u.sam7.top/3MiiTn" alt="作者头像" class="avatar" onerror="this.style.display='none'">
 </div>
 <div class="profile-content">
     <h1><i class="fas fa-bolt"></i> 开关电源设计 · 五年搬砖经验</h1>
@@ -490,21 +490,21 @@ comments: false
     <span class="interest-icon"><i class="fas fa-running"></i></span>
     <div class="interest-content">
         <h4>跑步爱好者</h4>
-        <p>马拉松训练 · 科学方法 · 运动康复</p>
+        <p>科学训练 · 运动康复</p>
     </div>
     </div>
     <div class="interest-item">
     <span class="interest-icon"><i class="fas fa-music"></i></span>
     <div class="interest-content">
         <h4>音乐娱乐</h4>
-        <p>音乐欣赏 · 电子游戏 · 动画电影</p>
+        <p>音乐欣赏 · 游戏动漫</p>
     </div>
     </div>
     <div class="interest-item">
     <span class="interest-icon"><i class="fab fa-creative-commons"></i></span>
     <div class="interest-content">
         <h4>拥抱开源</h4>
-        <p>开源软件 · 技术分享 · 社区贡献</p>
+        <p>开源软件 · 技术分享</p>
     </div>
     </div>
 </div>

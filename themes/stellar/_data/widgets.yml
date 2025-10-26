@@ -18,7 +18,7 @@ ghissues:
 # Recent update
 recent:
   layout: recent
-  rss: # /atom.xml # npm i hexo-generator-feed
+  rss:  atom.xml # npm i hexo-generator-feed
   limit: 10 # Count of posts
 
 # 页面树（与当前页面强关联的上下篇文章列表）
@@ -58,9 +58,9 @@ tagcloud:
   amount: 100
   orderby: name
   order: 1 # 1, sac 升序；-1, desc 降序
-  color: false # 使用颜色
-  start_color: # 开始的颜色。您可使用十六进位值（#b700ff），rgba（rgba(183, 0, 255, 1)），hsla（hsla(283, 100%, 50%, 1)）或 颜色关键字。此变量仅在 color 参数开启时才有用。
-  end_color: # 结束的颜色。您可使用十六进位值（#b700ff），rgba（rgba(183, 0, 255, 1)），hsla（hsla(283, 100%, 50%, 1)）或 颜色关键字。此变量仅在 color 参数开启时才有用。
+  color: true # 使用颜色
+  start_color: rgba(255, 0, 0, 1) # 红色（rgba格式：红255, 绿0, 蓝0, 不透明度1）
+  end_color: rgba(128, 0, 128, 1) # 紫色（rgba格式：红128, 绿0, 蓝128, 不透明度1
   show_count: false # 显示每个标签的文章总数
 
 timeline:
@@ -88,9 +88,15 @@ welcome:
   layout: markdown
   title: 🎉欢迎
   content: |
-    本站托管于Cloudflare, 加载缓慢请耐心等待，欢迎大家畅所欲言。
-    <hr style="border: 1px solid black; background-color: black;">
-    <span id="jinrishici-sentence"></span>
-    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    欢迎大家畅所欲言！
+    本站相关配置信息如下：
+    - Hexo 版本：8.0.0
+    - Node.js 版本：22.19.0
+    - 主题版本：Stellar 1.33.1
+    - 静态部署：[Cloudflare](https://sam7.top/) [Github](https://crow7.dpdns.org/) [Vercel](https://sam7.dpdns.org/)
+    - CDN 加速：Cloudflare
+      <hr style="border: 1px solid black; background-color: black;">
+      <span id="jinrishici-sentence"></span>
+      <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 
     

@@ -36,7 +36,7 @@ deploy:
    message: "Hexo deploy: {{ now('YYYY-MM-DD HH:mm:ss') }}"  # 提交信息（可选）
 ```
 
-- 终端执行`hexo clean && hexo g && hexo d  # 清理、生成、部署` ，部署成功后，访问 `https://yourname.github.io` 即可看到博客，也可以重定向绑定自己的域名，由Cloudflare托管。
+- 终端执行`hexo clean && hexo g && hexo d  # 清理、生成、部署` ，部署成功后，访问 `https://yourname.github.io` 即可看到博客，也可以重定向绑定自己的域名，由Cloudflare托管。[GitHub Pages 绑定自定义域名 + 开启 HTTPS | 青何博客](https://blog.ifback.com/article/github-pages-bind-custom-domain-and-enable-https/)
 
 ### 3. 部署到 Cloudflare Pages
 

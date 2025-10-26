@@ -279,23 +279,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let primaryColor = computedStyle.getPropertyValue('--color-primary').trim();
     if (!primaryColor) {
-      primaryColor = computedStyle.getPropertyValue('--theme-color').trim() || 
-                     computedStyle.getPropertyValue('--primary-color').trim() || 
+      primaryColor = computedStyle.getPropertyValue('--theme-color').trim() ||
+                     computedStyle.getPropertyValue('--primary-color').trim() ||
                      '#3498db';
     }
-    
-    const bgColor = computedStyle.getPropertyValue('--bg-color').trim() || 
-                   computedStyle.getPropertyValue('--background-color').trim() || 
+
+    const bgColor = computedStyle.getPropertyValue('--bg-color').trim() ||
+                   computedStyle.getPropertyValue('--background-color').trim() ||
                    getComputedStyle(document.body).backgroundColor;
-    
+
     const rgb = bgColor.match(/\d+/g);
     let brightness = 255;
     if (rgb) {
       brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
     }
-    
+
     root.style.setProperty('--theme-primary', primaryColor);
-    
+
     if (brightness > 128) {
       root.style.setProperty('--theme-bg-light', '#f0f5ff');
       root.style.setProperty('--theme-card-bg', '#ffffff');
