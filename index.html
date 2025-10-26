@@ -1,0 +1,491 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="false"><head><meta charset="utf-8"><meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1"><link rel="canonical" href="https://sam7.top/"><meta name="generator" content="Hexo 8.0.0"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin><link rel="preconnect" href="https://cdn.jsdmirror.com" crossorigin><meta name="renderer" content="webkit"><meta name="force-rendering" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"><meta name="HandheldFriendly" content="True"><meta name="mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000"><meta name="theme-color" content="#f9fafb"><meta name="msvalidate.01" content="E721DC152CA85AB52EB03F923EDA4DFC"><meta name="baidu-site-verification" content="codeva-HI3R1accIr"><title>七分配的Sam</title><meta name="description" content="这是一个融合技术与生活的个人博客，聚焦开关电源设计、电子电路调试、元器件选型等硬核内容，从原理剖析到实战案例，分享电路设计中的避坑经验与创新思路，适合电子爱好者和从业者交流学习。同时，这里也记录着跑步日常以及生活随笔里的点滴感悟。技术的严谨与生活的温度在此交织，既为同好提供专业参考，也为自己留存一段真实鲜活的成长轨迹。"><meta property="og:type" content="website"><meta property="og:title" content="七分配的Sam"><meta property="og:url" content="https://sam7.top/"><meta property="og:site_name" content="七分配的Sam"><meta property="og:description" content="这是一个融合技术与生活的个人博客，聚焦开关电源设计、电子电路调试、元器件选型等硬核内容，从原理剖析到实战案例，分享电路设计中的避坑经验与创新思路，适合电子爱好者和从业者交流学习。同时，这里也记录着跑步日常以及生活随笔里的点滴感悟。技术的严谨与生活的温度在此交织，既为同好提供专业参考，也为自己留存一段真实鲜活的成长轨迹。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://u.sam7.top/3MiiTn"><meta property="article:author" content="Sam"><meta property="article:tag" content="个人博客"><meta property="article:tag" content="博客搭建"><meta property="article:tag" content="开关电源"><meta property="article:tag" content="生活随笔"><meta property="article:tag" content="电子设计"><meta property="article:tag" content="跑步日常"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://u.sam7.top/3MiiTn"><meta name="keywords" content="开关电源,电子设计,跑步日常,生活随笔,博客搭建,个人博客"><link rel="alternate" href="/atom.xml" title="七分配的Sam" type="application/atom+xml"><link rel="stylesheet" href="/css/main.css?v=1.33.1"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://sam7.top","author":{"@type":"Person","name":"Sam","sameAs":[],"image":"https://u.sam7.top/3MiiTn"},"name":"七分配的Sam","description":"这是一个融合技术与生活的个人博客，聚焦开关电源设计、电子电路调试、元器件选型等硬核内容，从原理剖析到实战案例，分享电路设计中的避坑经验与创新思路，适合电子爱好者和从业者交流学习。同时，这里也记录着跑步日常以及生活随笔里的点滴感悟。技术的严谨与生活的温度在此交织，既为同好提供专业参考，也为自己留存一段真实鲜活的成长轨迹。","url":"https://sam7.top","keywords":["开关电源","电子设计","跑步日常","生活随笔","博客搭建","个人博客"]}</script><link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css"><link rel="preload" as="style" crossorigin href="https://fontsapi.zeoseven.com/442/main/result.css" onload='this.rel="stylesheet"' onerror='this.href="https://fontsapi-storage.zeoseven.com/442/main/result.css"'><noscript><link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css"></noscript><link rel="icon" href="https://u.sam7.top/6QcmtF" type="image/avif"><link rel="stylesheet" href="/css/art-title.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng&family=Pacifico&display=swap"><link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet"><script src="/js/darkmode.js"></script><script src="/js/vercel-analytics.js"></script></head><body><div class="l_body index" id="start" layout="undefined" type="undefined"><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container"><header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp)"></div><img no-lazy class="avatar" src="https://u.sam7.top/3MiiTn" onerror="javascript:this.classList.add('error');this.src='https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">七分配的Sam</div><div class="sub normal cap">纸上得来终觉浅,绝知此事需躬行</div><div class="sub hover cap" style="opacity:0">博客搭建、开关电源、跑步日常</div></a></div></header><div class="nav-area"><nav class="menu dis-select"><a class="nav-item active" title="博客" href="/blog/" style="color:#2196f3"><i class="fa-solid fa-newspaper" style="font-size:1.25em"></i></a><a class="nav-item" title="笔记" href="/note/" style="color:#4caf50"><i class="fa-solid fa-pen-to-square" style="font-size:1.25em"></i></a><a class="nav-item" title="项目" href="/project/" style="color:#ff9800"><i class="fa-solid fa-folder-open" style="font-size:1.25em"></i></a><a class="nav-item" title="记录" href="/records/" style="color:#cc96f3"><i class="fa-solid fa-clock" style="font-size:1.25em"></i></a><div class="nav-item more-dropdown" style="color:#390ca1"><a class="more-toggle" title="更多"><i class="fa-solid fa-ellipsis-vertical fa-shake" style="font-size:1.25em"></i></a><div class="more-dropdown-menu"><a class="dropdown-item" href="/archives/" title="归档"><span>归档</span></a><a class="dropdown-item" href="/categories/" title="分类"><span>分类</span></a><a class="dropdown-item" href="/tags/" title="标签"><span>标签</span></a><a class="dropdown-item" href="/messages/" title="留言"><span>留言</span></a><a class="dropdown-item" href="/atom.xml" title="RSS"><span>RSS</span></a><a class="dropdown-item" href="/friends/" title="友链"><span>友链</span></a><a class="dropdown-item" href="/about/" title="关于"><span>关于</span></a></div></div></nav></div><div class="widgets"><div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div><widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">🎉欢迎</span></div><div class="widget-body fs14"><p>欢迎大家畅所欲言！<br>本站相关配置信息如下：</p><ul><li>Hexo 版本：8.0.0</li><li>Node.js 版本：22.19.0</li><li>主题版本：Stellar 1.33.1</li><li>静态部署：<a href="https://sam7.top/">Cloudflare</a> <a target="_blank" rel="noopener" href="https://crow7.dpdns.org/">Github</a> <a target="_blank" rel="noopener" href="https://sam7.dpdns.org/">Vercel</a></li><li>CDN 加速：Cloudflare<hr style="border:1px solid #000;background-color:#000"><span id="jinrishici-sentence"></span><script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script></li></ul></div></widget><widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span><a class="cap-action" id="rss" title="Subscribe" href="atom.xml"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19q0-.825.588-1.412T5 17q.825 0 1.413.588T7 19q0 .825-.587 1.413T5 21m13.5 0q-.65 0-1.088-.475T16.9 19.4q-.275-2.425-1.312-4.537T12.9 11.1q-1.65-1.65-3.762-2.687T4.6 7.1q-.65-.075-1.125-.512T3 5.5q0-.65.45-1.062t1.075-.363q3.075.275 5.763 1.563t4.737 3.337q2.05 2.05 3.338 4.738t1.562 5.762q.05.625-.363 1.075T18.5 21m-6 0q-.625 0-1.075-.437T10.85 19.5q-.225-1.225-.787-2.262T8.65 15.35q-.85-.85-1.888-1.412T4.5 13.15q-.625-.125-1.062-.575T3 11.5q0-.65.45-1.075t1.075-.325q1.825.25 3.413 1.063t2.837 2.062q1.25 1.25 2.063 2.838t1.062 3.412q.1.625-.325 1.075T12.5 21"/></svg></a></div><div class="widget-body fs14"><a class="item title" href="/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/blog/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/"><span class="title">hexo部署</span></a><a class="item title" href="/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/blog/hexo&stellar%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"><span class="title">博客搭建hexo & stellar安装配置</span></a></div></widget></div><footer class="footer dis-select"><div class="social-wrap"><a class="social" title="Github" href="https://github.com/sam7xx" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-github fa-brands" style="font-size:1em"></i></a><a class="social" title="RSS" href="/atom.xml" rel="noopener noreferrer"><i class="fa-solid fa-rss" style="color:#ff5722;font-size:1em"></i></a><a class="social" title="Email" href="mailto://2690640537@qq.com" target="_blank" rel="external nofollow noopener noreferrer"><i class="fa-solid fa-envelope fa-bounce" style="color:#b197fc;font-size:1em"></i></a><a class="social" title="主题切换" href="javascript:void(0);" rel="noopener noreferrer"><i class="fa-solid fa-circle-half-stroke fa-flip" style="color:#ffd600;font-size:1em"></i></a><a class="social" title="留言板" href="/messages" rel="noopener noreferrer"><i class="fa-solid fa-message fa-bounce" style="color:#ff9800;font-size:1em"></i></a><a class="social" title="关于" href="/about" rel="noopener noreferrer"><i class="fa-solid fa-user" style="color:#4caf50;font-size:1em"></i></a><a class="social" title="友链" href="/friends" rel="noopener noreferrer"><i class="fa-solid fa-link" style="color:#2196f3;font-size:1em"></i></a></div></footer></div></aside><div class="l_main" id="main"><header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp)"></div><img no-lazy class="avatar" src="https://u.sam7.top/3MiiTn" onerror="javascript:this.classList.add('error');this.src='https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">七分配的Sam</div><div class="sub normal cap">纸上得来终觉浅,绝知此事需躬行</div><div class="sub hover cap" style="opacity:0">博客搭建、开关电源、跑步日常</div></a></div></header><div class="navbar top"><div class="navbar-blur"><div class="navbar-container"><nav class="post"><a class="active" href="/">近期发布</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archives/">归档</a></nav></div></div></div><div class="post-list post"><a class="post-card post" href="/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/blog/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/"><article class="md-text"><h2 class="post-title">hexo部署</h2><div class="excerpt"><p>0. 前言 Hexo 部署是将本地生成的静态博客内容发布到服务器或托管平台的过程，常见的部署目标包括 GitHub Pages、Netlify、Ve...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-10-07T04:17:21.000Z">2025-10-07</time></span><span class="cap breadcrumb"><svg style="margin-bottom:1px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M2 6.95c0-.883 0-1.324.07-1.692A4 4 0 0 1 5.257 2.07C5.626 2 6.068 2 6.95 2c.386 0 .58 0 .766.017a4 4 0 0 1 2.18.904c.144.119.28.255.554.529L11 4c.816.816 1.224 1.224 1.712 1.495a4 4 0 0 0 .848.352C14.098 6 14.675 6 15.828 6h.374c2.632 0 3.949 0 4.804.77c.079.07.154.145.224.224c.77.855.77 2.172.77 4.804V14c0 3.771 0 5.657-1.172 6.828C19.657 22 17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.172C2 19.657 2 17.771 2 14z" opacity=".5"/><path fill="currentColor" d="M20 6.238c0-.298-.005-.475-.025-.63a3 3 0 0 0-2.583-2.582C17.197 3 16.965 3 16.5 3H9.988c.116.104.247.234.462.45L11 4c.816.816 1.224 1.224 1.712 1.495a4 4 0 0 0 .849.352C14.098 6 14.675 6 15.829 6h.373c1.78 0 2.957 0 3.798.238"/><path fill="currentColor" fill-rule="evenodd" d="M12.25 10a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75" clip-rule="evenodd"/></svg><span>博客搭建</span></span></div></article></a><a class="post-card post" href="/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/blog/hexo&stellar%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/"><article class="md-text"><h2 class="post-title">博客搭建hexo & stellar安装配置</h2><div class="excerpt"><p>1. 构建工具安装准备 1.1 Node.js环境搭建 hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Nod...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2025-09-20T10:19:42.000Z">2025-09-20</time></span><span class="cap breadcrumb"><svg style="margin-bottom:1px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M2 6.95c0-.883 0-1.324.07-1.692A4 4 0 0 1 5.257 2.07C5.626 2 6.068 2 6.95 2c.386 0 .58 0 .766.017a4 4 0 0 1 2.18.904c.144.119.28.255.554.529L11 4c.816.816 1.224 1.224 1.712 1.495a4 4 0 0 0 .848.352C14.098 6 14.675 6 15.828 6h.374c2.632 0 3.949 0 4.804.77c.079.07.154.145.224.224c.77.855.77 2.172.77 4.804V14c0 3.771 0 5.657-1.172 6.828C19.657 22 17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.172C2 19.657 2 17.771 2 14z" opacity=".5"/><path fill="currentColor" d="M20 6.238c0-.298-.005-.475-.025-.63a3 3 0 0 0-2.583-2.582C17.197 3 16.965 3 16.5 3H9.988c.116.104.247.234.462.45L11 4c.816.816 1.224 1.224 1.712 1.495a4 4 0 0 0 .849.352C14.098 6 14.675 6 15.829 6h.373c1.78 0 2.957 0 3.798.238"/><path fill="currentColor" fill-rule="evenodd" d="M12.25 10a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75" clip-rule="evenodd"/></svg><span>博客搭建</span></span></div></article></a></div><footer class="page-footer footnote"><hr><div class="text"><center><p>网站由 <a href="/">Sam</a> © 2025使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar</a> 主题创建</p><p><span id="runtime_span"></span></p><script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1e3),X=new Date("2025/09/06 19:00:00"),Y=new Date,T=Y.getTime()-X.getTime(),M=864e5,a=T/M,A=Math.floor(a),b=24*(a-A),B=Math.floor(b),c=60*(b-B),C=Math.floor(60*(b-B)),D=Math.floor(60*(c-C)),runtime_span.innerHTML="网站已运行 "+A+"天"+B+"小时"+C+"分"+D+"秒"}show_runtime()</script><script defer src="https://vercount.one/js"></script><p>总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次<br><span class="totalcount">共发表 2 篇Blog · </span><span class="post-count">总计 20k 字</span></p></center><div style="display:flex;justify-content:center;align-items:center;margin:10px"><a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/miGrfX" data-src="https://u.sam7.top/miGrfX" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right:10px" id="notbyai" data-ll-status="loaded"></a><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img class="lazy entered loaded" src="https://u.sam7.top/2BJDeW" data-src="https://u.sam7.top/2BJDeW" alt="只要保留原作者姓名并在基于原作创作的新作品适用同类型的许可协议，即可基于非商业目的对原作重新编排、改编或者再创作。" style="width:100px;height:35px" data-ll-status="loaded"></a></div></div></footer><div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right"><div class="widgets"><widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签云</span></div><div class="widget-body fs14"><a href="/tags/hexo%E9%83%A8%E7%BD%B2/" style="font-size:12px;color:red" class="tag -0">hexo部署</a> <a href="/tags/hexo%E9%85%8D%E7%BD%AE/" style="font-size:24px;color:purple" class="tag -10">hexo配置</a> <a href="/tags/stellar%E4%B8%BB%E9%A2%98/" style="font-size:12px;color:red" class="tag -0">stellar主题</a></div></widget></div></aside><div class="float-panel"><button type="button" style="display:none" class="laptop-only rightbar-toggle mobile" onclick="sidebar.rightbar()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></button> <button type="button" style="display:none" class="mobile-only leftbar-toggle mobile" onclick="sidebar.leftbar()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg></button></div></div><div class="scripts"><script type="text/javascript">window.canonical={originalHost:"sam7.top",officialHosts:["localhost","sam7.dpdns.org","crow7.dpdns.org","www.sam7.top","sam7xx.github.io"],encoded:"c2FtNy50b3A="};const ctx={date_suffix:{just:"刚刚",min:"分钟前",hour:"小时前",day:"天前"},root:"/",tag_plugins:{chat:Object.assign({api:"https://siteinfo.listentothewind.cn/api/v1"})},search:{}};if(ctx.search.service="local_search","local_search"==ctx.search.service){let s=Object.assign({},'{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}');ctx.search[ctx.search.service]=s}const def={avatar:"https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg",cover:"https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg",loading:"https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd"},deps={jquery:"https://cdn.jsdmirror.cn/npm/jquery@3.7/dist/jquery.min.js",marked:"https://cdn.jsdmirror.cn/npm/marked@16/lib/marked.umd.min.js",lazyload:"/%5Bobject%20Object%5D"}</script><script type="text/javascript">function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });</script><script>const sidebar={leftbar:()=>{l_body&&(l_body.toggleAttribute("leftbar"),l_body.removeAttribute("rightbar"))},rightbar:()=>{l_body&&(l_body.toggleAttribute("rightbar"),l_body.removeAttribute("leftbar"))},dismiss:()=>{l_body&&(l_body.removeAttribute("leftbar"),l_body.removeAttribute("rightbar"))},toggleTOC:()=>{document.querySelector("#data-toc").classList.toggle("collapse")}}</script><script type="text/javascript">(()=>{const e=document.querySelectorAll(".tag-subtree.parent-tag > a > .tag-switcher-wrapper");for(const t of e)t.addEventListener("click",e=>{e.target.closest(".tag-subtree.parent-tag").classList.toggle("expanded"),e.preventDefault()});const t=new URLSearchParams(window.location.search).get("tag");if(t){let e=document.querySelector(`.tag-subtree[data-tag="${t}"]`);if(e)for(e.querySelector("a").classList.add("active");e;)e.classList.add("expanded"),e=e.parentElement.closest(".tag-subtree.parent-tag")}})()</script><script async src="https://cdn.jsdmirror.com/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script><script>// https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }</script><script src="/js/main.js?v=1.33.1" defer></script><script type="text/javascript">const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()</script><script defer>window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });</script><script>window.addEventListener("DOMContentLoaded",e=>{ctx.search={path:"/search.json"},utils.js("/js/search/local-search.js",{defer:!0})})</script><script>window.FPConfig={delay:0,ignoreKeywords:[],maxRPS:5,hoverDelay:25}</script><script defer src="https://cdn.jsdmirror.cn/npm/flying-pages@2/flying-pages.min.js"></script><script>ctx.fancybox={selector:".timenode p>img, waline_container .vcontent img, .custom-image-container a, .md-text img:not([class]), .md-text .image img",css:"https://cdn.jsdmirror.cn/npm/@fancyapps/ui@6/dist/fancybox/fancybox.css",js:"https://cdn.jsdmirror.com/npm/@fancyapps/ui@6/dist/fancybox/fancybox.umd.js"};var selector="[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])";ctx.fancybox.selector&&(selector+=", "+ctx.fancybox.selector);var needFancybox=0!==document.querySelectorAll(selector).length;if(!needFancybox){const t=document.getElementsByClassName("ds-memos");null!=t&&t.length>0&&(needFancybox=!0);const n=document.getElementsByClassName("with-fancybox");null!=n&&n.length>0&&(needFancybox=!0)}needFancybox&&(utils.css(ctx.fancybox.css),utils.js(ctx.fancybox.js,{defer:!0}).then((function(){Fancybox.bind(selector,{hideScrollbar:!1,Thumbs:{autoStart:!1},caption:(t,n)=>n.triggerEl.alt||n.triggerEl.dataset.caption||null})})))</script><script>window.addEventListener("DOMContentLoaded",e=>{const n=document.getElementById("swiper-api");null!=n&&(utils.css("https://unpkg.com/swiper@10.3/swiper-bundle.min.css"),utils.js("https://cdn.jsdmirror.cn/npm/swiper@10.3/swiper-bundle.min.js",{defer:!0}).then((function(){const e=n.getAttribute("effect")||"";new Swiper(".swiper#swiper-api",{slidesPerView:"auto",spaceBetween:8,centeredSlides:!0,effect:e,rewind:!0,pagination:{el:".swiper-pagination",clickable:!0},navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}})})))})</script><script defer src="https://jsd.onmicrosoft.cn/gh/qxchuckle/Post-Summary-AI@6.0/chuckle-post-ai.min.js"></script><script defer>window.addEventListener("DOMContentLoaded",e=>{new ChucklePostAI(Object.assign({el:"article.content",css:"/css/_plugins/tianli_gpt"},JSON.parse('{"enable":true,"js":"https://jsd.onmicrosoft.cn/gh/qxchuckle/Post-Summary-AI@6.0/chuckle-post-ai.min.js","field":"all","key":"S-JAVXPRUNPV8LWXO4","total_length":500,"typewriter":true,"summary_directly":true,"rec_method":"all","hide_shuttle":false,"summary_toggle":false,"interface":{"name":"AI摘要","introduce":"我是文章辅助AI: QX-AI，点击下方的按钮，让我生成本文简介、推荐相关文章等。","version":"GPT","button":["介绍自己","推荐文章","生成摘要","矩阵穿梭"]},"summary_position":"bottom","summary_offset":0,"summary_color":"theme","rec_enable":true,"rec_count":3}')))})</script><script>document.addEventListener("DOMContentLoaded",(function(){window.codeElements=document.querySelectorAll(".code"),window.codeElements.length>0&&(ctx.copycode={default_text:"Copy",success_text:"Copied",toast:"复制成功"},utils.js("/js/plugins/copycode.js"))}))</script></div></body></html><script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-2" count="11" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
