@@ -4,7 +4,7 @@ abbrlink: 51727
 tags:
   - hexo配置
   - stellar主题
-description: 使用Hexo搭建个人博客的详细步骤，包括构建工具的安装准备、hexo插件使用和stellar主题配置。
+description: 记录Hexo搭建个人博客的详细步骤，包括构建工具的安装准备、hexo插件使用和stellar主题配置。
 categories: 博客搭建
 date: 2025-09-20 18:19:42
 ---
@@ -2282,7 +2282,7 @@ rss: /atom.xml
 
 ### 20. 关于、留言板
 
-在博客源文件夹source中，新建`about messages`文件夹，在相应文件夹中新建index.md，或者直接在源文件夹下面新建`about.md`和`messages.md`,markdown内容即为展示内容,使用时直接用`/about /messages`指定路径。
+在博客源文件夹source中，新建`about和messages`文件夹，在相应文件夹中新建index.md，或者直接在源文件夹下面新建`about.md`和`messages.md`,markdown内容即为展示内容,使用时直接用`/about /messages`指定路径。
 
 ```yaml
       # 这里配置子菜单，使用 nested 字段

@@ -1,5 +1,5 @@
 ---
-title: hexo博客优化、推荐配置
+title: hexo博客优化与推荐配置
 abbrlink: 
 tags:
   - hexo配置
@@ -9,14 +9,15 @@ categories: 博客搭建
 date: 2025-11-07 13:10:00
 ---
 
-在 Hexo 博客中优化 SEO（搜索引擎优化），主要从 **元标签配置、站点地图、链接结构、内容优化** 等方面入手，以下是具体实现步骤：
+### 1. SEO(搜索引擎)优化
 
-### 一、基础配置：修改 Hexo 核心配置
+SEO优化是提升网站在搜索引擎自然搜索结果中排名的手段，在 Hexo 博客中优化 SEO（搜索引擎优化），主要从 **元标签配置、站点地图、链接结构、内容优化** 等方面入手，以下是具体实现步骤：
+
+#### 1.1 基础配置
 
 首先在根目录 `_config.yml` 中设置基础信息，让搜索引擎识别博客的基本属性：
 
-```yaml
-# _config.yml
+```yaml _config.yml
 title: 你的博客名称  # 搜索引擎显示的标题（含核心关键词）
 subtitle: 博客副标题  # 补充说明，可选
 description: 博客的核心描述（100-150字，包含主要关键词）  # 影响搜索引擎收录时的摘要
@@ -26,11 +27,11 @@ language: zh-CN  # 语言，默认中文
 timezone: Asia/Shanghai  # 时区，确保文章时间正确
 ```
 
-### 二、优化页面元标签（Title、Description 等）
+#### 1.2 优化页面元标签
 
 元标签（Meta Tags）是搜索引擎抓取页面的核心依据，需要为每个页面（首页、文章页、分类页等）配置 **独特的标题和描述**。
 
-#### 1. 安装主题 SEO 插件（推荐）
+安装主题 SEO 插件（推荐）
 
 如果使用 `hexo-theme-stellar`、`next` 等主流主题，通常已支持 SEO 配置，无需额外开发。若主题不支持，可安装通用插件：
 
@@ -38,7 +39,7 @@ timezone: Asia/Shanghai  # 时区，确保文章时间正确
 npm install hexo-generator-seo-friendly-sitemap --save  # 增强型元标签支持
 ```
 
-#### 2. 手动修改主题模板（通用方法）
+手动修改主题模板（通用方法）
 
 进入主题的模板目录（如 `themes/stellar/layout`），找到页面头部模板（通常是 `_partial/head.ejs` 或 `head.jade`），添加或修改以下元标签：
 
@@ -70,17 +71,17 @@ npm install hexo-generator-seo-friendly-sitemap --save  # 增强型元标签支�
   ```markdown
   ---
   title: Hexo SEO 优化指南
-  date: 2024-10-08
+  date: 2025-10-08
   description: 本文详细介绍 Hexo 博客的 SEO 优化方法，包括元标签、站点地图配置等。
   keywords: [Hexo SEO, 博客优化, 搜索引擎收录]
   ---
   ```
 
-### 三、生成站点地图（Sitemap）
+#### 1.3 生成站点地图
 
-<span style="color:#FFFF00;">站点地图是搜索引擎抓取的 “导航图”，帮助爬虫快速发现所有页面。</span>
+站点地图是搜索引擎抓取的 “导航图”，帮助爬虫快速发现所有页面。
 
-#### 1. 安装站点地图生成插件
+安装站点地图生成插件：
 
 ```bash
 # 生成标准 sitemap（适用于 Google、Bing 等）
@@ -90,7 +91,7 @@ npm install hexo-generator-sitemap --save
 npm install hexo-generator-baidu-sitemap --save
 ```
 
-#### 2. 配置站点地图
+配置站点地图：
 
 在 `_config.yml` 中添加插件配置：
 
@@ -150,13 +151,9 @@ baidusitemap:
     
 ```
 
-
-
-#### 3. 生效方法
-
 执行 `hexo g` 生成博客时，会自动在 `public` 目录下生成 `sitemap.xml` 和 `baidusitemap.xml`。
 
-### 四、配置 robots.txt
+#### 1.4 配置 robots.txt
 
 `robots.txt` 告诉搜索引擎哪些页面可以抓取、哪些禁止，需放在 `source` 目录下（确保生成后在 `public` 根目录）。
 
@@ -255,11 +252,11 @@ Sitemap: https://你的博客域名/baidusitemap.xml
 </urlset>
 ```
 
-1. 确保 `robots.txt` 被正确生成：执行 `hexo g` 后，检查 `public/robots.txt` 是否存在。
+确保 `robots.txt` 被正确生成：执行 `hexo g` 后，检查 `public/robots.txt` 是否存在。
 
-### 五、优化链接结构（Permalink）
+#### 1.5 优化链接结构
 
-Hexo 默认永久链接包含日期（如 `/2024/10/08/title/`），不利于 SEO（URL 过长且无关键词）。建议修改为简洁格式：
+Hexo 默认永久链接包含日期（如 `/2025/10/08/title/`），不利于 SEO（URL 过长且无关键词）。建议修改为简洁格式：
 
 在 `_config.yml` 中设置：
 
@@ -271,49 +268,47 @@ permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 
 **注意**：修改后需执行 `hexo clean` 清除旧链接缓存，避免 404 错误。
 
+#### 1.6 内容与细节优化
 
+**文章标题与内容**：
 
-### 六、内容与细节优化
+- 标题包含核心关键词（如 “Hexo SEO 优化指南” 而非 “如何优化我的博客”）。
+- 首段包含关键词，正文自然分布关键词（避免堆砌）。
+- 使用标题层级（`#` 到 `######`），`h1` 仅用于文章标题，`h2-h3` 分章节，帮助搜索引擎理解结构。
 
-1. **文章标题与内容**：
+**图片优化**：
 
-   - 标题包含核心关键词（如 “Hexo SEO 优化指南” 而非 “如何优化我的博客”）。
-   - 首段包含关键词，正文自然分布关键词（避免堆砌）。
-   - 使用标题层级（`#` 到 `######`），`h1` 仅用于文章标题，`h2-h3` 分章节，帮助搜索引擎理解结构。
+- 为所有图片添加 `alt` 属性（描述图片内容，含关键词）：
 
-2. **图片优化**：
+  ```markdown
+  ![图片描述（含关键词）](图片路径)  # Markdown 语法
+  ```
 
-   - 为所有图片添加 `alt` 属性（描述图片内容，含关键词）：
+- 压缩图片大小（可使用 `hexo-image-optimization` 插件自动压缩）。
 
-     ```markdown
-     ![图片描述（含关键词）](图片路径)  # Markdown 语法
-     ```
+**内部链接**：
 
-   - 压缩图片大小（可使用 `hexo-image-optimization` 插件自动压缩）。
+文章中合理添加其他相关文章的链接（如 “相关推荐”），帮助搜索引擎抓取更多页面。
 
-3. **内部链接**：
-
-   - 文章中合理添加其他相关文章的链接（如 “相关推荐”），帮助搜索引擎抓取更多页面。
-
-### 七、提交站点到搜索引擎
+#### 1.7 提交站点到搜索引擎
 
 配置完成后，主动提交站点让搜索引擎快速收录：
 
-1. **Google**：
+**Google**：
 
-   - 登录 [Google Search Console](https://search.google.com/search-console)，添加网站域名。
-   - 通过 “站点地图” 功能提交 `https://你的域名/sitemap.xml`。
+- 登录 [Google Search Console](https://search.google.com/search-console)，添加网站域名。
+- 通过 “站点地图” 功能提交 `https://你的域名/sitemap.xml`。
 
-2. **百度**：
+**百度**：
 
-   - 登录 [百度资源平台](https://ziyuan.baidu.com/)，验证网站。
-   - 提交 `https://你的域名/baidusitemap.xml` 到 “站点地图” 模块。
+- 登录 [百度资源平台](https://ziyuan.baidu.com/)，验证网站。
+- 提交 `https://你的域名/baidusitemap.xml` 到 “站点地图” 模块。
 
-3. **其他引擎**：
+**其他引擎**：
 
-   必应（Bing）、搜狗等同理，提交对应站点地图即可。
+必应（Bing）、搜狗等同理，提交对应站点地图即可。
 
-### 八、验证 SEO 效果
+#### 1.8 验证 SEO 效果
 
 1. 使用 [Google 搜索控制台](https://search.google.com/search-console) 或 [百度资源平台](https://ziyuan.baidu.com/) 查看收录状态、抓取错误等。
 2. 用 [SEO 检测工具](https://seositecheckup.com/) 检查元标签、站点地图是否生效。
@@ -321,13 +316,13 @@ permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 
 通过以上步骤，Hexo 博客的 SEO 基础配置就完成了。SEO 是长期过程，核心还是优质内容 + 规范的技术配置，坚持更新和优化即可逐步提升收录和排名。
 
-### 九、自动推送
+#### 1.9 自动推送
 
 安装autopush插件`npm install hexo-seo-autopush --save`，支持百度、谷歌、必应等自动推送。
 
 主题配置文件中添加以下内容，配置百度、谷歌、必应sitemap自动推送。
 
-```
+```yaml
 seo_autopush:
   # 是否启用插件
   enable: true
@@ -336,20 +331,19 @@ seo_autopush:
     # 百度搜索资源平台推送（需先在百度验证站点）
     baidu:
       # 百度站点的 token（从百度搜索资源平台获取）
-      token: "http://data.zz.baidu.com/urls?site=https://sam7.top&token=tGYHTZ0Y3H4R8W95"
+      token: "http://data.zz.baidu.com/urls?site=https://sam7.top&token=百度站点的 token"
       # 推送类型：自动推送（auto）或手动推送（manual），默认 auto
       type: "auto"
     # 谷歌搜索控制台推送（可选）
     google:
       # 谷歌站点的 API 密钥（从谷歌云平台获取）
-      apiKey: "AIzaSyDLkLMbOFcgfqcafAMp7SZQyrLPozSsvEA"
+      apiKey: "谷歌API访问密钥"
       # 谷歌站点的站点ID（从谷歌搜索控制台获取）
       siteId: "sc-domain%3Asam7.top"
-      bing:
-      apiKey: "你的必应API访问密钥"  # 第二步获取的密钥
+    bing:
+      apiKey: "必应API访问密钥"  # 第二步获取的密钥
       siteUrl: "https://yourdomain.com"  # 已验证的站点URL（需与必应管理工具中一致）
   # 是否只在生产环境（hexo generate）时推送（推荐 true，避免开发时重复推送）
   onlyProduction: true
 ```
-
 

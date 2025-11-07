@@ -19,7 +19,7 @@ timezone: 'Asia/Shanghai'
 url: https://sam7.top
 permalink: :category/:title/ #:year/:month/:day/:title/
 abbrlink:
-  alg: crc32  #算法： crc16(default) and crc32
+  alg: crc16 #算法： crc16(default) and crc32
   rep: dec    #进制： dec(default) and hex
 permalink_defaults:
 pretty_urls:
