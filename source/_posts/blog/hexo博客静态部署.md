@@ -1,8 +1,9 @@
 ---
-title: hexo部署
+title: hexo博客静态部署
 tags:
   - hexo配置
   - hexo部署
+description: 使用Hexo将本地生成的静态博客内容部署到GitHub Pages、Cloudflare Pages以及Netlify/Vercel等平台，详细说明了部署步骤、GitHub Actions 工作流配置以及常见问题的解决方法。
 categories: 博客搭建
 abbrlink: 55230
 date: 2025-10-07 12:17:21
@@ -20,7 +21,7 @@ Hexo 部署是将本地生成的静态博客内容发布到服务器或托管平
 
 ### 2. 部署到 GitHub Pages
 
-适合个人博客，免费但有时候不太稳定，当备用站使用，具体操作步骤如下：
+适合个人博客，免费但有时候不太稳定，手机浏览器无法加载，域名重定向可用，目前作为备用站，具体操作步骤如下：
 
 - 在Github新建仓库，仓库名为  `yourname.github.io`，确保仓库为公共仓库。
 然后在仓库设置中打开Github Pages功能。
@@ -502,7 +503,7 @@ To github.com:xxxxx/xxxxx.github.io.git
 
    通过以上步骤，能从工作流配置、仓库设置、缓存清理三个层面彻底禁用 Jekyll，确保 GitHub Pages 直接托管 Hexo 生成的静态文件。核心逻辑是：**确保 `.nojekyll` 被正确部署到 `gh-pages` 分支的根目录，且 GitHub 识别到该文件**。
 
-### 6. **笔记**
+### 6. **推荐配置**
 
 - - 本地 Git 仓库应跟踪 Hexo 源代码（`_config.yml`、`source`、`themes` 等），而非 `public` 目录（可在 `.gitignore` 中忽略）。
   - 部署平台通过源代码自动构建生成 `public` 目录，避免手动上传静态文件。

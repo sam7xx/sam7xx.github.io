@@ -92,8 +92,9 @@ welcome:
     本站相关配置信息如下：
     - Hexo 版本：8.0.0
     - Node.js 版本：22.19.0
-    - 主题版本：Stellar 1.33.1
-    - 静态部署：[Cloudflare](https://sam7.top/) [Github](https://crow7.dpdns.org/) [Vercel](https://sam7.dpdns.org/)
+    - Stellar 版本：1.33.1
+    - 主站：[Cloudflare部署](https://sam7.top/)
+    - 备用站：[GitHub部署](https://sam7xx.github.io/) & [Vercel部署](https://sam7.dpdns.org/)
     - CDN 加速：Cloudflare
       <hr style="border: 1px solid black; background-color: black;">
       <span id="jinrishici-sentence"></span>

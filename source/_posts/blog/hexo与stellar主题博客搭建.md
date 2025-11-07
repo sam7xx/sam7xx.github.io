@@ -1,9 +1,10 @@
 ---
-title: 博客搭建hexo & stellar安装配置
+title: hexo博客搭建与stellar主题配置
 abbrlink: 51727
 tags:
   - hexo配置
   - stellar主题
+description: 使用Hexo搭建个人博客的详细步骤，包括构建工具的安装准备、hexo插件使用和stellar主题配置。
 categories: 博客搭建
 date: 2025-09-20 18:19:42
 ---
@@ -14,7 +15,7 @@ date: 2025-09-20 18:19:42
 
 hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Node.js比较旧，需前往[Node.js](https://nodejs.cn/en/download)官网按指引安装最新稳定版本。
 
-由于本博主使用的是WSL子系统，这里选择Linux系统和nvm安装方式。
+由于博主使用的是WSL子系统，这里选择Linux系统和nvm安装方式。
 
 首先安装nvm Node.js版本管理器，再使用nvm工具包安装指定版本Node.js，Node.js自带npm软件包管理器，顺便安装yarn JavaScript软件包管理器。
 
