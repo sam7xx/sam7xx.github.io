@@ -1,6 +1,6 @@
 ---
 title: hexo博客优化与推荐配置
-abbrlink: 
+abbrlink: 50019
 tags:
   - hexo配置
   - typora配置
@@ -9,11 +9,13 @@ categories: 博客搭建
 date: 2025-11-07 13:10:00
 ---
 
-### 1. SEO(搜索引擎)优化
+## 1. SEO(搜索引擎)优化
+
+参考文章：[Hexo优化:速度与SEO - 笔搁纸鸯](https://b.wihi.top/posts/72699cf7.html)
 
 SEO优化是提升网站在搜索引擎自然搜索结果中排名的手段，在 Hexo 博客中优化 SEO（搜索引擎优化），主要从 **元标签配置、站点地图、链接结构、内容优化** 等方面入手，以下是具体实现步骤：
 
-#### 1.1 基础配置
+### 1.1 基础配置
 
 首先在根目录 `_config.yml` 中设置基础信息，让搜索引擎识别博客的基本属性：
 
@@ -27,7 +29,7 @@ language: zh-CN  # 语言，默认中文
 timezone: Asia/Shanghai  # 时区，确保文章时间正确
 ```
 
-#### 1.2 优化页面元标签
+### 1.2 优化页面元标签
 
 元标签（Meta Tags）是搜索引擎抓取页面的核心依据，需要为每个页面（首页、文章页、分类页等）配置 **独特的标题和描述**。
 
@@ -77,7 +79,7 @@ npm install hexo-generator-seo-friendly-sitemap --save  # 增强型元标签支�
   ---
   ```
 
-#### 1.3 生成站点地图
+### 1.3 生成站点地图
 
 站点地图是搜索引擎抓取的 “导航图”，帮助爬虫快速发现所有页面。
 
@@ -153,7 +155,7 @@ baidusitemap:
 
 执行 `hexo g` 生成博客时，会自动在 `public` 目录下生成 `sitemap.xml` 和 `baidusitemap.xml`。
 
-#### 1.4 配置 robots.txt
+### 1.4 配置 robots.txt
 
 `robots.txt` 告诉搜索引擎哪些页面可以抓取、哪些禁止，需放在 `source` 目录下（确保生成后在 `public` 根目录）。
 
@@ -254,7 +256,7 @@ Sitemap: https://你的博客域名/baidusitemap.xml
 
 确保 `robots.txt` 被正确生成：执行 `hexo g` 后，检查 `public/robots.txt` 是否存在。
 
-#### 1.5 优化链接结构
+### 1.5 优化链接结构
 
 Hexo 默认永久链接包含日期（如 `/2025/10/08/title/`），不利于 SEO（URL 过长且无关键词）。建议修改为简洁格式：
 
@@ -268,7 +270,7 @@ permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 
 **注意**：修改后需执行 `hexo clean` 清除旧链接缓存，避免 404 错误。
 
-#### 1.6 内容与细节优化
+### 1.6 内容与细节优化
 
 **文章标题与内容**：
 
@@ -290,7 +292,7 @@ permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 
 文章中合理添加其他相关文章的链接（如 “相关推荐”），帮助搜索引擎抓取更多页面。
 
-#### 1.7 提交站点到搜索引擎
+### 1.7 提交站点到搜索引擎
 
 配置完成后，主动提交站点让搜索引擎快速收录：
 
@@ -308,7 +310,7 @@ permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 
 必应（Bing）、搜狗等同理，提交对应站点地图即可。
 
-#### 1.8 验证 SEO 效果
+### 1.8 验证 SEO 效果
 
 1. 使用 [Google 搜索控制台](https://search.google.com/search-console) 或 [百度资源平台](https://ziyuan.baidu.com/) 查看收录状态、抓取错误等。
 2. 用 [SEO 检测工具](https://seositecheckup.com/) 检查元标签、站点地图是否生效。
@@ -316,13 +318,13 @@ permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 
 通过以上步骤，Hexo 博客的 SEO 基础配置就完成了。SEO 是长期过程，核心还是优质内容 + 规范的技术配置，坚持更新和优化即可逐步提升收录和排名。
 
-#### 1.9 自动推送
+### 1.9 自动推送
 
 安装autopush插件`npm install hexo-seo-autopush --save`，支持百度、谷歌、必应等自动推送。
 
 主题配置文件中添加以下内容，配置百度、谷歌、必应sitemap自动推送。
 
-```yaml
+```yaml _config.yml
 seo_autopush:
   # 是否启用插件
   enable: true
@@ -347,3 +349,145 @@ seo_autopush:
   onlyProduction: true
 ```
 
+## 2. 资源文件压缩
+
+使用`hexo-all-minifier`插件在构建时通过删除空格和缩进自动压缩HTML、CSS、JavaScript和图片文件，降低文件大小，提升网站加载速度。
+
+- 终端安装
+
+```
+npm install hexo-all-minifier --save
+```
+
+- 在 `_config.yml` 中启用配置：
+
+```
+all_minifier: true
+```
+
+- **重新生成博客**
+  保存配置文件后，在终端中执行以下命令`hexo cl & hexo g & hexo s`，插件就会在构建过程中自动压缩相关文件了：效果如下
+
+![image-20251108094452118](https://u.sam7.top/EnMZ2H)
+
+- 可选配置
+
+​	如果你希望对不同类型的文件压缩进行更精细的控制（例如排除某些已压缩的文件），可以在 `_config.yml` 文件中进行更详细的配置：
+
+```yaml _config.yml
+all_minifier:
+  # HTML压缩配置
+  html:
+    enable: true
+    exclude: # 排除特定文件，例如所有已压缩的html文件
+      - '*.min.html'
+  # CSS压缩配置
+  css:
+    enable: true
+    exclude:
+      - '*.min.css'
+  # JavaScript压缩配置
+  js:
+    enable: true
+    mangle: true # 混淆变量名，进一步减小文件体积
+    exclude:
+      - '*.min.js'
+  # 图片压缩配置
+  image:
+    enable: true
+    exclude: # 排除已压缩的图片文件
+      - '*.min.png'
+      - '*.min.jpg'
+      - '*.min.jpeg'
+      - '*.min.gif'
+```
+
+## 3. jsDelivr国内公益镜像加速
+
+参考文章：[分享几个JSDelivr国内公益加速镜像 - 流月小站](https://blog.flowmoon.cn/archives/105.html)
+
+将CDN加速镜像都换成[JSDMirror镜像站-jsdelivr国内;jsdelivr镜像](https://cdn.jsdmirror.com/)，提升加载速度，可以加速**GitHub 仓库、JS文件、CSS文件、npm插件**。
+
+![image-20251108094747452](https://u.sam7.top/zzxT4Z)
+
+![image-20251108095959461](https://u.sam7.top/Z4fFWW)
+
+![image-20251108095911037](https://u.sam7.top/BY24Db)
+
+**基本守则**
+
+作为公益性质的加速站点，我们在使用过程中也应该遵守一些基本的规则：
+
+`不要用于个人图床加速`：图床消耗大量的带宽，不建议使用公共 CDN 来加速个人图片的访问，特别是那些大图或高频访问的图片，甚至有些人放一些视频在公共CDN上，这会极大的消耗公共资源。
+
+`不要加速字体文件`：字体文件通常非常大，会对带宽造成很大的压力。
+
+## 4. Typora插件安装配置
+
+按照[typora_plugin/README-cn.md at master · obgnail/typora_plugin](https://github.com/obgnail/typora_plugin/blob/master/README-cn.md)README.md指引安装Typora插件
+
+Typora_Plugin功能非常强大，集成以下61个插件功能。
+
+| #    | 插件                    | 功能                                 | 默认启用 |
+| ---- | ----------------------- | ------------------------------------ | -------- |
+| 1    | window_tab              | 标签页管理                           |          |
+| 2    | search_multi            | 多元文件搜索                         |          |
+| 3    | collapse_paragraph      | 章节折叠                             | ×        |
+| 4    | collapse_list           | 列表折叠                             | ×        |
+| 5    | collapse_table          | 表格折叠                             | ×        |
+| 6    | md_padding              | 中英文混排优化                       |          |
+| 7    | slash_commands          | 斜杠命令                             |          |
+| 8    | templater               | 文件模板                             |          |
+| 9    | resource_manager        | 一键清除无用图片                     |          |
+| 10   | fence_enhance           | 复制、折叠、格式化代码               |          |
+| 11   | toc                     | 在右侧生成大纲目录                   |          |
+| 12   | commander               | 命令行环境                           |          |
+| 13   | toolbar                 | 多功能搜索                           |          |
+| 14   | right_click_menu        | 右键菜单统一管理插件                 |          |
+| 15   | pie_menu                | 圆盘菜单                             | ×        |
+| 16   | datatables              | 表格增强（搜索、过滤、分页、排序等） | ×        |
+| 17   | preferences             | 插件配置                             |          |
+| 18   | markmap                 | 提供 markmap 组件支持                |          |
+| 19   | echarts                 | 提供 echarts 组件支持                |          |
+| 20   | chart                   | 提供 chartjs 组件支持                |          |
+| 21   | drawIO                  | 提供 drawIO 组件支持                 |          |
+| 22   | abc                     | 提供 abcjs 组件支持                  |          |
+| 23   | calendar                | 提供 tui.calendar 组件支持           |          |
+| 24   | wavedrom                | 提供 wavedrom 组件支持               |          |
+| 25   | marp                    | 提供 marp 组件支持                   |          |
+| 26   | plantUML                | 提供 PlantUML 组件支持               | ×        |
+| 27   | callouts                | 提供 callouts 支持                   |          |
+| 28   | text_stylize            | 文字风格化                           |          |
+| 29   | read_only               | 只读模式                             |          |
+| 30   | blur                    | 模糊模式                             |          |
+| 31   | kanban                  | 看板                                 |          |
+| 32   | timeline                | 时间线                               |          |
+| 33   | chat                    | 聊天                                 |          |
+| 34   | file_counter            | 显示目录下的文件数                   |          |
+| 35   | auto_number             | 章节、表格、图片、代码块等自动编号   |          |
+| 36   | imageReviewer           | 图片查看器                           |          |
+| 37   | chineseSymbolAutoPairer | 中文符号自动补全                     |          |
+| 38   | resize_table            | 调整表格行高列宽                     |          |
+| 39   | resize_image            | 调整图片显示大小                     |          |
+| 40   | export_enhance          | 导出 HTML 时避免图片丢失             |          |
+| 41   | markdownLint            | markdown 格式检查                    |          |
+| 42   | go_top                  | 一键到文章顶部、底部                 |          |
+| 43   | truncate_text           | 暂时隐藏内容，提高大文件渲染性能     | ×        |
+| 44   | dark                    | 夜间模式                             |          |
+| 45   | no_image                | 无图模式                             |          |
+| 46   | updater                 | 一键升级插件                         |          |
+| 47   | easy_modify             | 编辑工具                             |          |
+| 48   | editor_width_slider     | 写作区宽度调整                       |          |
+| 49   | redirectLocalRootUrl    | 重定向本地资源根目录                 | ×        |
+| 50   | blockSideBySide         | 并列显示活动块                       | ×        |
+| 51   | scrollBookmarker        | 书签管理器                           | ×        |
+| 52   | cipher                  | 加密文件                             | ×        |
+| 53   | ripgrep                 | 使用 ripgrep 搜索文件                | ×        |
+| 54   | article_uploader        | 一键上传博客到支持的所有平台         | ×        |
+| 55   | sortableOutline         | 拖动大纲标题，调整文章结构           | ×        |
+| 56   | cursor_history          | 光标跳转                             | ×        |
+| 57   | static_markers          | Markdown 标记常显                    | ×        |
+| 58   | custom                  | 开放平台，用户自定义插件（高级）     |          |
+| 59   | hotkeys                 | 快捷键注册中心（高级）               |          |
+| 60   | quickButton             | 于右下角添加功能按钮（高级）         |          |
+| 61   | json_rpc                | 外部操纵 Typora（高级）              | ×        |

@@ -9,9 +9,9 @@ categories: 博客搭建
 date: 2025-09-20 18:19:42
 ---
 
-### 1. 构建工具安装准备
+## 1. 构建工具安装准备
 
-#### 1.1 Node.js环境搭建
+### 1.1 Node.js环境搭建
 
 hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库Node.js比较旧，需前往[Node.js](https://nodejs.cn/en/download)官网按指引安装最新稳定版本。
 
@@ -34,7 +34,7 @@ node -v # Should print "v24.9.0".
 npm -v # Should print "11.6.0".
 ```
 
-#### 1.2 NPM简介
+### 1.2 NPM简介
 
 **NPM（Node Package Manager）** 是 Node.js 的默认包管理工具，用于管理 JavaScript 项目的依赖库和工具。它允许开发者轻松地安装、更新、共享和发布代码包，同时支持版本控制和脚本运行。
 
@@ -62,9 +62,9 @@ npm install express # 本地安装 将包安装到当前项目的 node_modules �
 npm install -g @vue/cli # 全局安装 使用 -g 参数将包安装到系统范围内，适用于 CLI 工具。
 ```
 
-### 2. HEXO配置
+## 2. HEXO配置
 
-#### 2.1 hexo安装以及初始化
+### 2.1 hexo安装以及初始化
 
 根据[Hexo](https://hexo.io/zh-cn/)官网安装指引，全局安装`npm install -g hexo@8.0.0`
 
@@ -89,7 +89,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 └── themes #主题文件夹
 ```
 
-#### 2.2 hexo配置  开始折腾
+### 2.2 hexo配置  开始折腾
 
 本站使用[Stellar](https://xaoxuu.com/wiki/stellar/comments/)主题构建，Stellar 是一个内置文档系统的简约商务风 Hexo 主题，支持丰富的标签和动态数据组件，帮助您简单从容地应对各种表达需求，十分推荐内容创作者使用 Stellar 开始您全新的博客之旅。
 
@@ -105,7 +105,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 参阅Stellar wiki选择开启需要的功能。
 
-### 3. 网站统计
+## 3. 网站统计
 
 **网页底部文章统计**参考博主[BoBoBlog](https://blog.bxzdyg.cn/)文章
 
@@ -184,15 +184,15 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 {% endtabs %}
 
-### 4. 评论系统
+## 4. 评论系统
 
-#### 4.1 waline启用
+### 4.1 waline启用
 
 stellar已集成waline插件，首先主题配置文件选择启用waline，具体配置见以下代码。
 
 然后跟着主页[快速上手 | Waline](https://waline.js.org/guide/get-started/) wiki一步步搭建到vercel。
 
-[SkyReeves](https://skyreeves.github.io/)博主写的很详细，参考[hexo博客引入Waline评论模块 - SkyReeves](https://skyreeves.github.io/post/69ee63d6.html)
+[SkyReeves](https://skyreeves.github.io/)博主写的很详细，参考[hexo博客引入Waline评论模块 - SkyReeves](https://skyreeves.github.io/post/69ee63d6.html)使用[LeanCloud](https://console.leancloud.app/apps)国际版和Vercel搭建。
 
 {% folding 查看代码 %}
 
@@ -247,7 +247,7 @@ comments:
 
 
 
-#### 4.2 评论框颜色跟随
+### 4.2 评论框颜色跟随
 
 启用后会发现，评论区域部分元素无法显示，需要修改`waline.styl`文件，调整颜色对比度。
 
@@ -435,7 +435,7 @@ comments:
 {% endtabs %}
 {% endbox %}
 
-### 5.  面包屑文章字数统计
+## 5.  面包屑文章字数统计
 
 主题布局文件article_banner.ejs中添加如下代码，即可实现功能。
 
@@ -604,7 +604,7 @@ function layoutDiv() {
 
 ![image-20251018133145461](https://u.sam7.top/ntjjmz)
 
-### 6. 动态图标配置
+## 6. 动态图标配置
 
 在主题配置文件_config.stellar.yml中增加以下CSS文件，引入font-awesome图标库。在[font-awesome v7 CDN](https://www.bootcdn.cn/font-awesome/)里面找一个CDN。
 
@@ -628,7 +628,7 @@ footer:
 
 ![image-20251008112814230](https://u.sam7.top/WjAEkb)
 
-### 7. 图床、图片配置
+## 7. 图床、图片配置
 
 - [ImgToLink+](https://imgtolinkx.com/)是一款免费、免登录图床软件，支持单个文件50M，返回短链。
 
@@ -640,7 +640,7 @@ footer:
 
 - Cloudflare好像也有免费的image服务。
 
-#### 7.1 Piclist Github图床配置
+### 7.1 Piclist Github图床配置
 
 由于typora支持picgo和piclist图床上传，所以选用了目前还在持续更新的piclist。
 
@@ -650,18 +650,26 @@ typora图片设置如下，插入图片时直接上传piclist图床，然后自�
 
 [PicList](https://piclist.cn/)主页下载安装最新版，选择Github图床搭建，参考[PicGo/PicList + Github 搭建图床 | Theo Docs](https://doc.theojs.cn/notes/build-picture-bed)
 
+Gitbhub新建图床仓库，并在设置[Developer Settings](https://github.com/settings/apps)中新建图床token,勾选piclist仓库repo读写权限。
+
+![image-20251108093016232](https://u.sam7.top/Pnsz6Y)
+
+然后再piclist端Github图床设置中关联新建的piclist仓库和token。
+
+![image-20251108100408787](https://u.sam7.top/r4Kka7)
+
 piclist相关设置
 
 - piclist设置图片最大800px宽度，大于800压缩至800，小于800不处理。
 
-- 使用`https://cdn.jsdmirror.com/gh`加速Github图床。
+- 使用`https://cdn.jsdelivr.net/gh`加速Github图床。
 - 上传成功直接复制url链接
 - 开启时间戳重命名
 - 添加图片水印
 - 使用短链接
 - 图片格式转换成压缩率更高的AVIF格式
 
-#### 7.2 搭建图床短链接
+### 7.2 搭建图床短链接
 
 为什么要用短链，部分平台（尤其是社交平台、论坛、旧版编辑器）对 URL 长度或格式有严格限制，包含特殊字符（如 `?` `&` `/`）的长链接，可能被平台误判为 “恶意链接” 而拦截，且原始图床链接可能泄露敏感信息。
 
@@ -673,13 +681,13 @@ piclist上传的图片链接也是一堆乱码，widowns文件系统目录`\`被
 
 ![image-20251018105813478](https://u.sam7.top/AEF2tc)
 
-#### 7.3 waline评论图床上传
+### 7.3 waline评论图床上传
 
 开启waline评论区图床上传，图片能上传成功，但是的识别不了链接。
 
 已经关掉了，PicList回传的不是json，只能选择URL、markdown格式。
 
-#### 7.4 fancybox设置
+### 7.4 fancybox设置
 
 stellar集成fancybox灯箱插件，可以在放大网页上面的图片，功能很多。
 
@@ -702,14 +710,14 @@ plugins:
     selector: .timenode p>img, waline_container .vcontent img, .custom-image-container a, .md-text img:not([class]), .md-text .image img # 多个选择器用英文逗号隔开
 ```
 
-### 8. 侧边栏配置
+## 8. 侧边栏配置
 
-#### 8.1 左侧栏页脚图标
+### 8.1 左侧栏页脚图标
 
 stellar主题预留有7个位置，主题配置如下，footer下面添加以下内容。
 
 ```yaml 主题配置文件
-######## Footer ########
+###### Footer ######
 footer: 
   social:
     github:
@@ -744,7 +752,7 @@ footer:
 
 ![image-20251018133033178](https://u.sam7.top/GGHPGQ)
 
-#### 8.2 侧边栏组件
+### 8.2 侧边栏组件
 
 参考主题wiki配置[Stellar：侧边栏组件的配置与使用（9个） - XAOXUU](https://xaoxuu.com/wiki/stellar/widgets/)
 
@@ -781,9 +789,9 @@ welcome:
   # 博客专栏列表页配置
 ```
 
-### 9. 主导航栏配置
+## 9. 主导航栏配置
 
-#### 9.1 启用主导航栏菜单
+### 9.1 启用主导航栏菜单
 
 主题配置文件中设置如下，使用fontawesome图标。
 
@@ -812,7 +820,7 @@ menubar:
 
 ![image-20251018225127149](https://u.sam7.top/hGbYrj)
 
-#### 9.2 主导航栏下拉菜单设置
+### 9.2 主导航栏下拉菜单设置
 
 菜单栏位置不够放怎么办，那就增加一个下拉菜单吧。在 Hexo 主题（这里是 Stellar 主题）的菜单栏 “更多” 处增加下拉菜单，可按以下步骤操作：
 
@@ -1182,7 +1190,7 @@ function layoutDiv() {
 
 ![image-20251018130238736](https://u.sam7.top/Bh3YjH)
 
-#### 9.3 网站设置
+### 9.3 网站设置
 
 - 根目录配置文件中，修改以下内容。
 
@@ -1253,7 +1261,7 @@ inject:
 
 
 
-#### 9.4 网页小图标
+### 9.4 网页小图标
 
 - 让豆包生成一个logo图标，修改为成128x128px，像素小加载快。
 
@@ -1271,7 +1279,7 @@ inject:
 
   <img src="https://u.sam7.top/XrwW8K" alt="效果展示" style="zoom:200%;" />
 
-### 10. 顶部导航栏显示异常
+## 10. 顶部导航栏显示异常
 
 浏览器设置浅色模式，主题切换为深色，顶部导航栏字体看起来比较奇怪，navbra.styl修改，`.navbar-blur`取消模糊效果。
 
@@ -1290,7 +1298,7 @@ inject:
   // 如需半透明效果可调整alpha值，如：background: rgba(255, 255, 255, 0.85)
 ```
 
-### 11. 页面布局调整
+## 11. 页面布局调整
 
 - 在主题样式`custom.styl`中添加`$leftbar-bottom-margin = 20px）`,调整主内容界面宽度为1080px，侧边栏宽度最大为277px，元素内部和外部距离都调整为15px。
 
@@ -1328,7 +1336,7 @@ $leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，�
 
 <img src="https://u.sam7.top/ZdpH23" alt="image-20251018132921523" style="zoom: 67%;" />
 
-### 12. 添加音乐播放器
+## 12. 添加音乐播放器
 
 参考 [stellar主题使用meetingjs接入aplayer音乐播放器 - BoBoBlog](https://blog.bxzdyg.cn/p/stellar-aplayer-metingjs/)
 
@@ -1616,9 +1624,9 @@ aplayer:
 
 {% endfolding %}
 
-### 13. 背景动态设置
+## 13. 背景动态设置
 
-#### 13.1 随机线条效果
+### 13.1 随机线条效果
 
  主题文件layout.ejs文件中添加以下代码
 
@@ -1637,7 +1645,7 @@ aplayer:
 
  手机端显示很乱，影响阅览网页，已弃用。
 
-#### 13.2 随机樱花效果
+### 13.2 随机樱花效果
 
 参考以下文章，修改成可以替换任意图像元素效果。
 
@@ -1820,7 +1828,7 @@ window.isMobileDevice = isMobileDevice;
 
 {% endfolding %}
 
-### 14. 文章路由
+## 14. 文章路由
 
 参考博主[BoBoBlog](https://blog.bxzdyg.cn/)文章
 
@@ -1856,7 +1864,7 @@ permalink_defaults:
 | crc32 | hex  | <https://yourname.github.io/p/8ddf18fb.html>   |
 | crc32 | dec  | <https://yourname.github.io/p/1690090958.html> |
 
-### 15. 主题深浅色切换
+## 15. 主题深浅色切换
 
 参考博主[BoBoBlog](https://blog.bxzdyg.cn/)，主题颜色设置为自动。
 
@@ -1866,7 +1874,7 @@ style:
   smooth_scroll: true # true / false 开启时如果目录过长可能无法准确定位
 ```
 
-#### 15.1 功能实现
+### 15.1 功能实现
 
 首先在 主题配置文件中`footer.social`处增加“主题切换”按钮配置，图标为半圆，点击可用于一键切换深浅色。
 
@@ -1933,7 +1941,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 {% endfolding %}
 
-#### 15.2 主题颜色调整
+### 15.2 主题颜色调整
 
 深浅色主题、侧边栏、卡片、代码块颜色调整，将`theme_base.styl`主题基本颜色修改成如下内容。
 
@@ -2165,11 +2173,11 @@ img.theme-aware:not(.emoji)
     blur-sat: 100% # 适当降低饱和度使背景不抢眼
 ```
 
-#### 15.3  其他
+### 15.3  其他
 
 waline评论和aplayer播放器都有适配，由于篇幅问题，对应章节都有描述。
 
-### 16. AI摘要
+## 16. AI摘要
 
 stellar集成tianti GPT，付费的，[洪墨AI](https://ai.zhheo.com/)这里购买添加key就好了，绑定网页。
 
@@ -2183,7 +2191,7 @@ stellar集成tianti GPT，付费的，[洪墨AI](https://ai.zhheo.com/)这里购
     key: S-JAVXPRUNPV8LWXO4 # tianli_gpt key
 ```
 
-### 17. 字体设置
+## 17. 字体设置
 
 [中文网字计划-提供便捷实用的全字符集中文渲染方案](https://chinese-font.netlify.app/zh-cn/)
 
@@ -2220,7 +2228,7 @@ style:
   text-align: left
 ```
 
-### 18. 域名申请
+## 18. 域名申请
 
 - 【EU.ORG】免费域名
 
@@ -2250,7 +2258,7 @@ style:
 
   国内价格对比了几家都差不太多，阿里云要便宜些，top域名比较便宜第一年8块10年240块，有活动可以更优惠。
 
-### 19. RSS订阅
+## 19. RSS订阅
 
 参考博主[BoBoBlog](https://blog.bxzdyg.cn/)
 
@@ -2280,7 +2288,7 @@ footer:
 rss: /atom.xml
 ```
 
-### 20. 关于、留言板
+## 20. 关于、留言板
 
 在博客源文件夹source中，新建`about和messages`文件夹，在相应文件夹中新建index.md，或者直接在源文件夹下面新建`about.md`和`messages.md`,markdown内容即为展示内容,使用时直接用`/about /messages`指定路径。
 
