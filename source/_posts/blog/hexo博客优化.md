@@ -66,18 +66,16 @@ npm install hexo-generator-seo-friendly-sitemap --save  # 增强型元标签支�
 <meta property="og:description" content="<%= page.description || page.excerpt || config.description %>">
 ```
 
-<span style="background:#FFFFFF;">**说明**：</span>
+**说明**：文章页的 `description` 和 `keywords` 可在文章 Front-matter 中单独设置（优先级高于全局）：
 
-- <span style="background:#FFFFFF;">文章页的 `description` 和 `keywords` 可在文章 Front-matter 中单独设置（优先级高于全局）</span><span style="color:#FFFF00;"></span>：
-
-  ```markdown
-  ---
-  title: Hexo SEO 优化指南
-  date: 2025-10-08
-  description: 本文详细介绍 Hexo 博客的 SEO 优化方法，包括元标签、站点地图配置等。
-  keywords: [Hexo SEO, 博客优化, 搜索引擎收录]
-  ---
-  ```
+```markdown
+---
+title: Hexo SEO 优化指南
+date: 2025-10-08
+description: 本文详细介绍 Hexo 博客的 SEO 优化方法，包括元标签、站点地图配置等。
+keywords: [Hexo SEO, 博客优化, 搜索引擎收录]
+---
+```
 
 ### 1.3 生成站点地图
 
@@ -349,19 +347,63 @@ seo_autopush:
   onlyProduction: true
 ```
 
-## 2. 资源文件压缩
+## 2. AI搜索引擎优化
+
+针对AI搜索引擎的优化策略，核心是从传统关键词匹配转向语义理解，重点关注内容权威性、答案直接性和用户体验，使内容更易被AI抓取并作为答案源引用。
+
+AI搜索引擎的目标是**为用户提供最准确、最有用的信息**。因此，最好的优化策略就是**创建真正有价值的内容**，并通过适当的技术手段确保这些内容能够被AI正确理解和引用。
+
+### 2.1 文章标题优化
+
+文章整体使用3级标题：文章标题使用h1标签，章节标题使用h2标签，章节副标题使用h3标签。
+
+```html
+<!-- 加强语义标记 -->
+<article itemscope itemtype="https://schema.org/Article">
+  <h1 itemprop="headline">文章标题</h1>
+  <div itemprop="articleBody">
+    <section aria-labelledby="section1">
+      <h2 id="section1">章节标题</h2>
+      <p>内容...</p>
+    </section>
+  </div>
+</article>
+```
+
+### 2.2 文章内容优化
+
+- 为视频添加详细文字稿
+- 为图片提供丰富的alt文本
+- 包含信息图表和数据可视化
+- 添加音频内容的文字版本
+
+### 2.3  AI搜索友好内容特征
+
+1. **准确性** - 信息准确无误，有可靠来源支持
+2. **完整性** - 全面覆盖话题的所有重要方面
+3. **实用性** - 提供可操作的建议和具体步骤
+4. **权威性** - 展示专业资质和经验证明
+5. **时效性** - 包含最新信息和数据
+6. **可读性** - 结构清晰，语言通俗易懂
+7. **独特性** - 提供独特的见解和原创研究
+8. **可信度** - 透明披露信息来源和潜在偏见
+9. **用户体验** - 页面加载快速，移动端友好
+
+AI搜索引擎的目标是**为用户提供最准确、最有用的信息**。因此，最好的优化策略就是**创建真正有价值的内容**，并通过适当的技术手段确保这些内容能够被AI正确理解和引用。
+
+## 3. 资源文件压缩
 
 使用`hexo-all-minifier`插件在构建时通过删除空格和缩进自动压缩HTML、CSS、JavaScript和图片文件，降低文件大小，提升网站加载速度。
 
 - 终端安装
 
-```
+```shell
 npm install hexo-all-minifier --save
 ```
 
 - 在 `_config.yml` 中启用配置：
 
-```
+```yaml
 all_minifier: true
 ```
 
@@ -372,7 +414,7 @@ all_minifier: true
 
 - 可选配置
 
-​	如果你希望对不同类型的文件压缩进行更精细的控制（例如排除某些已压缩的文件），可以在 `_config.yml` 文件中进行更详细的配置：
+ 如果你希望对不同类型的文件压缩进行更精细的控制（例如排除某些已压缩的文件），可以在 `_config.yml` 文件中进行更详细的配置：
 
 ```yaml _config.yml
 all_minifier:
@@ -402,7 +444,7 @@ all_minifier:
       - '*.min.gif'
 ```
 
-## 3. jsDelivr国内公益镜像加速
+## 4. jsDelivr国内公益镜像加速
 
 参考文章：[分享几个JSDelivr国内公益加速镜像 - 流月小站](https://blog.flowmoon.cn/archives/105.html)
 
@@ -414,7 +456,7 @@ all_minifier:
 
 ![image-20251108095911037](https://u.sam7.top/BY24Db)
 
-**基本守则**
+基本守则：
 
 作为公益性质的加速站点，我们在使用过程中也应该遵守一些基本的规则：
 
@@ -422,14 +464,16 @@ all_minifier:
 
 `不要加速字体文件`：字体文件通常非常大，会对带宽造成很大的压力。
 
-## 4. Typora插件安装配置
+## 5. Typora插件安装配置
 
-按照[typora_plugin/README-cn.md at master · obgnail/typora_plugin](https://github.com/obgnail/typora_plugin/blob/master/README-cn.md)README.md指引安装Typora插件
+- Typora_Plugin插件安装
 
-Typora_Plugin功能非常强大，集成以下61个插件功能。
+ 按照[typora_plugin/README-cn.md at master · obgnail/typora_plugin](https://github.com/obgnail/typora_plugin/blob/master/README-cn.md)README.md指引安装Typora插件
+
+ Typora_Plugin功能非常强大，集成以下61个插件功能。
 
 | #    | 插件                    | 功能                                 | 默认启用 |
-| ---- | ----------------------- | ------------------------------------ | -------- |
+| :--- | :---------------------- | :----------------------------------- | :------- |
 | 1    | window_tab              | 标签页管理                           |          |
 | 2    | search_multi            | 多元文件搜索                         |          |
 | 3    | collapse_paragraph      | 章节折叠                             | ×        |
@@ -491,3 +535,71 @@ Typora_Plugin功能非常强大，集成以下61个插件功能。
 | 59   | hotkeys                 | 快捷键注册中心（高级）               |          |
 | 60   | quickButton             | 于右下角添加功能按钮（高级）         |          |
 | 61   | json_rpc                | 外部操纵 Typora（高级）              | ×        |
+
+- 斜杠命令兼容stellar标签
+
+ 参考文章：[使用Typora_plugin增强Stellar写作体验 - Thun888](https://blog.hzchu.top/2024/使用Typora-plugin增强Stellar写作体验/)
+
+ typora强大的插件生态与Stellar主题丰富的标签功能相结合，能够极大提升Markdown写作效率和内容表现力。
+
+{% folders %}
+<!-- folder 折叠 -->
+
+```toml
+[slash_commands]
+# 命令列表
+#  - enable:    是否启用
+#  - type:      snippet/command。前者表示在调用时插入文字片段，后者表示在调用时执行逻辑命令
+#  - icon(可选): 使用emoji作为图标
+#  - hint(可选): 提示信息
+#  - keyword:   关键词
+#  - callback:  若type=snippet，则填入需要插入的文字片段，若type=command，则填入回调函数的字符串
+COMMANDS = [
+    { enable = true, type = "snippet", icon = "😺", hint = "插入表情标签", keyword = "emoji", callback = "{% emoji  %}" },
+    { enable = true, type = "snippet", icon = "🪄", hint = "插入标记标签", keyword = "mark", callback = "{% mark  color: %}" },
+    { enable = true, type = "snippet", icon = "🏷️", hint = "插入hashtag标签", keyword = "hashtag", callback = "{% hashtag  color: %}" },
+    { enable = true, type = "snippet", icon = "📷", hint = "插入image图片标签", keyword = "image", callback = "{% image  download: width: padding: bg: %}" },
+    { enable = true, type = "snippet", icon = "🧇", hint = "插入quot引用标签", keyword = "quot", callback = "{% quot  icon:hashtag %}" },
+    { enable = true, type = "snippet", icon = "🦉", hint = "插入poetry诗词标签", keyword = "poetry", callback = "{% poetry 游山西村 author:陆游 footer:诗词节选 %}\n{% endpoetry %}" },
+    { enable = true, type = "snippet", icon = "📃", hint = "插入note备注块标签", keyword = "note", callback = "{% note [title] content color: %}" },
+    { enable = true, type = "snippet", icon = "🔗", hint = "插入link链接卡片标签", keyword = "link", callback = "{% link href [title] [icon:src] [desc:true/false] %}" },
+    { enable = true, type = "snippet", icon = "▶", hint = "插入button按钮标签", keyword = "button", callback = "{% button text url [icon:key/src] [color:color] [size:xs] %}" },
+    { enable = true, type = "snippet", icon = "🎯", hint = "插入okr目标管理标签", keyword = "okr", callback = "{% okr o1 %}\n{% endokr %}" },
+    { enable = true, type = "snippet", icon = "📚", hint = "插入copy复制行标签", keyword = "copy", callback = "{% copy [code] prefix:$ %}" },
+    { enable = true, type = "snippet", icon = "🔘", hint = "插入radio单选标签", keyword = "radio", callback = "{% radio checked:true [name] %}" },
+    { enable = true, type = "snippet", icon = "☑️", hint = "插入checkbox复选标签", keyword = "radio", callback = "{% checkbox symbol: color: checked: [name] %}" },
+    { enable = true, type = "snippet", icon = "🎶", hint = "插入audio音频标签", keyword = "audio", callback = "{% audio  %}" },
+    { enable = true, type = "snippet", icon = "📽️", hint = "插入video视频标签", keyword = "video", callback = "{% video  %}" },
+    { enable = true, type = "snippet", icon = "🧭", hint = "插入navbar导航栏标签", keyword = "navbar", callback = "{% navbar active:/wiki/ [文章](/) [项目](/wiki/) %}" },
+    { enable = true, type = "snippet", icon = "📅", hint = "插入timeline时间线标签", keyword = "timeline", callback = "{% timeline %}\n<!-- node [text] -->\n{% endtimeline %}" },
+    { enable = true, type = "snippet", icon = "📁", hint = "插入folders文件夹/折叠容器标签", keyword = "folders", callback = "{% folders %}\n<!-- folder 题目1 -->\n{% endfolders %}" },
+    { enable = true, type = "snippet", icon = "👥", hint = "插入friends友链标签", keyword = "friends", callback = "{% friends [name] %}" },
+    { enable = true, type = "snippet", icon = "🌐", hint = "插入sites站点标签", keyword = "sites", callback = "{% sites 分组名 %}" },
+    { enable = true, type = "snippet", icon = "📝", hint = "插入md标签,渲染外部 markdown 文件", keyword = "md", callback = "{% md [url] %}" },
+    { enable = true, type = "snippet", icon = "📚", hint = "插入toc文档目录树标签", keyword = "toc", callback = "{% toc wiki:xxx [open:true] [display:mobile] title %}" },
+    { enable = true, type = "snippet", icon = "📦", hint = "插入box盒子容器标签", keyword = "box", callback = "{% box [title] [color:color] [child:codeblock/tabs] %}\n{% endbox %}" },
+    { enable = true, type = "snippet", icon = "🔖", hint = "插入tabs分栏容器标签", keyword = "tabs", callback = "{% tabs active: align:center %}\n<!-- tab [name] -->\n{% endtabs %}" },
+    { enable = true, type = "snippet", icon = "🔲", hint = "插入grid标签", keyword = "grid", callback = "{% grid bg:box/card %}\n<!-- cell -->\n{% endgrid %}" },
+    { enable = true, type = "snippet", icon = "🖼️", hint = "插入gallery图库容器标签", keyword = "gallery", callback = "{% gallery %}\n{% endgallery %}" },
+    { enable = true, type = "snippet", icon = "📚", hint = "插入albums专辑容器标签", keyword = "albums", callback = "{% albums [group_id] %}" },
+    { enable = true, type = "snippet", icon = "🖼️", hint = "插入posters海报容器标签", keyword = "posters", callback = "{% posters [group_id] %}" },
+    { enable = true, type = "snippet", icon = "🖼️", hint = "插入banner横幅容器标签", keyword = "banner", callback = "{% banner [name] bg: %}\n{% endbanner %}" },
+    { enable = true, type = "snippet", icon = "📸", hint = "插入swiper轮播容器标签", keyword = "swiper", callback = "{% swiper effect:cards %}\n\n{% endswiper %}" },
+    { enable = true, type = "snippet", icon = "👤", hint = "插入ghcard标签", keyword = "ghcard", callback = "{% ghcard [name] %}" },
+    { enable = true, type = "snippet", icon = "🌙", hint = "插入ghcard标签（暗黑主题）", keyword = "ghcard-dark", callback = "{% ghcard [name] theme:dark %}" },
+    { enable = true, type = "snippet", icon = "🔐", hint = "插入psw密码标签", keyword = "psw", callback = "{% psw 密码 %}" },
+    { enable = true, type = "snippet", icon = "🔽", hint = "插入u下划线标签", keyword = "u", callback = "{% u 下划线 %}" },
+    { enable = true, type = "snippet", icon = "🔆", hint = "插入emp着重号标签", keyword = "emp", callback = "{% emp 着重号 %}" },
+    { enable = true, type = "snippet", icon = "🌊", hint = "插入wavy波浪线标签", keyword = "wavy", callback = "{% wavy 波浪线 %}" },
+    { enable = true, type = "snippet", icon = "❌", hint = "插入del删除线标签", keyword = "del", callback = "{% del 删除线 %}" },
+    { enable = true, type = "snippet", icon = "🔺", hint = "插入sup上角标标签", keyword = "sup", callback = "{% sup 上角标 %}" },
+    { enable = true, type = "snippet", icon = "🔻", hint = "插入sub下角标标签", keyword = "sub", callback = "{% sub 下角标 %}" },
+    { enable = true, type = "snippet", icon = "⌨️", hint = "插入kbd键盘样式标签", keyword = "kbd", callback = "{% kbd ⌘ %}" }
+]
+
+```
+
+
+{% endfolders %}
+
+![image-20251108120707055](https://u.sam7.top/KNxhCJ)
