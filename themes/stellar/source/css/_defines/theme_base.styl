@@ -32,6 +32,7 @@ x-set-bg-colors($scheme)
   $light = $scheme == 'dark' ? 0% : 100%
   --bg-a20: x-hsla($hue, $sat, $light, 0.2)
   --bg-a50: x-hsla($hue, $sat, $light, 0.5)
+  --bg-a55: x-hsla($hue, $sat, $light, 0.55)
   --bg-a60: x-hsla($hue, $sat, $light, 0.6)
   --bg-a75: x-hsla($hue, $sat, $light, 0.75)
   --bg-a100: x-hsla($hue, $sat, $light, 1)
@@ -77,11 +78,20 @@ x-set-image-filters($scheme)
     --image-filter-value: none
 
 // ---------------- apply theme ----------------
+// fallback: 如果编译时主题未注入 $site-background-image 或 $site-background-opacity，则使用站点配置的默认值
+if !$site-background-image
+  $site-background-image = 'https://u.sam7.top/h5tPaG'
+
+if !$site-background-opacity
+  $site-background-opacity = 0.1
+
 // 设置浅色模式
 dynamic-theme-light()
   $hue = $c-base-hue
   --background: x-hsla($hue, 20%, 98%, 1)
   --card: $site-background-image ? hsla(white, 0.5) : white
+  // 背景遮罩（浅色主题使用白色半透明遮罩）
+  --site-bg-overlay: x-hsla(0, 0%, 100%, $site-background-opacity)
 
   x-set-bg-colors('light')
   x-set-text-colors('light')
@@ -99,6 +109,8 @@ dynamic-theme-dark()
   x-set-text-colors('dark')
   x-set-image-filters('dark')
   --text-code: x-hsla(20, 75, 60, 1)
+  // 背景遮罩（深色主题使用黑色半透明遮罩）
+  --site-bg-overlay: x-hsla(0, 0%, 0%, calc($site-background-opacity + 0.7))
 
 :root
   // 主题色
@@ -115,9 +127,17 @@ dynamic-theme-dark()
 
 :root[data-theme="light"]
   dynamic-theme-light()
+  // light 主题微调（更亮、略高饱和）
+  --site-bg-blur: 10px
+  --site-bg-sat: 90%
+  --site-bg-contrast: 0.95
 
 :root[data-theme="dark"]
   dynamic-theme-dark()
+  // dark 主题微调（更暗、稍降饱和）
+  --site-bg-blur: 8px
+  --site-bg-sat: 80%
+  --site-bg-contrast: 0.9
 
 // ========== 图片主题变化解决方案 ==========
 
@@ -139,7 +159,7 @@ dynamic-theme-dark()
   .widget img,
   .navbar img,
   .header img,
-  .footer img,
+  //.footer img,
   .avatar,
   .logo,
   .site-brand img,
@@ -156,7 +176,7 @@ dynamic-theme-dark()
   // 对于需要保持较深背景的图片
   img[data-dark-bg],
   .dark-bg-img
-    filter: invert(1) hue-rotate(180deg) brightness(0.5) contrast(0.8) saturate(0.85) !important
+    filter: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.95) !important
 
 // 表情图片不随主题变化
 .emoji,
@@ -196,3 +216,67 @@ img.theme-aware:not(.emoji)
 .no-theme,
 [data-no-theme]
   filter: none !important
+
+// 兼容：在浅色主题中让前缀符号（例如 $）显示为浅黑色，恢复为改前行为并提高可读性
+:root[data-theme="light"]
+  .tag-plugin.copy > span
+    color: rgba(0,0,0,0.65)
+
+// ========== Wallpaper: 背景图与主题遮罩（随 data-theme 变化） ==========
+// 使用现有的主题变量（如 --bg-a55, --background）来让遮罩颜色随 light/dark 自动变化
+:root
+  // 背景开关与默认参数（可被主题变量覆盖）
+  --site-bg-enabled: 1
+  // 推荐默认（桌面）：适中模糊/去饱和/降低对比，使背景不抢眼
+  --site-bg-blur: 10px    // 常用桌面起点，若不要毛玻璃可设 0px
+  --site-bg-sat: 85%      // 饱和度：70-90% 推荐范围
+  --site-bg-contrast: 0.9 // 对比度：0.85-0.95 推荐范围
+  // 从主题配置读取背景遮罩透明度（如果有），否则默认使用 0.1
+  if $site-background-opacity
+    --site-bg-opacity: $site-background-opacity
+  else
+    --site-bg-opacity: 0.1
+
+// 伪元素承载大幅背景图与滤镜，遮罩采用 --bg-a55（已在 x-set-bg-colors 中根据主题设置）
+html::before
+  content: ""
+  position: fixed
+  inset: 0
+  z-index: -9998
+  background-size: cover
+  background-position: center center
+  background-repeat: no-repeat
+  transform: scale(1.02)
+  pointer-events: none
+  will-change: opacity
+  // 不使用毛玻璃，只有在有图片时设置背景图
+  // 调整饱和度与对比度以降低背景干扰（不使用 blur）
+  filter: saturate(var(--site-bg-sat)) contrast(var(--site-bg-contrast))
+  opacity: var(--site-bg-enabled)
+  if $site-background-image
+    background-image: url($site-background-image)
+  else
+    background-image: none
+
+html::after
+  content: ""
+  position: fixed
+  inset: 0
+  z-index: -9997
+  pointer-events: none
+  // 使用主题变量控制遮罩颜色（浅色或深色）
+  background: var(--site-bg-overlay, var(--bg-a55, rgba(0,0,0,0.08)))
+  opacity: var(--site-bg-opacity, 0.1)
+  mix-blend-mode: normal
+
+// 不改动主要内容层的默认 z-index/position，恢复主题原有布局
+.site
+  position: relative
+
+// （注）已取消对 .sitebg/.siteblur 优先逻辑，改为使用 html::before + html::after 实现背景与遮罩
+
+// 移动端降级：减少模糊以节省性能
+@media (max-width: $device-mobile-max)
+  html::before
+    // 移动端降级：降低饱和度与对比以节省性能并提高清晰度
+    filter: saturate(75%) contrast(0.9)

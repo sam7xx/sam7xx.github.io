@@ -4,8 +4,9 @@ abbrlink: 50019
 tags:
   - hexo配置
   - typora配置
-description: 记录Hexo完成搭建后的优化配置，包括博客的SEO优化、资源文件压缩、国内CDN镜像源加速以及typora配置，优化网页加载速度，提升码字效率。
-categories: 博客搭建
+description: 记录Hexo完成搭建后的优化配置，包括博客的SEO优化、资源文件压缩、国内CDN镜像源加速以及typora配置，优化网页加载速度，提升写作效率。
+categories: [博客搭建]
+menu_id: post
 date: 2025-11-07 13:10:00
 ---
 
@@ -19,7 +20,7 @@ SEO优化是提升网站在搜索引擎自然搜索结果中排名的手段，�
 
 首先在根目录 `_config.yml` 中设置基础信息，让搜索引擎识别博客的基本属性：
 
-```yaml _config.yml
+```yml _config.yml
 title: 你的博客名称  # 搜索引擎显示的标题（含核心关键词）
 subtitle: 博客副标题  # 补充说明，可选
 description: 博客的核心描述（100-150字，包含主要关键词）  # 影响搜索引擎收录时的摘要
@@ -37,15 +38,13 @@ timezone: Asia/Shanghai  # 时区，确保文章时间正确
 
 如果使用 `hexo-theme-stellar`、`next` 等主流主题，通常已支持 SEO 配置，无需额外开发。若主题不支持，可安装通用插件：
 
-```bash
-npm install hexo-generator-seo-friendly-sitemap --save  # 增强型元标签支持
-```
+{% copy npm install hexo-generator-seo-friendly-sitemap --save  # 增强型元标签支持 prefix:$ %}
 
 手动修改主题模板（通用方法）
 
 进入主题的模板目录（如 `themes/stellar/layout`），找到页面头部模板（通常是 `_partial/head.ejs` 或 `head.jade`），添加或修改以下元标签：
 
-```html
+```html _partial/head.ejs
 <!-- 在 head 标签内添加 -->
 <!-- 标题：首页用博客名，文章页用「文章标题 | 博客名」 -->
 <title><% if (is_home) { %><%= config.title %><% } else if (is_post) { %><%= page.title %> | <%= config.title %><% } else { %><%= page.title || config.title %><% } %></title>
@@ -83,19 +82,15 @@ keywords: [Hexo SEO, 博客优化, 搜索引擎收录]
 
 安装站点地图生成插件：
 
-```bash
-# 生成标准 sitemap（适用于 Google、Bing 等）
-npm install hexo-generator-sitemap --save
+{% copy npm install hexo-generator-sitemap --save # 生成标准 sitemap（适用于 Google、Bing 等） prefix:$ %}
 
-# 生成百度专属 sitemap（百度对标准 sitemap 支持较差）
-npm install hexo-generator-baidu-sitemap --save
-```
+{% copy npm install hexo-generator-baidu-sitemap --save # 生成百度专属 sitemap（百度对标准 sitemap 支持较差） prefix:$ %}
 
 配置站点地图：
 
 在 `_config.yml` 中添加插件配置：
 
-```yaml
+```yml blog/_config.yml
 # 标准 sitemap 配置
 sitemap:
   path: sitemap.xml  # 生成的文件路径（根目录下）
@@ -159,7 +154,7 @@ baidusitemap:
 
 1. 在 `source` 目录创建 `robots.txt`：
 
-```txt
+```txt robots.txt
 # 允许所有搜索引擎抓取
 User-agent: *
 Allow: /
@@ -260,7 +255,7 @@ Hexo 默认永久链接包含日期（如 `/2025/10/08/title/`），不利于 SE
 
 在 `_config.yml` 中设置：
 
-```yaml
+```yml blog/_config.yml
 permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 # 或包含分类（更推荐）：
 # permalink: :category/:title/
@@ -318,11 +313,11 @@ permalink: :title/  # 仅保留文章标题（需确保标题唯一）
 
 ### 1.9 自动推送
 
-安装autopush插件`npm install hexo-seo-autopush --save`，支持百度、谷歌、必应等自动推送。
+{% copy npm install hexo-seo-autopush --save #安装autopush插件，支持百度、谷歌、必应等自动推送。 prefix:$ %}
 
-主题配置文件中添加以下内容，配置百度、谷歌、必应sitemap自动推送。
+根目录配置文件中添加以下内容，配置百度、谷歌、必应sitemap自动推送。
 
-```yaml _config.yml
+```yml _config.yml
 seo_autopush:
   # 是否启用插件
   enable: true
@@ -397,13 +392,11 @@ AI搜索引擎的目标是**为用户提供最准确、最有用的信息**。�
 
 - 终端安装
 
-```shell
-npm install hexo-all-minifier --save
-```
+  {% copy npm install hexo-all-minifier --save prefix:$ %}
 
 - 在 `_config.yml` 中启用配置：
 
-```yaml
+```yml blog/_config.yml
 all_minifier: true
 ```
 
@@ -416,7 +409,7 @@ all_minifier: true
 
  如果你希望对不同类型的文件压缩进行更精细的控制（例如排除某些已压缩的文件），可以在 `_config.yml` 文件中进行更详细的配置：
 
-```yaml _config.yml
+```yml _config.yml
 all_minifier:
   # HTML压缩配置
   html:
@@ -545,7 +538,7 @@ all_minifier:
 {% folders %}
 <!-- folder 折叠 -->
 
-```toml
+```toml Typora\resources\plugin\global\settings\settings.user.toml
 [slash_commands]
 # 命令列表
 #  - enable:    是否启用

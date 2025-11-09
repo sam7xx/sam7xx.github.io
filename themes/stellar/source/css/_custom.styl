@@ -61,19 +61,19 @@ $border-image-l = convert(hexo-config('style.border-radius.image-l')) // 大型�
 $border-image = convert(hexo-config('style.border-radius.image')) // 普通图片边框半径（从Hexo配置获取）
 $border-image-s = convert(hexo-config('style.border-radius.image-s')) // 小型图片边框半径（从Hexo配置获取）
 $border-button = 8px // 按钮边框半径（固定8px）
-$leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，单位px/rem）
+$leftbar-bottom-margin = 30px  // 左侧栏底部距离（根据需求调整，单位px/rem）
 
 // 可以动态变化的属性
 :root
-  --width-main: 1080px // 主内容区域宽度（默认1080px）
+  --width-main: 999px // 主内容区域宽度（默认1080px）
   --fsp: $fs-body // 段落字体大小（关联正文基础大小）
   --fsh2: 'calc(%s + 11px)' % var(--fsp) // h2标题大小（基于段落字体动态计算）
   --fsh3: 'calc(%s + 7px)' % var(--fsp) // h3标题大小（基于段落字体动态计算）
   --fsh4: 'calc(%s + 4px)' % var(--fsp) // h4标题大小（基于段落字体动态计算）
   
   --side-content-width: 255px // 侧边栏内容宽度（默认255px）
-  --gap-margin: 11px // 元素外部间距（元素间距离）
-  --gap-padding: 11px // 元素内部间距（内容到边框距离）
+  --gap-margin: 15px // 元素外部间距（元素间距离）
+  --gap-padding: 15px // 元素内部间距（内容到边框距离）
   
   --gap-p: 'calc(%s + 4px)' % $fs-body // 段落间距（正文大小+4px）
   --gap-p-compact: 'calc(%s * 0.75)' % $fs-body // 紧凑段落间距（正文大小*0.75）

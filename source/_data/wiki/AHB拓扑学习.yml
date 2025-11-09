@@ -1,0 +1,50 @@
+name: AHB拓扑学习
+title: AHB拓扑PD3.1开关电源设计--140W
+subtitle: 'AHB拓扑学习记录 | Designed by Sam'
+tags: 开关电源设计
+icon: https://res.xaox.cc/gh/cdn-x/wiki@main/stellar/icon.svg
+cover: https://res.xaox.cc/gh/cdn-x/wiki@main/stellar/icon.svg
+description: 基于AHB拓扑的140W PD3.1电源设计项目，涵盖设计原理、实现细节及优化方案。
+repo: 
+search:
+  filter: /wiki/AHB/
+  placeholder: 在 Stellar 中搜索...
+leftbar: 
+  - tree
+  - timeline_stellar_releases
+  - related
+comment_title: '欢迎交流与讨论'
+comments:
+  service: giscus
+  giscus:
+    data-repo: 
+    data-mapping: number
+    data-term: 226
+base_dir: /wiki/AHB/
+tree:
+  'AHB拓扑与CRM模式PFC学习':
+    - AHB工作原理
+    - AHB控制策略
+    - AHB设计要点
+  '仿真模拟分析':
+    - 拓扑和功率级仿真
+    - 控制环路设计
+    - 损耗和热分析
+    - EMC预评估
+    - 保护与可靠性验证
+  '关键器件选型计算':
+    - PFC电感设计
+    - AHB变压器设计
+    - 开关管选型计算
+    - 输入输出电容设计
+  '原理图与PCB设计':
+    - PFC外围参数设计
+    - AHB外围参数设计
+    - SR外围参数设计
+    - 协议IC外围参数设计
+    - PCB布局与布线    
+  '调试验证':
+    - PFC电感与变压器绕制
+    - PCBA焊接
+    - 测试与调试
+    - 结果分析与优化

@@ -86,7 +86,7 @@ tagtree:
 # 欢迎语
 welcome:
   layout: markdown
-  title: 🎉欢迎
+  title: 🎉🎉🎉
   content: |
     欢迎大家畅所欲言！
     本站相关配置信息如下：

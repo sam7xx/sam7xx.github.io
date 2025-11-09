@@ -53,17 +53,17 @@ menubar:
       theme: '#2196F3'
       icon: '<i class="fa-solid fa-newspaper" style="font-size:1.25em;"></i>'
       title: 博客
-      url: /blog
-    - id: note
+      url: /
+    - id: notes
       theme: '#4CAF50'
       icon: '<i class="fa-solid fa-pen-to-square" style="font-size:1.25em;"></i>'
       title: 笔记
-      url: /note
-    - id: project
+      url: /notebooks
+    - id: wiki
       theme: '#FF9800'
       icon: '<i class="fa-solid fa-folder-open" style="font-size:1.25em;"></i>'
       title: 项目
-      url: /project
+      url: /wiki
     - id: runing
       theme: '#CC96F3'
       icon: '<i class="fa-solid fa-clock" style="font-size:1.25em;"></i>'
@@ -786,11 +786,11 @@ style:
   error_page: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
   site: # 使用 background-image 后，blur 设置才有效
     background-color:  var(--background) #var(--bg-a11) var(--background)
-    background-image:  #url(https://t.alcy.cc/fj)
-    blur-px: 14px # 增加模糊度使背景不突兀
+    background-image:  https://u.sam7.top/mF7wWy
+    blur-px: 1px # 增加模糊度使背景不突兀
     blur-bg:  var(--bg-a55)
-    blur-sat: 100% # 适当降低饱和度使背景不抢眼
-    
+    blur-sat: 50% # 适当降低饱和度使背景不抢眼
+    background-opacity: 0.05
   # 技术文章内页各级标题前面的符号
   header_prefix:
     h2: '#'

@@ -4,8 +4,9 @@ abbrlink: 51727
 tags:
   - hexo配置
   - stellar主题
-description: 记录Hexo搭建个人博客的详细步骤，包括构建工具的安装准备、hexo插件使用和stellar主题配置。
-categories: 博客搭建
+description: 记录使用Hexo搭建个人博客的详细步骤，包括构建工具的安装准备、hexo插件使用和stellar主题配置。
+categories: [博客搭建]
+menu_id: post
 date: 2025-09-20 18:19:42
 ---
 
@@ -21,7 +22,7 @@ hexo基于Node.js构建,需安装Node.js依赖环境，由于ubuntu系统仓库N
 
 具体操作如下：
 
-```sh
+```sh shell
 # Download and install nvm:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 # in lieu of restarting the shell
@@ -40,11 +41,11 @@ npm -v # Should print "11.6.0".
 
 如果需要加速国内访问，可以配置淘宝镜像：
 
-`npm config set registry https://registry.npmmirror.com`
+{% copy npm config set registry https://registry.npmmirror.com prefix:$ %}
 
 以下是一些常用的 NPM 命令：
 
-```sh
+```sh shell
 npm init # 初始化 package.json 文件
 npm install # 安装 package.json 中的所有依赖
 npm install <包名> --save-dev # 安装开发依赖
@@ -57,10 +58,9 @@ npm run <脚本名> # 运行 package.json 中定义的脚本
 
 本地与全局安装
 
-```sh
-npm install express # 本地安装 将包安装到当前项目的 node_modules 目录，仅对该项目可用。
-npm install -g @vue/cli # 全局安装 使用 -g 参数将包安装到系统范围内，适用于 CLI 工具。
-```
+{% copy npm install express # 本地安装 将包安装到当前项目的 node_modules 目录，仅对该项目可用。 prefix:$ %}
+
+{% copy npm install -g @vue/cli # 全局安装 使用 -g 参数将包安装到系统范围内，适用于 CLI 工具。   prefix:$ %}
 
 ## 2. HEXO配置
 
@@ -68,7 +68,7 @@ npm install -g @vue/cli # 全局安装 使用 -g 参数将包安装到系统范�
 
 根据[Hexo](https://hexo.io/zh-cn/)官网安装指引，全局安装`npm install -g hexo@8.0.0`
 
-```sh
+```sh shell
 hexo init blog #初始化blog目录，目录一定为空。
 cd blog
 npm install #安装hexo所需依赖
@@ -78,7 +78,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 初始化后blog文件夹结构如下.
 
-```sh
+```sh shell
 .
 ├── _config.yml #hexo配置文件
 ├── package.json
@@ -95,7 +95,9 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 {% link <https://xaoxuu.com/wiki/stellar> "stellar主题文档" desc:true %}
 
-`npm i hexo-theme-stellar`安装稳定版本，安装路径位于`blog/node_modules/`文件夹内。
+{% copy npm i hexo-theme-stellar #安装稳定版本  prefix:$ %}
+
+安装路径位于`blog/node_modules/`文件夹内。
 
 在 `blog/_config.yml` 文件中找到并修改：
 
@@ -109,29 +111,29 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 **网页底部文章统计**参考博主[BoBoBlog](https://blog.bxzdyg.cn/)文章
 
-- 安装插件：npm i hexo-wordcount –save
+{% copy npm i hexo-wordcount –save #安装hexo-wordcount插件 prefix:$ %}
 
-- 还需要需要在主题文件footer.ejs里将 `{post_count}` 和 `{word_count}` 替换为实际数据。Stellar 主题页脚渲染时，content 是字符串，可以用 JS 替换。
+需要在主题文件footer.ejs里将 `{post_count}` 和 `{word_count}` 替换为实际数据。Stellar 主题页脚渲染时，content 是字符串，可以用 JS 替换。
 
-  建议在ayoutDiv 函数里，渲染 markdown 前加如下替换：
+建议在ayoutDiv 函数里，渲染 markdown 前加如下替换：
 
-  ```ejs footer.ejs
-    // footer
-    el += '<div class="text">'
-    if (content) {
-      const postCount = site.posts.length;
-      const wordCount = typeof totalcount === 'function' ? totalcount(site) : 0;
-      let contentStr = content;
-      contentStr = contentStr.replace('{post_count}', postCount).replace('{word_count}', wordCount);
-      el += markdown(contentStr)
-    }
-  ```
+```css footer.ejs
+  // footer
+  el += '<div class="text">'
+  if (content) {
+    const postCount = site.posts.length;
+    const wordCount = typeof totalcount === 'function' ? totalcount(site) : 0;
+    let contentStr = content;
+    contentStr = contentStr.replace('{post_count}', postCount).replace('{word_count}', wordCount);
+    el += markdown(contentStr)
+  }
+```
 
-  然后在主题配置文件footer:content:增加如下代码，即可实现显示网站总文章字数统计。
+然后在主题配置文件footer:content:增加如下代码，即可实现显示网站总文章字数统计。
 
-  ```yaml 主题配置文件
-  <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span
-  ```
+```yml blog/_config.stellar.yml
+<span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span
+```
 
 **网页访问统计**由于不蒜子老是挂，现在使用的是Vercount插件，不蒜子的优化版本。[Vercount: 一个比不蒜子更好的网站计数器 | EvanNotFound's Blog](https://ohevan.com/vercount-website-counter-busuanzi-alternative.html)
 
@@ -196,7 +198,7 @@ stellar已集成waline插件，首先主题配置文件选择启用waline，具�
 
 {% folding 查看代码 %}
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
 comments:
   service: waline # beaudar, utterances, giscus, twikoo, waline, artalk
   comment_title: 快来参与讨论吧~
@@ -608,7 +610,7 @@ function layoutDiv() {
 
 在主题配置文件_config.stellar.yml中增加以下CSS文件，引入font-awesome图标库。在[font-awesome v7 CDN](https://www.bootcdn.cn/font-awesome/)里面找一个CDN。
 
-``` yaml
+``` yml blog/_config.stellar.yml
 # 动态图标引入
 inject:
   head:
@@ -617,7 +619,7 @@ inject:
 
  图标格式张这样`<i class="fa-solid fa-github fa-brands fa-bounce"></i>`，然后就可以在想要添加图标的地方使用了，[Font Awesome](https://fontawesome.com/)主页搜索相应特性的图标，大部分都是免费的。
 
-```yaml
+```yml blog/_config.stellar.yml
 footer: 
   social:
     github:
@@ -695,7 +697,7 @@ stellar集成fancybox灯箱插件，可以在放大网页上面的图片，功�
 
 md语法图片格式支持默认全局打开，有个问题就是点击文章海报图片也会放大。
 
-```yml 主题配置文件
+```yml blog/_config.stellar.yml
 plugins:
 
   fancybox:
@@ -716,7 +718,7 @@ plugins:
 
 stellar主题预留有7个位置，主题配置如下，footer下面添加以下内容。
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
 ###### Footer ######
 footer: 
   social:
@@ -760,7 +762,7 @@ footer:
 
 在 `_data/widgets.yml` 文件中添加以下内容，需要自己创建：
 
-```yaml _data/widgets.yml
+```yml _data/widgets.yml
 # 欢迎语
 welcome:
   layout: markdown
@@ -774,7 +776,7 @@ welcome:
 
 修改主题配置文件，在想要显示的页面添加welcome组件，
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
   home:
     leftbar:  welcome, recent, music
     rightbar: tagcloud
@@ -795,7 +797,7 @@ welcome:
 
 主题配置文件中设置如下，使用fontawesome图标。
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
 menubar:
   columns: 5 # 一行多少个
   items: # 可按照自己需求增加，符合以下格式即可
@@ -836,7 +838,7 @@ menubar:
 
 <!-- tab 主题配置文件 -->
 
-```yaml 主题配置文件
+```yml 主题配置文件
 menubar:
   columns: 5
   items:
@@ -1194,7 +1196,7 @@ function layoutDiv() {
 
 - 根目录配置文件中，修改以下内容。
 
-```yaml 根目录配置文件
+```yml blog/_config.yml
 title: #博客名称
 subtitle: '纸上得来终觉浅,绝知此事需躬行|文本2' #鼠标移至副标题区域即可显示文本2内容
 description: '博客描述'
@@ -1252,7 +1254,7 @@ timezone: 'Asia/Shanghai' #时区
 
   - 然后在根目录配置文件增加以下内容，将中英文手写字体和art-title.CSS引入head标签内。
 
-``` yaml 根目录配置文件
+``` yml blog/_config.yml
 inject:
   head:
   	- <link rel="stylesheet" href="/art-title.css">  # 自定义艺术字样式引入
@@ -1269,7 +1271,7 @@ inject:
 
 - 然后在根目录配置文件增加以下内容，将Favicon图标引入head标签内。
 
-  ```yaml 根目录配置文件
+  ```yaml blog/_config.yml
   inject:
     head:
     	- <link rel="icon" href="https://u.sam7.top/6QcmtF" type="image/avif">  # Favicon图标引入
@@ -1340,9 +1342,11 @@ $leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，�
 
 参考 [stellar主题使用meetingjs接入aplayer音乐播放器 - BoBoBlog](https://blog.bxzdyg.cn/p/stellar-aplayer-metingjs/)
 
-首先需要安装音乐播放器插件`npm install --save hexo-tag-aplayer`,在根目录主题配置文件里面添加以下内容，开启metingjs。
+{% copy npm install --save hexo-tag-aplayer prefix:$ %}
 
-```yaml _config.yaml
+首先需要安装音乐播放器插件,在根目录主题配置文件里面添加以下内容，开启metingjs。
+
+```yml _config.yml
 aplayer:
   # 示例配置
   cdn: https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js
@@ -1643,7 +1647,7 @@ aplayer:
 
  终端运行hexo clean 清除缓存，hexo g&hexo s渲染网页后本地预览。
 
- 手机端显示很乱，影响阅览网页，已弃用。
+ 手机端显示很乱，影响阅览网页，可以减少线条数或者移动端适配减少线条数量。
 
 ### 13.2 随机樱花效果
 
@@ -1836,13 +1840,11 @@ window.isMobileDevice = isMobileDevice;
 
 能够解决中文网页标题转义的现象，并且创建文章自动添加abbrlink
 
-```bash
-npm install hexo-abbrlink --save
-```
+{% copy npm install hexo-abbrlink --save prefix:$ %}
 
 在 `blog/_config.yml` 中找到对应 `permalink` 标签，进行修改即可：
 
-```yaml _config.yaml
+```yml _config.yml
 url: sam7.top
 permalink: :year:month/:title/ #:year/:month/:day/:title/
 abbrlink:
@@ -1868,7 +1870,7 @@ permalink_defaults:
 
 参考博主[BoBoBlog](https://blog.bxzdyg.cn/)，主题颜色设置为自动。
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
 style:
   prefers_theme: auto # auto / light / dark
   smooth_scroll: true # true / false 开启时如果目录过长可能无法准确定位
@@ -1878,7 +1880,7 @@ style:
 
 首先在 主题配置文件中`footer.social`处增加“主题切换”按钮配置，图标为半圆，点击可用于一键切换深浅色。
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
 footer: 
   social:
     theme:
@@ -2153,7 +2155,7 @@ img.theme-aware:not(.emoji)
 
 主题配置文件中修改如下
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
   leftbar:
     # 可以设置：纯色/渐变色/图片作为背景
     background-color:  var(--block) #var(--card) var(--block)
@@ -2181,7 +2183,7 @@ waline评论和aplayer播放器都有适配，由于篇幅问题，对应章节�
 
 stellar集成tianti GPT，付费的，[洪墨AI](https://ai.zhheo.com/)这里购买添加key就好了，绑定网页。
 
-```yaml
+```yml blog/_config.stellar.yml
 # AI 摘要
   # https://github.com/qxchuckle/Post-Summary-AI
   tianli_gpt: 
@@ -2199,7 +2201,7 @@ stellar集成tianti GPT，付费的，[洪墨AI](https://ai.zhheo.com/)这里购
 
 根目录配置文件中，最后一行加入以下指令：
 
-```yaml 根目录配置文件
+```yml blog/_config.yml
 inject:
   head:
     - <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css"> #字体引入
@@ -2212,7 +2214,7 @@ inject:
 
 在主题配置文件中找到 style.font-family，修改以下内容：
 
-```yaml 主题配置文件
+```yml blog/_config.stellar.yml
 style:
   prefers_theme: auto # auto / light / dark
   smooth_scroll: true # true / false 开启时如果目录过长可能无法准确定位
@@ -2262,10 +2264,13 @@ style:
 
 参考博主[BoBoBlog](https://blog.bxzdyg.cn/)
 
-可用于搜索引擎和友链拉取动态`npm i hexo-generator-feed`安装插件，根目录下配置文件添加如下内容
+安装可用于搜索引擎和友链拉取动态插件
 
-```yaml _config.yml
-blog/_config.yml
+{% copy npm i hexo-generator-feed prefix:$ %}
+
+根目录下配置文件添加如下内容
+
+```yml _config.yml
 feed:
   type: atom # RSS的类型(atom/rss2)
   path: atom.xml # 文件路径,默认是atom.xml/rss2.xml
@@ -2278,7 +2283,7 @@ feed:
 
 然后在主题配置文件中加入以下内容，添加左侧栏footer小图标：
 
-```yaml _config.stellar.yml
+```yml _config.stellar.yml
 footer:
   social:
 	rss:
@@ -2292,7 +2297,7 @@ rss: /atom.xml
 
 在博客源文件夹source中，新建`about和messages`文件夹，在相应文件夹中新建index.md，或者直接在源文件夹下面新建`about.md`和`messages.md`,markdown内容即为展示内容,使用时直接用`/about /messages`指定路径。
 
-```yaml
+```yml blog/_config.stellar.yml
       # 这里配置子菜单，使用 nested 字段
       nested:
         - id: archives

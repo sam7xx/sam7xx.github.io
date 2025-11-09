@@ -3,9 +3,10 @@ title: hexo博客静态部署
 tags:
   - hexo配置
   - hexo部署
-description: 记录Hexo将本地生成的静态博客内容部署到GitHub、Cloudflare以及Netlify/Vercel等平台，详细说明了部署步骤、GitHub Actions工作流配置以及常见问题的解决方法。
-categories: 博客搭建
+description: 记录使用Hexo将本地生成的静态博客内容部署到GitHub、Cloudflare以及Netlify/Vercel等平台，详细说明了部署步骤、GitHub Actions工作流配置以及常见问题的解决方法。
+categories: [博客搭建]
 abbrlink: 55230
+menu_id: post
 date: 2025-10-07 12:17:21
 ---
 
@@ -26,11 +27,13 @@ Hexo 部署是将本地生成的静态博客内容发布到服务器或托管平
 
   ![image-20251108084735053](https://u.sam7.top/ZxYcQt)
 
-- 然后在博客文件夹下安装部署插件`npm install hexo-deployer-git --save`
+- 然后在博客文件夹下安装部署插件
+
+  {% copy npm install hexo-deployer-git --save prefix:$ %}
 
 - 修改 `_config.yml`主题配置文件`deploy`信息，详细配置如下。
 
-```yaml 主题配置文件
+```yml blog/_config.yml
 deploy:
    type: git
    repo: https://github.com/yourname/yourname.github.io.git  # 仓库地址
@@ -51,7 +54,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
 - **初始化本地 Git 仓库**（若未初始化）：
 
-   ```bash
+   ```bash shell
    cd blog # 进入 Hexo 博客根目录
    git branch -m main #不然会报错
    git init # 初始化 Git
@@ -68,7 +71,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
 - **提交并推送代码到远程仓库**：
 
-   ```bash 终端
+   ```bash shell
    git add . # 添加所有文件（排除 .gitignore 中指定的内容）
    git commit -m "Initial commit: Hexo source code" # 提交
    # 切换到 SSH 协议，生成 SSH 密钥，一路回车默认即可,密码可以为空。
@@ -111,7 +114,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
 - 更新 Hexo 配置，为避免静态资源路径错误，需修改 Hexo 根目录的 `_config.yml`：
 
-   ```yaml
+   ```yml blog/_config.yml
    url: https://blog.example.com  # 改为你的自定义域名
    root: /  # 保持默认
    ```
@@ -122,7 +125,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
 ### 4.1 Netlify/Vercel部署
 
-这两个平台均支持自动构建部署，比Cloudflare简单，大概步骤类似，默认设置点点点搞定，目前Vercel作为备用站：
+这两个平台均支持自动构建部署，比Cloudflare简单，构建步骤类似，默认设置点点点搞定，目前Vercel作为备用站：
 
 - 在 Netlify/Vercel 控制台导入 Hexo 源代码仓库。
 
@@ -150,9 +153,7 @@ Cloudflare Pages 需通过 Git 仓库拉取代码并自动构建，因此需先�
 
 在 Hexo 项目根目录（即 `_config.yml` 所在目录）执行以下命令，安装 `@vercel/analytics`：
 
-```bash
-npm install @vercel/analytics --save
-```
+{% copy npm install @vercel/analytics --save prefix:$  %}
 
 步骤 2：创建分析代码注入脚本
 
@@ -160,7 +161,7 @@ npm install @vercel/analytics --save
 
 1. 在 Hexo 项目的 `source/js/` 目录下（如果没有 `js` 目录则创建），新建 `vercel-analytics.js` 文件，内容如下：
 
-   ```js
+   ```js vercel-analytics.js
    // 从 @vercel/analytics 包中提取核心逻辑（适配浏览器环境）
    (function() {
      const script = document.createElement('script');
@@ -187,7 +188,7 @@ npm install @vercel/analytics --save
 
 2. 编辑 `themes/[你的主题名]/layout/_partial/head.ejs`，在文件末尾添加以下代码（引入刚才创建的脚本）：
 
-   ```ejs
+   ```ejs head.ejs
    <!-- 引入 Vercel Analytics 脚本 -->
    <% if (!is_amp()) { %> <!-- 非 AMP 页面才加载 -->
      <script src="/js/vercel-analytics.js"></script>
@@ -203,9 +204,7 @@ npm install @vercel/analytics --save
 
 1. 本地测试是否生效：
 
-   ```bash
-   hexo clean && hexo g && hexo s
-   ```
+   {% copy hexo clean && hexo g && hexo s prefix:$  %}
 
    启动后访问 `http://localhost:4000`，打开浏览器开发者工具（F12）的「Network」面板，查看是否加载了 `vercel-analytics.js` 和 `script.js`（来自 Vercel CDN），若有则说明注入成功。
 
@@ -213,7 +212,7 @@ npm install @vercel/analytics --save
 
    将代码提交到关联 Vercel 的 Git 仓库，Vercel 会自动构建部署：
 
-   ```bash
+   ```bash shell
    git add .
    git commit -m "Add Vercel Analytics to Hexo"
    git push origin main
@@ -266,7 +265,7 @@ npm install @vercel/analytics --save
 
 {% folding 查看代码 %}
 
-```yaml deploy.yaml
+```yml blog/.github/workflows/deploy.yml
 name: hexo部署流程
 on:
   push:
@@ -369,7 +368,7 @@ jobs:
 
 - 推送代码触发自动部署
 
-```bash
+```bash shell
 # 提交工作流文件
 git add .github/workflows/deploy.yml
 git commit -m "Add auto-deploy workflow to 3 platforms"
@@ -379,7 +378,7 @@ git push origin main
 也可以写入脚本`deploy.sh`，放在博客根目录，更新博客后终端执行./deploy.sh即可完成代码推送至Github。
 {% folding 查看代码 %}
 
-```sh deploy.sh
+```sh blog/deploy.sh
 #!/bin/bash
 set -euo pipefail  # 严格模式：遇错即停，防止未定义变量
 
@@ -441,7 +440,7 @@ main "$@"
 
 {% endfolding %}
 
-```bash
+```bash shell
 $ ./deploy.sh
 ℹ️ ===== Hexo全项目自动部署工具 =====
 ℹ️ 检查Hexo项目是否有变更...
@@ -513,7 +512,7 @@ To github.com:xxxxx/xxxxx.github.io.git
   - 解决：可以生成一个.nojekyll文件来禁用jekyll部署，再工作流中增加public文件下.nojekyll
   - 根目录也添加 `.nojekyll`（双重保险）,虽然工作流已在 `public` 目录生成 `.nojekyll`，但可在仓库根目录也添加一个，防止 GitHub 误读：
 
-   ```bash
+   ```bash shell
    # 本地仓库根目录执行
    touch .nojekyll
    git add .nojekyll
@@ -523,7 +522,7 @@ To github.com:xxxxx/xxxxx.github.io.git
 
    通过以上步骤，能从工作流配置、仓库设置、缓存清理三个层面彻底禁用 Jekyll，确保 GitHub Pages 直接托管 Hexo 生成的静态文件。核心逻辑是：**确保 `.nojekyll` 被正确部署到 `gh-pages` 分支的根目录，且 GitHub 识别到该文件**。
 
-## 6. **推荐配置**
+## 6. 持续优化
 
 - **无需上传public目录**
   
