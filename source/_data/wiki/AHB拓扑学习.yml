@@ -7,19 +7,18 @@ cover: https://res.xaox.cc/gh/cdn-x/wiki@main/stellar/icon.svg
 description: 基于AHB拓扑的140W PD3.1电源设计项目，涵盖设计原理、实现细节及优化方案。
 repo: 
 search:
-  filter: /wiki/AHB/
-  placeholder: 在 Stellar 中搜索...
-leftbar: 
-  - tree
-  - timeline_stellar_releases
-  - related
+  filter: /wiki/
+  placeholder: 在 项目 中搜索...
+license: true
+share: true
 comment_title: '欢迎交流与讨论'
 comments:
   service: giscus
   giscus:
-    data-repo: 
+    data-repo: sam7xx/sam7xx.github.io
     data-mapping: number
-    data-term: 226
+    data-term: 18
+menu_id: wiki
 base_dir: /wiki/AHB/
 tree:
   'AHB拓扑与CRM模式PFC学习':

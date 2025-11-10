@@ -10,7 +10,8 @@ order_by: -updated
 license: true
 share: true
 
-menu_id: notes/基本元器件
+
+menu_id: notebooks
 # 笔记列表页的左/右侧栏
 # leftbar: [tagtree, recent]
 # rightbar: []

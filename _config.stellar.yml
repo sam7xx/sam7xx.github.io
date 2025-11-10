@@ -146,6 +146,7 @@ site_tree:
     # 笔记本列表页的左侧栏和右侧栏。
     leftbar: recent # recent within all notebooks
     rightbar: null
+    
   # 笔记列表页配置
   notes:
     # 笔记列表页和笔记页高亮的主导航栏菜单按钮。
@@ -277,18 +278,18 @@ comments:
   # https://giscus.app/zh-CN
   giscus:
     src: https://giscus.app/client.js
-    data-repo:  # [在此输入仓库]
-    data-repo-id:  # [在此输入仓库 ID]
-    data-category: Announcements # [在此输入分类名]
-    data-category-id: 
-    data-mapping: pathname
+    data-repo:  sam7xx/sam7xx.github.io # [在此输入仓库]
+    data-repo-id: R_kgDOO7x7jQ # [在此输入仓库 ID]
+    data-category: General # [在此输入分类名]
+    data-category-id: DIC_kwDOO7x7jc4Cu25Z
+    data-mapping: title
     data-strict: 0
     data-reactions-enabled: 1
     data-emit-metadata: 0
     data-input-position: bottom # top, bottom
-    data-theme: noborder_light
+    data-theme: fro
     data-lang: zh-CN
-    data-loading: # lazy
+    data-loading: lazy
     crossorigin: anonymous
 
   # Twikoo
@@ -496,7 +497,7 @@ tag_plugins:
     blobcat: https://gcore.jsdelivr.net/gh/cdn-x/emoticons@3.1/blobcat/{name}.gif
   icon:
     # 留空时，图标和文字颜色相同
-    default_color: accent # theme, accent, red, orange, yellow, green, cyan, blue, purple
+    default_color: theme # theme, accent, red, orange, yellow, green, cyan, blue, purple
   # {% button 标题 链接 %}
   button:
     default_color: theme # theme, accent, red, orange, yellow, green, cyan, blue, purple
@@ -662,7 +663,7 @@ plugins:
   tianli_gpt: 
     enable: true
     js: https://jsd.onmicrosoft.cn/gh/qxchuckle/Post-Summary-AI@6.0/chuckle-post-ai.min.js
-    field: all # all, post, wiki
+    field: post # all, post, wiki — 设置为 post 表示仅在文章页启用，笔记/文档页面将不再加载 AI 摘要
     key: S-JAVXPRUNPV8LWXO4 # tianli_gpt key
     total_length: 500 # 设置提交的字数限制，默认为1000字，上限为5000，超过5000字符将被截断
     typewriter: true # 打字机动画 效果

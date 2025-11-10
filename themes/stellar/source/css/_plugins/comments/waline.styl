@@ -14,7 +14,7 @@
   --waline-font-size: 0.9375rem;
   
   /* 浅色模式 - 增强工具栏对比度 */
-  --waline-white: #ffffff;
+  --waline-white: #EFEFEF;
   --waline-light-grey: #2c0e0eff; /* 加深浅灰色，提升文字可读性 */
   --waline-dark-grey: #333333; /* 加深深灰色，增强与背景对比 */
   
@@ -24,7 +24,7 @@
   
   /* 布局颜色 - 增强工具栏区域区分 */
   --waline-color: #188dd1ff;
-  --waline-bgcolor: #ffffff;
+  --waline-bgcolor: #EFEFEF;
   --waline-bgcolor-light: #f5f5f5; /* 稍深的浅色背景，使工具栏区域更明显 */
   --waline-bgcolor-hover: #e0e0e0; /* 加深悬停背景，提升交互反馈 */
   --waline-border-color: #cccccc; /* 稍深的边框，使工具栏元素边界更清晰 */
@@ -93,7 +93,7 @@
     --waline-border-color: #383838; /* 更粗的视觉边框效果 */
     --waline-disable-bgcolor: #333333;
     --waline-disable-color: #999999; /* 禁用状态与可用状态明显区分 */
-    --waline-code-bgcolor: #050810; /* 代码块背景与主背景区分 */
+    --waline-code-bgcolor: #575757; /* 代码块背景与主背景区分 */
     
     /* 特殊颜色 - 增强区块感 */
     --waline-bq-color: #252525; /* 引用区块明显区分 */
@@ -116,8 +116,8 @@
       padding: .375em;
       font-weight: bold;
       font-size: 1.25em;
-      color: #ffffff;
-      background-color: #1C1F21;
+      color: #EFEFEF;
+      background-color: #575757;
       border-radius: 4px;
     }
     
@@ -129,7 +129,7 @@
     
     /* 输入框强化 */
     .wl-editor {
-      background-color: #050810 !important;
+      background-color: #575757 !important;
       border: 1px solid #383838 !important;
       color: #f0f0f0 !important;
     }
@@ -166,5 +166,5 @@
 
 /* 4. 深色模式兼容（避免影响深色模式） */
 :root[data-theme="dark"] .header.cmt-title {
-  color: #ffffff !important; /* 深色模式保持白色标题，确保正常显示 */
+  color: #EFEFEF !important; /* 深色模式保持白色标题，确保正常显示 */
 }
