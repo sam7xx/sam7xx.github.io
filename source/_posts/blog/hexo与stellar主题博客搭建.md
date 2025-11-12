@@ -1487,38 +1487,13 @@ aplayer:
 
 ### 12.2 吸底音乐播放器
 
-主题配置文件中增加以下内容，在`inject.body_end` 添加 meting-js 吸底播放器代码，实现全站底部音乐歌单，默认静音、切换页面不中断。
+主题配置文件中增加以下内容，在`layout.ejs </body>`标签前面添加 meting-js 吸底播放器代码，实现全站底部音乐歌单，默认静音、切换页面不中断，还是和toc有冲突，无法实现跳转。
 
 ```yml _config.yml
- inject:
-  head:
-  ...
-  body_end:
-    - |
-      <div id="aplayer-fixed" class="aplayer aplayer-fixed" style="z-index:9999"></div>
-      <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-      <meting-js
-        server="netease"
-        type="playlist"
-        id="14222331844"  <!-- 替换为你的网易云歌单ID -->
-        fixed="true"
-        mini="false"
-        autoplay="false"
-        theme="#2980b9"
-        loop="all"
-        order="list"
-        preload="none"
-        volume="0.7"
-        mutex="true"
-        lrc-type="0"
-        list-folded="false"
-        list-max-height="340px"
-        storage-name="aplayer-setting"
-      ></meting-js>
+html += `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script><meting-js class="aplayer" server="netease" type="playlist" id="3136952023" fixed="true" autoplay="false" theme="#2980b9" loop="all" order="list" preload="auto" volume="0.1" lrc-type="0"></meting-js>`
 ```
 
-
+<img src="https://u.sam7.top/B6zwcR" alt="image-20251112132017872" style="zoom:200%;" />
 
 ### 12.3 aplayer配色修改
 

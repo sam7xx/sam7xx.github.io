@@ -69,9 +69,7 @@ if (theme.style.prefers_theme === 'auto') {
     html += `<div class="scripts">`
       html += partial('_partial/scripts')
     html += `</div>`
-  <!-- 移除fixed属性，避免内置定位逻辑干扰 -->
-  html += `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script><meting-js class="aplayer" server="netease" type="playlist" id="3136952023" fixed="true" autoplay="false" theme="#2980b9" loop="all" order="list" preload="auto" volume="0.1" lrc-type="0"></meting-js>`
-  html += `</body>`
+    html += `</body>`
 html += `</html>`
 %>
 <%- html %>
