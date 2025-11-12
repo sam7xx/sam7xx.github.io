@@ -11,13 +11,13 @@ search:
   placeholder: 在 项目 中搜索...
 license: true
 share: true
-comment_title: '欢迎交流与讨论'
-comments:
-  service: giscus
-  giscus:
-    data-repo: sam7xx/sam7xx.github.io
-    data-mapping: number
-    data-term: 18
+# comment_title: '欢迎交流与讨论'
+# comments:
+#   service: giscus
+#   giscus:
+#     data-repo: sam7xx/sam7xx.github.io
+#     data-mapping: number
+#     data-term: 18
 menu_id: wiki
 base_dir: /wiki/AHB/
 tree:

@@ -3,8 +3,8 @@ title: 跑步周记
 abbrlink: 26352
 date: 2025-11-08 15:10:00
 layout: page
+banner: https://u.sam7.top/T8hACJ
 breadcrumb: false
-comments_service: giscus
 ---
 
 {% timeline %}
@@ -33,8 +33,6 @@ OTS训练过度综合征了，有氧能力断崖下跌。
 <img src="https://u.sam7.top/x5ReAy" alt="image-20251111080242865"  />
 
 {% endtabs %}
-
-
 
 
 
