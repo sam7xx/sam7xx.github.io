@@ -457,7 +457,7 @@ footer:
           <script defer src="https://vercount.one/js"></script>
           <!--添加一个访问量-->
           总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次
-          <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span>
+          <span class="totalcount">已发布博客{blog_count}篇 · 笔记{note_count}篇 · 文档{wiki_count}篇 · 总计{word_count}字</span>
           </center>
           <div style="display: flex;justify-content: center;align-items: center;margin: 10px;">
             <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/miGrfX" data-src="https://u.sam7.top/miGrfX" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
@@ -641,7 +641,8 @@ plugins:
     # 可以处理评论区的图片（不支持 iframe 类评论系统）例如：
     # 使用 twikoo 评论可以写: .tk-content img:not([class*="emo"])
     # 使用 waline 评论可以写: #waline_container .vcontent img
-    selector: .timenode p>img, waline_container .vcontent img, .custom-image-container a, .md-text img:not([class]), .md-text .image img # 多个选择器用英文逗号隔开
+  # 排除带有 .no-zoom 的图片（如封面/横幅），避免被 fancybox 绑定放大
+  selector: .timenode p>img, waline_container .vcontent img, .custom-image-container a # 多个选择器用英文逗号隔开
 
   # swiper
   swiper:
@@ -651,7 +652,7 @@ plugins:
 
   # https://scrollrevealjs.org/api/reveal.html
   scrollreveal:
-    enable: #true # 慎用，有些时候打开页面空白
+    enable: true # 慎用，有些时候打开页面空白
     js: https://gcore.jsdelivr.net/npm/scrollreveal@4.0/dist/scrollreveal.min.js
     distance: 8px
     duration: 500 # ms
@@ -787,7 +788,7 @@ style:
   error_page: https://cdn.jsdmirror.com/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg
   site: # 使用 background-image 后，blur 设置才有效
     background-color:  var(--background) #var(--bg-a11) var(--background)
-    background-image:  https://u.sam7.top/mF7wWy
+    background-image:  https://u.sam7.top/CYFChk
     blur-px: 1px # 增加模糊度使背景不突兀
     blur-bg:  var(--bg-a55)
     blur-sat: 50% # 适当降低饱和度使背景不抢眼
@@ -818,8 +819,6 @@ api_host:
   gist: gist.github.com
   # https://github.com/anuraghazra/github-readme-stats
   ghcard: github-readme-stats.vercel.app
-
-
 
 # 非资深hexo开发者尽量不要动这块
 system:

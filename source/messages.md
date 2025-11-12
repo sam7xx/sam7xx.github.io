@@ -1,7 +1,7 @@
 ---
 title: 留言板
 layout: page
-comments: true
+comments_service: giscus
 ---
 
 <style>

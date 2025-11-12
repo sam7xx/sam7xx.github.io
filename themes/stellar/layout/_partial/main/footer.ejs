@@ -1,9 +1,78 @@
 <%
-const content = theme.footer.content?.replace('{author.name}', (config.author || 'Anonymity'))?.replace('{theme.name}', stellar_info('name'))?.replace('{theme.version}', stellar_info('version'))?.replace('{theme.tree}', stellar_info('tree'))
+// 预处理内容，替换基本变量
+let processedContent = theme.footer.content
+  ?.replace('{author.name}', (config.author || 'Anonymity'))
+  ?.replace('{theme.name}', stellar_info('name'))
+  ?.replace('{theme.version}', stellar_info('version'))
+  ?.replace('{theme.tree}', stellar_info('tree'))
+  ?.replace('{year}', new Date().getFullYear())
+  ?.replace('{beian}', (theme.footer.beian?.enable ? theme.footer.beian.icp || '' : ''));
+
+// 文章统计函数
+function getPostStats() {
+  try {
+    // 统计文章数量和字数
+    const blogCount = site.posts.length;
+    
+    // 统计 notes 和 wiki 文章
+    let noteCount = 0;
+    let wikiCount = 0;
+    let totalWordCount = 0;
+    
+    // 检查所有页面的路径
+    if (site.pages) {
+      if (site.pages.data) {
+        site.pages.data.forEach(page => {
+          if (page.source && page.source.startsWith('notes/')) {
+            noteCount++;
+          }
+          if (page.source && page.source.startsWith('wiki/')) {
+            wikiCount++;
+          }
+        });
+      } else {
+        site.pages.forEach(page => {
+          if (page.source && page.source.startsWith('notes/')) {
+            noteCount++;
+          }
+          if (page.source && page.source.startsWith('wiki/')) {
+            wikiCount++;
+          }
+        });
+      }
+    }
+    
+    // 计算总字数
+    if (typeof totalcount === 'function') {
+      totalWordCount = totalcount(site);
+    } else {
+      // 回退方法：只统计标准文章
+      site.posts.forEach(post => {
+        if (post.content) {
+          const count = wordcount(post.content);
+          totalWordCount += parseInt(count) || 0;
+        }
+      });
+    }
+    
+    return { 
+      blogCount, 
+      noteCount, 
+      wikiCount, 
+      totalWordCount 
+    };
+      
+  } catch (error) {
+    console.error('统计文章时出错:', error);
+    return { blogCount: 0, noteCount: 0, wikiCount: 0, totalWordCount: 0 };
+  }
+}
+
 function layoutDiv() {
   var el = ''
   el += `<footer class="page-footer${scrollreveal(' ')} footnote">`
   el += '<hr>'
+  
   // sitemap
   const sitemap = theme.footer.sitemap
   if (sitemap?.length > 0) {
@@ -33,18 +102,24 @@ function layoutDiv() {
     }
     el += '</div>'
   }
-  // footer
+  
+  // footer content
   el += '<div class="text">'
-  if (content) {
-    const postCount = site.posts.length;
-    const wordCount = typeof totalcount === 'function' ? totalcount(site) : 0;
-    let contentStr = content;
-    contentStr = contentStr.replace('{post_count}', postCount).replace('{word_count}', wordCount);
-    el += markdown(contentStr)
+  if (processedContent) {
+    // 获取统计信息
+    const stats = getPostStats();
+    
+    // 替换统计占位符
+    let contentStr = processedContent
+      .replace(/{blog_count}/g, stats.blogCount)
+      .replace(/{note_count}/g, stats.noteCount)
+      .replace(/{wiki_count}/g, stats.wikiCount)
+      .replace(/{word_count}/g, stats.totalWordCount.toLocaleString());
+    
+    el += markdown(contentStr);
   }
   el += '</div></footer>'
   return el
 }
 %>
 <%- layoutDiv() %>
-

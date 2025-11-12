@@ -6,7 +6,7 @@ tags:
   - stellar主题
 description: 记录使用Hexo搭建个人博客的详细步骤，包括构建工具的安装准备、hexo插件使用和stellar主题配置。
 categories: [博客搭建]
-menu_id: post
+topic: 博客搭建
 date: 2025-09-20 18:19:42
 ---
 
@@ -115,24 +115,144 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
 
 需要在主题文件footer.ejs里将 `{post_count}` 和 `{word_count}` 替换为实际数据。Stellar 主题页脚渲染时，content 是字符串，可以用 JS 替换。
 
-建议在ayoutDiv 函数里，渲染 markdown 前加如下替换：
+建议在layoutDiv 函数里，渲染 markdown 前加如下替换：
+
+{% folding 查看代码 %}
 
 ```css footer.ejs
-  // footer
-  el += '<div class="text">'
-  if (content) {
-    const postCount = site.posts.length;
-    const wordCount = typeof totalcount === 'function' ? totalcount(site) : 0;
-    let contentStr = content;
-    contentStr = contentStr.replace('{post_count}', postCount).replace('{word_count}', wordCount);
-    el += markdown(contentStr)
+<%
+// 预处理内容，替换基本变量
+let processedContent = theme.footer.content
+  ?.replace('{author.name}', (config.author || 'Anonymity'))
+  ?.replace('{theme.name}', stellar_info('name'))
+  ?.replace('{theme.version}', stellar_info('version'))
+  ?.replace('{theme.tree}', stellar_info('tree'))
+  ?.replace('{year}', new Date().getFullYear())
+  ?.replace('{beian}', (theme.footer.beian?.enable ? theme.footer.beian.icp || '' : ''));
+
+// 文章统计函数
+function getPostStats() {
+  try {
+    // 统计文章数量和字数
+    const blogCount = site.posts.length;
+    
+    // 统计 notes 和 wiki 文章
+    let noteCount = 0;
+    let wikiCount = 0;
+    let totalWordCount = 0;
+    
+    // 检查所有页面的路径
+    if (site.pages) {
+      if (site.pages.data) {
+        site.pages.data.forEach(page => {
+          if (page.source && page.source.startsWith('notes/')) {
+            noteCount++;
+          }
+          if (page.source && page.source.startsWith('wiki/')) {
+            wikiCount++;
+          }
+        });
+      } else {
+        site.pages.forEach(page => {
+          if (page.source && page.source.startsWith('notes/')) {
+            noteCount++;
+          }
+          if (page.source && page.source.startsWith('wiki/')) {
+            wikiCount++;
+          }
+        });
+      }
+    }
+    
+    // 计算总字数
+    if (typeof totalcount === 'function') {
+      totalWordCount = totalcount(site);
+    } else {
+      // 回退方法：只统计标准文章
+      site.posts.forEach(post => {
+        if (post.content) {
+          const count = wordcount(post.content);
+          totalWordCount += parseInt(count) || 0;
+        }
+      });
+    }
+    
+    return { 
+      blogCount, 
+      noteCount, 
+      wikiCount, 
+      totalWordCount 
+    };
+      
+  } catch (error) {
+    console.error('统计文章时出错:', error);
+    return { blogCount: 0, noteCount: 0, wikiCount: 0, totalWordCount: 0 };
   }
+}
+
+function layoutDiv() {
+  var el = ''
+  el += `<footer class="page-footer${scrollreveal(' ')} footnote">`
+  el += '<hr>'
+  
+  // sitemap
+  const sitemap = theme.footer.sitemap
+  if (sitemap?.length > 0) {
+    var count = sitemap.length
+    if ([6].includes(count)) {
+      count = 3
+    } else if ([7,8].includes(count)) {
+      count = 4
+    } else {
+      count = Math.min(sitemap.length, 5)
+    }
+    el += `<div class="sitemap" style="column-count:${count};">`
+    for (let group of sitemap) {
+      let title = group.title
+      let items = group.items
+      if (items == undefined || items.length == 0) {
+        continue
+      }
+      el += '<div class="sitemap-group">'
+      el += '<span class="fs15">' + title + '</span>'
+      items.forEach((item, i) => {
+        el += '<a href="' + url_for(md_link(item)) + '">'
+        el += __(md_text(item))
+        el += '</a>'
+      });
+      el += '</div>'
+    }
+    el += '</div>'
+  }
+  
+  // footer content
+  el += '<div class="text">'
+  if (processedContent) {
+    // 获取统计信息
+    const stats = getPostStats();
+    
+    // 替换统计占位符
+    let contentStr = processedContent
+      .replace(/{blog_count}/g, stats.blogCount)
+      .replace(/{note_count}/g, stats.noteCount)
+      .replace(/{wiki_count}/g, stats.wikiCount)
+      .replace(/{word_count}/g, stats.totalWordCount.toLocaleString());
+    
+    el += markdown(contentStr);
+  }
+  el += '</div></footer>'
+  return el
+}
+%>
+<%- layoutDiv() %>
 ```
+
+{% endfolding %}
 
 然后在主题配置文件footer:content:增加如下代码，即可实现显示网站总文章字数统计。
 
 ```yml blog/_config.stellar.yml
-<span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span
+<span class="totalcount">已发布博客{blog_count}篇 · 笔记{note_count}篇 · 文档{wiki_count}篇 · 总计{word_count}字</span>
 ```
 
 **网页访问统计**由于不蒜子老是挂，现在使用的是Vercount插件，不蒜子的优化版本。[Vercount: 一个比不蒜子更好的网站计数器 | EvanNotFound's Blog](https://ohevan.com/vercount-website-counter-busuanzi-alternative.html)
@@ -176,7 +296,7 @@ http://localhost:4000/ #点击链接可用浏览器本地预览博客
           <script defer src="https://vercount.one/js"></script>
           <!--添加一个访问量-->
           总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次
-          <span class="totalcount">共发表 {post_count} 篇Blog · </span><span class="post-count">总计 {word_count} 字</span>
+          <span class="totalcount">已发布博客{blog_count}篇 · 笔记{note_count}篇 · 文档{wiki_count}篇 · 总计{word_count}字</span>
           </center>
           <div style="display: flex;justify-content: center;align-items: center;margin: 10px;">
             <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/miGrfX" data-src="https://u.sam7.top/miGrfX" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
@@ -1340,6 +1460,8 @@ $leftbar-bottom-margin = 20px  // 左侧栏底部距离（根据需求调整，�
 
 ## 12. 添加音乐播放器
 
+### 12.1 简单使用
+
 参考 [stellar主题使用meetingjs接入aplayer音乐播放器 - BoBoBlog](https://blog.bxzdyg.cn/p/stellar-aplayer-metingjs/)
 
 {% copy npm install --save hexo-tag-aplayer prefix:$ %}
@@ -1362,6 +1484,43 @@ aplayer:
 ```
 
 ![image-20251018130415394](https://u.sam7.top/MKB4bw)
+
+### 12.2 吸底音乐播放器
+
+主题配置文件中增加以下内容，在`inject.body_end` 添加 meting-js 吸底播放器代码，实现全站底部音乐歌单，默认静音、切换页面不中断。
+
+```yml _config.yml
+ inject:
+  head:
+  ...
+  body_end:
+    - |
+      <div id="aplayer-fixed" class="aplayer aplayer-fixed" style="z-index:9999"></div>
+      <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+      <meting-js
+        server="netease"
+        type="playlist"
+        id="14222331844"  <!-- 替换为你的网易云歌单ID -->
+        fixed="true"
+        mini="false"
+        autoplay="false"
+        theme="#2980b9"
+        loop="all"
+        order="list"
+        preload="none"
+        volume="0.7"
+        mutex="true"
+        lrc-type="0"
+        list-folded="false"
+        list-max-height="340px"
+        storage-name="aplayer-setting"
+      ></meting-js>
+```
+
+
+
+### 12.3 aplayer配色修改
 
 修改主题样式文件`aplayer.styl`，修改播放器参数，播放器颜色跟随系统主题。
 
@@ -1627,6 +1786,8 @@ aplayer:
 ```
 
 {% endfolding %}
+
+
 
 ## 13. 背景动态设置
 
@@ -1984,6 +2145,7 @@ x-set-bg-colors($scheme)
   $light = $scheme == 'dark' ? 0% : 100%
   --bg-a20: x-hsla($hue, $sat, $light, 0.2)
   --bg-a50: x-hsla($hue, $sat, $light, 0.5)
+  --bg-a55: x-hsla($hue, $sat, $light, 0.55)
   --bg-a60: x-hsla($hue, $sat, $light, 0.6)
   --bg-a75: x-hsla($hue, $sat, $light, 0.75)
   --bg-a100: x-hsla($hue, $sat, $light, 1)
@@ -2029,11 +2191,20 @@ x-set-image-filters($scheme)
     --image-filter-value: none
 
 // ---------------- apply theme ----------------
+// fallback: 如果编译时主题未注入 $site-background-image 或 $site-background-opacity，则使用站点配置的默认值
+if !$site-background-image
+  $site-background-image = 'https://u.sam7.top/h5tPaG'
+
+if !$site-background-opacity
+  $site-background-opacity = 0.1
+
 // 设置浅色模式
 dynamic-theme-light()
   $hue = $c-base-hue
   --background: x-hsla($hue, 20%, 98%, 1)
   --card: $site-background-image ? hsla(white, 0.5) : white
+  // 背景遮罩（浅色主题使用白色半透明遮罩）
+  --site-bg-overlay: x-hsla(0, 0%, 100%, $site-background-opacity)
 
   x-set-bg-colors('light')
   x-set-text-colors('light')
@@ -2051,6 +2222,8 @@ dynamic-theme-dark()
   x-set-text-colors('dark')
   x-set-image-filters('dark')
   --text-code: x-hsla(20, 75, 60, 1)
+  // 背景遮罩（深色主题使用黑色半透明遮罩）
+  --site-bg-overlay: x-hsla(0, 0%, 0%, calc($site-background-opacity + 0.7))
 
 :root
   // 主题色
@@ -2067,9 +2240,17 @@ dynamic-theme-dark()
 
 :root[data-theme="light"]
   dynamic-theme-light()
+  // light 主题微调（更亮、略高饱和）
+  --site-bg-blur: 10px
+  --site-bg-sat: 90%
+  --site-bg-contrast: 0.95
 
 :root[data-theme="dark"]
   dynamic-theme-dark()
+  // dark 主题微调（更暗、稍降饱和）
+  --site-bg-blur: 8px
+  --site-bg-sat: 80%
+  --site-bg-contrast: 0.9
 
 // ========== 图片主题变化解决方案 ==========
 
@@ -2091,7 +2272,7 @@ dynamic-theme-dark()
   .widget img,
   .navbar img,
   .header img,
-  .footer img,
+  //.footer img,
   .avatar,
   .logo,
   .site-brand img,
@@ -2108,7 +2289,7 @@ dynamic-theme-dark()
   // 对于需要保持较深背景的图片
   img[data-dark-bg],
   .dark-bg-img
-    filter: invert(1) hue-rotate(180deg) brightness(0.5) contrast(0.8) saturate(0.85) !important
+    filter: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.95) !important
 
 // 表情图片不随主题变化
 .emoji,
@@ -2148,6 +2329,70 @@ img.theme-aware:not(.emoji)
 .no-theme,
 [data-no-theme]
   filter: none !important
+
+// 兼容：在浅色主题中让前缀符号（例如 $）显示为浅黑色，恢复为改前行为并提高可读性
+:root[data-theme="light"]
+  .tag-plugin.copy > span
+    color: rgba(0,0,0,0.65)
+
+// ========== Wallpaper: 背景图与主题遮罩（随 data-theme 变化） ==========
+// 使用现有的主题变量（如 --bg-a55, --background）来让遮罩颜色随 light/dark 自动变化
+:root
+  // 背景开关与默认参数（可被主题变量覆盖）
+  --site-bg-enabled: 1
+  // 推荐默认（桌面）：适中模糊/去饱和/降低对比，使背景不抢眼
+  --site-bg-blur: 10px    // 常用桌面起点，若不要毛玻璃可设 0px
+  --site-bg-sat: 85%      // 饱和度：70-90% 推荐范围
+  --site-bg-contrast: 0.9 // 对比度：0.85-0.95 推荐范围
+  // 从主题配置读取背景遮罩透明度（如果有），否则默认使用 0.1
+  if $site-background-opacity
+    --site-bg-opacity: $site-background-opacity
+  else
+    --site-bg-opacity: 0.1
+
+// 伪元素承载大幅背景图与滤镜，遮罩采用 --bg-a55（已在 x-set-bg-colors 中根据主题设置）
+html::before
+  content: ""
+  position: fixed
+  inset: 0
+  z-index: -9998
+  background-size: cover
+  background-position: center center
+  background-repeat: no-repeat
+  transform: scale(1.02)
+  pointer-events: none
+  will-change: opacity
+  // 不使用毛玻璃，只有在有图片时设置背景图
+  // 调整饱和度与对比度以降低背景干扰（不使用 blur）
+  filter: saturate(var(--site-bg-sat)) contrast(var(--site-bg-contrast))
+  opacity: var(--site-bg-enabled)
+  if $site-background-image
+    background-image: url($site-background-image)
+  else
+    background-image: none
+
+html::after
+  content: ""
+  position: fixed
+  inset: 0
+  z-index: -9997
+  pointer-events: none
+  // 使用主题变量控制遮罩颜色（浅色或深色）
+  background: var(--site-bg-overlay, var(--bg-a55, rgba(0,0,0,0.08)))
+  opacity: var(--site-bg-opacity, 0.1)
+  mix-blend-mode: normal
+
+// 不改动主要内容层的默认 z-index/position，恢复主题原有布局
+.site
+  position: relative
+
+// （注）已取消对 .sitebg/.siteblur 优先逻辑，改为使用 html::before + html::after 实现背景与遮罩
+
+// 移动端降级：减少模糊以节省性能
+@media (max-width: $device-mobile-max)
+  html::before
+    // 移动端降级：降低饱和度与对比以节省性能并提高清晰度
+    filter: saturate(75%) contrast(0.9)
 
 ```
 

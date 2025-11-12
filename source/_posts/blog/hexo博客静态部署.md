@@ -5,8 +5,8 @@ tags:
   - hexo部署
 description: 记录使用Hexo将本地生成的静态博客内容部署到GitHub、Cloudflare以及Netlify/Vercel等平台，详细说明了部署步骤、GitHub Actions工作流配置以及常见问题的解决方法。
 categories: [博客搭建]
+topic: 博客搭建
 abbrlink: 55230
-menu_id: post
 date: 2025-10-07 12:17:21
 ---
 

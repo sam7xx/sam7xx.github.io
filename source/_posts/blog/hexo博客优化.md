@@ -6,7 +6,7 @@ tags:
   - typora配置
 description: 记录Hexo完成搭建后的优化配置，包括博客的SEO优化、资源文件压缩、国内CDN镜像源加速以及typora配置，优化网页加载速度，提升写作效率。
 categories: [博客搭建]
-menu_id: post
+topic: 博客搭建
 date: 2025-11-07 13:10:00
 ---
 
