@@ -508,17 +508,17 @@ comments: false
         <div class="interest-item">
           <div class="interest-icon">🏃</div>
           <h4>跑步健身</h4>
-          <p>享受奔跑，健康生活</p>
+          <p class="tagline">享受奔跑，健康生活</p>
         </div>
         <div class="interest-item">
           <div class="interest-icon">🎵</div>
           <h4>音乐电影</h4>
-          <p>音乐放松，电影思考</p>
+          <p class="tagline">音乐放松，电影思考</p>
         </div>
         <div class="interest-item">
           <div class="interest-icon">💻</div>
           <h4>技术折腾</h4>
-          <p>拥抱开源，探索前沿</p>
+          <p class="tagline">拥抱开源，探索前沿</p>
         </div>
       </div>
     </div>
@@ -527,15 +527,15 @@ comments: false
       <div class="purpose">
         <div class="purpose-item">
           <h4>📝 记录成长</h4>
-          <p>记录学习收获和经验</p>
+          <p class="tagline">记录学习收获和经验</p>
         </div>
         <div class="purpose-item">
           <h4>🤝 分享交流</h4>
-          <p>与同好交流技术心得</p>
+          <p class="tagline">与同好交流技术心得</p>
         </div>
         <div class="purpose-item">
           <h4>🎯 沉淀思考</h4>
-          <p>整理思路，形成体系</p>
+          <p class="tagline">整理思路，形成体系</p>
         </div>
       </div>
     </div>
