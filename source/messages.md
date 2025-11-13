@@ -1,7 +1,6 @@
 ---
 title: 留言板
 layout: page
-comments: false
 ---
 
 <style>
