@@ -431,6 +431,9 @@ footer:
     #     - '[xxx](/)'
   content: | # 支持 Markdown 格式
           <center>
+
+          网站由 [{author.name}](/) © 2025使用 [{theme.name}]({theme.tree}) 主题创建
+
           <span id="runtime_span"></span>
           <script type="text/javascript">
           function show_runtime() {
@@ -449,8 +452,6 @@ footer:
               runtime_span.innerHTML = "网站已运行 " + A + "天" + B + "小时" + C + "分" + D + "秒"
           }
           show_runtime();
-          网站由 [{author.name}](/) © 2025使用 [{theme.name}]({theme.tree}) 主题创建
-
           </script>
           <!--不蒜子计数器 https://ohevan.com/vercount-website-counter-busuanzi-alternative.html-->
           <script defer src="https://vercount.one/js"></script>
