@@ -1,11 +1,12 @@
 ---
-title: 关于作者
+title: 关于我
 layout: page
 comments: false
+
 ---
 
 <style>
-/* 强制隐藏面包屑、目录和AI摘要 */
+/* 强制隐藏无关元素 */
 .article.banner.top,
 .post-ai,
 .toc,
@@ -14,7 +15,7 @@ comments: false
   display: none !important;
 }
 
-[data-theme="light"] {
+:root {
   --primary-color: #A8B8E0;
   --primary-light: #B8C8F0;
   --primary-dark: #7A95D6;
@@ -24,532 +25,527 @@ comments: false
   --text-light: #6b7280;
   --border-color: #e5e7eb;
   --shadow: 0 2px 8px rgba(0,0,0,0.05);
+  --content-max-width: 1000px; /* 内容最大宽度 */
+  --grid-min-width: 260px; /* 统一网格最小列宽 */
+  --grid-gap: 16px; /* 统一网格间距 */
 }
 
+/* 深色模式优化 */
 [data-theme="dark"] {
-  --primary-color: #6B8CD8;
-  --primary-light: #8BA6F0;
-  --primary-dark: #5A7BC7;
-  --bg-color: #1f2937;
-  --card-bg: #374151;
-  --text-color: #f3f4f6;
-  --text-light: #d1d5db;
-  --border-color: #4b5563;
-  --shadow: 0 2px 8px rgba(0,0,0,0.15);
+  --primary-color: #8BA6F0;
+  --primary-light: #A8B8E0;
+  --primary-dark: #6B8CD8;
+  --bg-color: rgba(45, 55, 71, 0.95);
+  --card-bg: rgba(65, 75, 91, 0.85);
+  --text-color: #f8fafc;
+  --text-light: #e2e8f0;
+  --border-color: rgba(95, 105, 125, 0.6);
+  --shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
+/* 全屏背景 */
 .about-page {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 15px;
-  font-family: "LXGW WenKai Screen";
-  line-height: 1.5;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 15px;
+  margin: 0;
+  font-family: "LXGW WenKai Screen", -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
   color: var(--text-color);
-  background-color: var(--bg-color);
-  transition: all 0.3s ease;
+  background: var(--bg-color);
   position: relative;
+  box-sizing: border-box;
 }
 
-/* 个人简介卡片 */
-.profile-card {
-  display: flex;
-  align-items: center;
+/* 内容容器 */
+.about-content {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* 深色模式遮罩 */
+[data-theme="dark"] .about-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(30, 40, 60, 0.3);
+  backdrop-filter: blur(12px);
+  z-index: -1;
+}
+
+/* 统一遮罩样式 */
+.section,
+.grid-item,
+.interest-item,
+.purpose-item,
+.contact-info {
+  position: relative;
+  isolation: isolate;
+}
+[data-theme="dark"] .section::before,
+[data-theme="dark"] .grid-item::before,
+[data-theme="dark"] .interest-item::before,
+[data-theme="dark"] .purpose-item::before,
+[data-theme="dark"] .contact-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* 个人简介 */
+.profile {
+  text-align: center;
+  margin: 15px 0 25px;
+  padding: 25px 20px;
   background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+  border-radius: 16px;
   color: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  position: relative;
   box-shadow: var(--shadow);
-  margin-top: 40px;
 }
-
-.avatar-container {
-  margin-right: 20px;
+[data-theme="dark"] .profile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  z-index: 0;
+}
+.profile > * {
+  position: relative;
+  z-index: 1;
 }
 
 .avatar {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  border: 3px solid rgba(255,255,255,0.3);
-  object-fit: cover;
+  border: 4px solid rgba(255,255,255,0.3);
+  margin-bottom: 15px;
 }
 
-.profile-content h1 {
+.profile h1 {
   margin: 0 0 8px 0;
-  font-size: 1.4em;
-  font-weight: 600;
+  font-size: 1.8em;
 }
 
-.subtitle {
-  margin: 0 0 12px 0;
-  opacity: 0.9;
+.tagline {
   font-size: 1em;
+  opacity: 0.9;
+  margin-bottom: 15px;
 }
 
-.expertise-tags {
+.tags {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
 .tag {
-  background: rgba(255,255,255,0.25);
-  padding: 4px 10px;
-  border-radius: 14px;
+  background: rgba(255,255,255,0.2);
+  padding: 5px 12px;
+  border-radius: 20px;
   font-size: 0.85em;
-  backdrop-filter: blur(5px);
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  backdrop-filter: blur(10px);
 }
 
-/* 通用区块样式 */
+/* 内容区块 */
 .section {
   background: var(--card-bg);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  margin-bottom: 20px;
+  padding: 20px 25px;
+  border-radius: 14px;
+  margin: 20px 0;
   border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(5px);
 }
 
 .section h2 {
   margin-top: 0;
   margin-bottom: 15px;
-  color: var(--text-color);
-  font-size: 1.3em;
-  border-bottom: 1px solid var(--border-color);
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-light);
   padding-bottom: 8px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  font-size: 1.3em;
 }
 
-/* 技能网格 */
-.skills-grid {
+/* 统一网格布局（核心优化：同步"正在学习"和"我的兴趣"的网格参数） */
+.grid-container,  /* 正在学习 */
+.interests {      /* 我的兴趣 */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width), 1fr)); /* 统一最小列宽 */
+  gap: var(--grid-gap); /* 统一间距 */
 }
 
-.skill-card {
+/* 正在学习 - 网格项 */
+.grid-item {
   background: var(--bg-color);
-  padding: 15px;
-  border-radius: 6px;
-  border-left: 3px solid var(--primary-color);
-  transition: all 0.3s ease;
+  padding: 18px;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-color);
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.skill-header {
+.grid-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.grid-item h3 {
+  margin: 0 0 12px 0;
+  color: var(--text-color);
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
-}
-
-.skill-icon {
-  font-size: 1.5em;
-  margin-right: 10px;
-  width: 35px;
-  text-align: center;
-  color: var(--primary-color);
-}
-
-.skill-card h3 {
-  margin: 0;
-  color: var(--text-color);
+  gap: 8px;
   font-size: 1.1em;
 }
 
-.skill-card ul {
+.grid-item ul {
   margin: 0;
-  padding-left: 18px;
+  padding-left: 20px;
 }
 
-.skill-card li {
+.grid-item li {
   margin-bottom: 6px;
   color: var(--text-light);
   font-size: 0.9em;
 }
 
-/* 学习方向 */
-.learning-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 15px;
-}
-
-.learning-card {
-  background: var(--bg-color);
-  padding: 15px;
-  border: 1px solid var(--primary-light);
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-.learning-card h3 {
-  margin-top: 0;
-  margin-bottom: 12px;
-  color: var(--text-color);
-  font-size: 1.1em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.learning-card ul {
-  margin: 0;
-  padding-left: 18px;
-}
-
-.learning-card li {
-  margin-bottom: 6px;
-  color: var(--text-light);
-  font-size: 0.9em;
-}
-
-/* 兴趣网格 */
-.interests-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-
+/* 我的兴趣 - 网格项（与"正在学习"保持视觉平衡） */
 .interest-item {
-  display: flex;
-  align-items: center;
   background: var(--bg-color);
-  padding: 12px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+  padding: 18px; /* 与grid-item统一内边距 */
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(4px);
+  /* 增加左侧边框，与"正在学习"风格统一 */
+  border-left: 4px solid var(--primary-color);
+}
+
+.interest-item:hover {
+  transform: translateY(-3px); /* 与grid-item悬停动效同步 */
+  box-shadow: var(--shadow);
 }
 
 .interest-icon {
-  font-size: 1.5em;
-  margin-right: 12px;
-  width: 35px;
-  text-align: center;
+  font-size: 2em;
+  margin-bottom: 10px;
   color: var(--primary-color);
 }
 
-.interest-content h4 {
-  margin: 0 0 4px 0;
-  color: var(--text-color);
-  font-size: 1em;
-}
-
-.interest-content p {
-  margin: 0;
-  color: var(--text-light);
-  font-size: 0.85em;
-}
-
-/* 目的网格 */
-.purpose-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-}
-
-.purpose-card {
-  background: var(--bg-color);
-  padding: 15px;
-  border-radius: 6px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.purpose-card h4 {
+.interest-item h4 {
   margin: 0 0 8px 0;
   color: var(--text-color);
-  font-size: 1em;
+  font-size: 1.05em;
+}
+
+.interest-item p {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 0.9em; /* 与grid-item文字大小统一 */
+}
+
+/* 写作目的 */
+.purpose {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width), 1fr));
+  gap: var(--grid-gap);
+}
+
+.purpose-item {
+  background: var(--bg-color);
+  padding: 18px;
+  border-radius: 10px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  border-left: 4px solid var(--primary-color);
+}
+
+.purpose-item h4 {
+  margin: 0 0 10px 0;
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
+  font-size: 1.05em;
 }
 
-.purpose-card p {
+.purpose-item p {
   margin: 0;
   color: var(--text-light);
-  font-size: 0.85em;
+  font-size: 0.9em;
   line-height: 1.4;
 }
 
-/* 联系区块 */
-.contact-section {
+/* 联系区域 */
+.contact {
   background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
   color: white;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="dark"] .contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  z-index: 0;
+}
+.contact > * {
+  position: relative;
+  z-index: 1;
 }
 
-.contact-section h2 {
+.contact h2 {
   color: white;
   border-bottom-color: rgba(255,255,255,0.3);
 }
 
-.contact-intro {
-  margin-bottom: 15px;
-  opacity: 0.9;
-  font-size: 0.95em;
-}
-
-.contact-info {
-  background: rgba(255,255,255,0.15);
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-size: 0.9em;
-}
-
-.contact-info p {
-  margin: 0 0 8px 0;
-}
-
-.contact-info p:last-child {
-  margin-bottom: 0;
-}
-
+/* 联系按钮 */
 .contact-buttons {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 15px;
+  margin-top: 20px;
   flex-wrap: wrap;
+  padding: 0 10px;
 }
 
 .contact-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.25);
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 25px;
+  background: rgba(255, 255, 255, 0.15);
   color: white;
   text-decoration: none;
-  border-radius: 20px;
+  border-radius: 12px;
   transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255,255,255,0.3);
-  font-size: 0.9em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1em;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  min-width: 160px;
 }
 
 .contact-btn:hover {
-  background: rgba(255,255,255,0.35);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .about-page {
-    padding: 10px;
-  }
+.contact-btn svg, .contact-btn i {
+  font-size: 1.2em;
+}
 
-  .profile-card {
-    flex-direction: column;
-    text-align: center;
-    padding: 15px;
-    margin-top: 30px;
+/* 响应式优化（同步分栏变化） */
+@media (max-width: 1024px) {
+  :root {
+    --content-max-width: 90%;
   }
+}
 
-  .avatar-container {
-    margin-right: 0;
-    margin-bottom: 12px;
+@media (max-width: 860px) {
+  /* 当屏幕宽度不足3列时，统一变为2列 */
+  .grid-container,
+  .interests,
+  .purpose {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .skills-grid,
-  .learning-grid,
-  .interests-grid,
-  .purpose-grid {
+@media (max-width: 560px) {
+  /* 当屏幕宽度不足2列时，统一变为1列 */
+  .grid-container,
+  .interests,
+  .purpose {
     grid-template-columns: 1fr;
   }
 
+  .about-page {
+    padding: 15px 10px;
+  }
+
+  .section {
+    padding: 18px 15px;
+  }
+
   .contact-buttons {
-    flex-direction: column;
-    align-items: center;
+    gap: 12px;
   }
 
   .contact-btn {
-    width: 180px;
-    justify-content: center;
+    padding: 10px 20px;
+    min-width: auto;
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .profile-content h1 {
-    font-size: 1.2em;
+  .profile {
+    padding: 20px 10px;
   }
 
-  .section {
-    padding: 15px 12px;
+  .avatar {
+    width: 85px;
+    height: 85px;
   }
 
-  .interest-item {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .interest-icon {
-    margin-right: 0;
-    margin-bottom: 8px;
+  .grid-item,
+  .interest-item,
+  .purpose-item {
+    padding: 15px 10px;
   }
 }
 
-/* 平滑过渡效果 */
+/* 平滑过渡 */
 * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+              backdrop-filter 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   }
   </style>
 
-<!-- 个人简介 -->
-<div class="profile-card">
-<div class="avatar-container">
-    <img src="https://u.sam7.top/3MiiTn" alt="作者头像" class="avatar" onerror="this.style.display='none'">
-</div>
-<div class="profile-content">
-    <h1><i class="fas fa-bolt"></i> 开关电源设计 · 五年搬砖经验</h1>
-    <p class="subtitle">擅长140W及以下功率的开关电源设计与优化</p>
-    <div class="expertise-tags">
-    <span class="tag"><i class="fas fa-plug"></i> 电源适配器</span>
-    <span class="tag"><i class="fas fa-mobile-screen-button"></i> 快充充电器</span>
-    <span class="tag"><i class="fas fa-plug-circle-bolt"></i> 车载充电器</span>
-    <span class="tag"><i class="fas fa-tachometer-alt"></i> 仪表电源</span>
+<div class="about-page">
+  <div class="about-content">
+    <div class="profile">
+      <img src="https://u.sam7.top/3MiiTn" alt="我的头像" class="avatar" onerror="this.style.display='none'">
+      <h1>👋 你好，我是Sam</h1>
+      <p class="tagline">一个热爱技术的电源工程师 & 跑步爱好者</p>
+      <div class="tags">
+        <span class="tag">⚡ 电源设计</span>
+        <span class="tag">💻 技术折腾</span>
+        <span class="tag">🏃 跑步健身</span>
+      </div>
     </div>
-</div>
-</div>
-
-<!-- 专业技能 -->
-<div class="section">
-<h2><i class="fas fa-tools"></i> 专业能力</h2>
-<div class="skills-grid">
-    <div class="skill-card">
-    <div class="skill-header">
-        <span class="skill-icon"><i class="fas fa-microchip"></i></span>
-        <h3>电路设计</h3>
+    <div class="section">
+      <h2>🛠️ 我的技能</h2>
+      <div class="grid-container">
+        <div class="grid-item">
+          <h3>📐 电路设计</h3>
+          <ul>
+            <li>PCB与原理图设计</li>
+            <li>EMC与热综合设计</li>
+            <li>可靠性与可制造性设计</li>
+          </ul>
+        </div>
+        <div class="grid-item">
+          <h3>⚡ 电源拓扑</h3>
+          <ul>
+            <li>Buck/Flyback/AHB</li>
+            <li>PFC电路设计</li>
+            <li>恒压恒流控制</li>
+          </ul>
+        </div>
+        <div class="grid-item">
+          <h3>🔍 测试验证</h3>
+          <ul>
+            <li>性能测试与分析</li>
+            <li>元器件选型计算</li>
+            <li>问题排查解决</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <ul>
-        <li>熟练使用 Altium Designer、KiCad 等软件进行原理图与PCB设计</li>
-        <li>熟悉开关电源PCB设计规范与安规要求</li>
-        <li>综合考虑EMC、热管理、可制造性等因素</li>
-    </ul>
+    <div class="section">
+      <h2>🚀 正在学习</h2>
+      <div class="grid-container">
+        <div class="grid-item">
+          <h3>🐍 Python开发</h3>
+          <ul>
+            <li>电路仿真与数据分析</li>
+            <li>自动化脚本编写</li>
+            <li>工具开发应用</li>
+          </ul>
+        </div>
+        <div class="grid-item">
+          <h3>🔧 硬件进阶</h3>
+          <ul>
+            <li>大功率电源设计</li>
+            <li>环路稳定性分析</li>
+            <li>电磁兼容仿真</li>
+          </ul>
+        </div>
+        <div class="grid-item">
+          <h3>🔌 单片机学习</h3>
+          <ul>
+            <li>STM32编程与应用</li>
+            <li>数字电源控制算法</li>
+            <li>DSP数字信号处理</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="skill-card">
-    <div class="skill-header">
-        <span class="skill-icon"><i class="fas fa-project-diagram"></i></span>
-        <h3>电路拓扑</h3>
+    <div class="section">
+      <h2>❤️ 我的兴趣</h2>
+      <div class="interests">
+        <div class="interest-item">
+          <div class="interest-icon">🏃</div>
+          <h4>跑步健身</h4>
+          <p>享受奔跑，健康生活</p>
+        </div>
+        <div class="interest-item">
+          <div class="interest-icon">🎵</div>
+          <h4>音乐电影</h4>
+          <p>音乐放松，电影思考</p>
+        </div>
+        <div class="interest-item">
+          <div class="interest-icon">💻</div>
+          <h4>技术折腾</h4>
+          <p>拥抱开源，探索前沿</p>
+        </div>
+      </div>
     </div>
-    <ul>
-        <li>熟练掌握 Buck、Boost、Buck-Boost、Flyback、AHB等拓扑</li>
-        <li>熟练掌握PFC电路、恒压恒流等电路</li>
-    </ul>
+    <div class="section">
+      <h2>✍️ 为什么写博客</h2>
+      <div class="purpose">
+        <div class="purpose-item">
+          <h4>📝 记录成长</h4>
+          <p>记录学习收获和经验</p>
+        </div>
+        <div class="purpose-item">
+          <h4>🤝 分享交流</h4>
+          <p>与同好交流技术心得</p>
+        </div>
+        <div class="purpose-item">
+          <h4>🎯 沉淀思考</h4>
+          <p>整理思路，形成体系</p>
+        </div>
+      </div>
     </div>
-    <div class="skill-card">
-    <div class="skill-header">
-        <span class="skill-icon"><i class="fas fa-search"></i></span>
-        <h3>设计验证</h3>
+    <div class="section contact">
+      <h2>💬 找到我</h2>
+      <p>欢迎交流技术、跑步或任何有趣话题！</p>
+      <div class="contact-buttons">
+        <a href="mailto:2690640537@qq.com" class="contact-btn">📧 发邮件</a>
+        <a href="/messages" class="contact-btn">💬 留言板</a>
+      </div>
     </div>
-    <ul>
-        <li>熟悉元器件选型计算与性能分析</li>
-        <li>了解开关电源性能指标</li>
-        <li>熟练掌握电源性能测试方法</li>
-    </ul>
-    </div>
-</div>
-</div>
-
-<!-- 学习规划 -->
-<div class="section">
-<h2><i class="fas fa-rocket"></i> 学习方向</h2>
-<div class="learning-grid">
-    <div class="learning-card">
-    <h3><i class="fas fa-code"></i> 软件技能提升</h3>
-    <ul>
-        <li>Python - 电路仿真与数据分析</li>
-        <li>自动化脚本开发与应用</li>
-        <li>C语言与嵌入式系统学习</li>
-        <li>电源设计工具开发</li>
-    </ul>
-    </div>
-    <div class="learning-card">
-    <h3><i class="fas fa-microchip"></i> 硬件技术深化</h3>
-    <ul>
-        <li>大功率电源设计技术</li>
-        <li>大功率电源拓扑学习</li>
-        <li>环路稳定性分析与优化</li>
-        <li>电磁兼容性设计与仿真</li>
-    </ul>
-    </div>
-</div>
-</div>
-
-<!-- 个人兴趣 -->
-<div class="section">
-<h2><i class="fas fa-heart"></i> 个人兴趣</h2>
-<div class="interests-grid">
-    <div class="interest-item">
-    <span class="interest-icon"><i class="fas fa-running"></i></span>
-    <div class="interest-content">
-        <h4>跑步爱好者</h4>
-        <p>科学训练 · 运动康复</p>
-    </div>
-    </div>
-    <div class="interest-item">
-    <span class="interest-icon"><i class="fas fa-music"></i></span>
-    <div class="interest-content">
-        <h4>音乐娱乐</h4>
-        <p>音乐欣赏 · 游戏动漫</p>
-    </div>
-    </div>
-    <div class="interest-item">
-    <span class="interest-icon"><i class="fab fa-creative-commons"></i></span>
-    <div class="interest-content">
-        <h4>拥抱开源</h4>
-        <p>开源软件 · 技术分享</p>
-    </div>
-    </div>
-</div>
-</div>
-
-<!-- 建站目的 -->
-<div class="section">
-<h2><i class="fas fa-star"></i> 写作初衷</h2>
-<div class="purpose-grid">
-    <div class="purpose-card">
-    <h4><i class="fas fa-book"></i> 技术沉淀</h4>
-    <p>记录工作中的技术难题与解决方案，形成个人知识体系</p>
-    </div>
-    <div class="purpose-card">
-    <h4><i class="fas fa-running"></i> 跑步记录</h4>
-    <p>分享训练心得、伤痛管理经验与科学训练方法</p>
-    </div>
-    <div class="purpose-card">
-    <h4><i class="fas fa-share-alt"></i> 经验分享</h4>
-    <p>整理个人在电源设计中的一些心得，希望能与同行交流探讨</p>
-    </div>
-    <div class="purpose-card">
-    <h4><i class="fas fa-graduation-cap"></i> 学习成长</h4>
-    <p>记录学习历程，见证个人技能与认知的持续提升</p>
-    </div>
-</div>
-</div>
-
-<!-- 联系方式 -->
-<div class="section contact-section">
-<h2><i class="fa-solid fa-phone-volume"></i> 交流联系</h2>
-<p class="contact-intro">如果您对电源设计、技术分享或跑步相关有兴趣，欢迎与我交流探讨！</p>
-<div class="contact-info">
-    <p><strong>擅长领域：</strong>开关电源设计 · PCB设计 · 电源测试</p>
-    <p><strong>学习方向：</strong>大功率电源拓扑 · 电源仿真 · Python</p>
-</div>
-<div class="contact-buttons">
-    <a href="mailto:2690640537@qq.com" class="contact-btn"><i class="fas fa-envelope"></i> 邮箱</a>
-    <a href="https://github.com/sam7xx" class="contact-btn"><i class="fab fa-github"></i> GitHub</a>
-    <a href="/messages" class="contact-btn"><i class="fas fa-comments"></i> 留言</a>
-    <a href="/" class="contact-btn"><i class="fas fa-home"></i> 首页</a>
-    <a href="/archives" class="contact-btn"><i class="fas fa-archive"></i> 归档</a>
-    <a href="/categories" class="contact-btn"><i class="fa-solid fa-list"></i> 分类</a>
-    <a href="/tags" class="contact-btn"><i class="fas fa-tag"></i> 标签 </a>
-    <a href="/atom.xml" class="contact-btn"><i class="fas fa-rss"></i> RSS </a>
-    <a href="/links" class="contact-btn"><i class="fas fa-link"></i> 友链 </a>
-</div>
+  </div>
 </div>

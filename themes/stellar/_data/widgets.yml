@@ -86,9 +86,8 @@ tagtree:
 # 欢迎语
 welcome:
   layout: markdown
-  title: 欢迎光临！ 
+  title: 欢迎光临！ 🎉🎉🎉
   content: |
-    🎉🎉🎉
     很高兴能在这里与大家相遇，欢迎畅所欲言，分享你的想法与见解～
     本站运行环境与访问方式如下：
     - **Hexo 版本**：8.1.1
@@ -104,4 +103,3 @@ welcome:
     <div style="text-align: center;"> <span id="jinrishici-sentence">载入中...</span> <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script> </div>
     
     ------
-    ✨✨✨

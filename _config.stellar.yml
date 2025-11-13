@@ -431,9 +431,6 @@ footer:
     #     - '[xxx](/)'
   content: | # 支持 Markdown 格式
           <center>
-
-          网站由 [{author.name}](/) © 2025使用 [{theme.name}]({theme.tree}) 主题创建
-
           <span id="runtime_span"></span>
           <script type="text/javascript">
           function show_runtime() {
@@ -452,12 +449,15 @@ footer:
               runtime_span.innerHTML = "网站已运行 " + A + "天" + B + "小时" + C + "分" + D + "秒"
           }
           show_runtime();
+          网站由 [{author.name}](/) © 2025使用 [{theme.name}]({theme.tree}) 主题创建
+
           </script>
           <!--不蒜子计数器 https://ohevan.com/vercount-website-counter-busuanzi-alternative.html-->
           <script defer src="https://vercount.one/js"></script>
           <!--添加一个访问量-->
           总访问<span id="busuanzi_value_site_pv"></span>次 · 总访客<span id="busuanzi_value_site_uv"></span>人 · 本页访问<span id="busuanzi_value_page_pv"></span>次
-          <span class="totalcount">已发布博客{blog_count}篇 · 笔记{note_count}篇 · 文档{wiki_count}篇 · 总计{word_count}字</span>
+          
+          已发布博客<span class="totalcount">{blog_count}篇 · 笔记{note_count}篇 · 文档{wiki_count}篇 · 总计{word_count}字</span>
           </center>
           <div style="display: flex;justify-content: center;align-items: center;margin: 10px;">
             <a target="_blank" rel="noopener" href="https://notbyai.fyi/"><img class="lazy entered loaded" src="https://u.sam7.top/miGrfX" data-src="https://u.sam7.top/miGrfX" alt="全部都是博主用心学编写的啊！不是ai啊" style="width:100px;height:35px;margin-right: 10px " id="notbyai" data-ll-status="loaded"></a>
