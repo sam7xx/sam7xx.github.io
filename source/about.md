@@ -524,17 +524,22 @@ comments: false
     </div>
     <div class="section">
       <h2>✍️ 为什么写博客</h2>
-      <div class="purpose">
-        <div class="purpose-item">
-          <h4>📝 记录成长</h4>
+      <!-- 复用“我的兴趣”的容器类名.interests -->
+      <div class="interests">
+        <!-- 每个项复用.interest-item类名，保持样式统一 -->
+        <div class="interest-item">
+          <div class="interest-icon">📝</div> <!-- 图标保持一致风格 -->
+          <h4>记录成长</h4>
           <p class="tagline">记录学习收获和经验</p>
         </div>
-        <div class="purpose-item">
-          <h4>🤝 分享交流</h4>
+        <div class="interest-item">
+          <div class="interest-icon">🤝</div>
+          <h4>分享交流</h4>
           <p class="tagline">与同好交流技术心得</p>
         </div>
-        <div class="purpose-item">
-          <h4>🎯 沉淀思考</h4>
+        <div class="interest-item">
+          <div class="interest-icon">🎯</div>
+          <h4>沉淀思考</h4>
           <p class="tagline">整理思路，形成体系</p>
         </div>
       </div>

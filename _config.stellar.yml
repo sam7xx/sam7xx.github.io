@@ -231,7 +231,7 @@ article:
   # npm i hexo-related-popular-posts
   related_posts:
     enable: true
-    max_count: 5
+    max_count: 3
 
 search:
   service: local_search # local_search, algolia_search, todo...

@@ -19,7 +19,7 @@ share: true
 #     data-mapping: number
 #     data-term: 18
 menu_id: wiki
-base_dir: /wiki/AHB/
+base_dir: /wiki/AHB拓扑学习/
 tree:
   'AHB拓扑与CRM模式PFC学习':
     - AHB工作原理
