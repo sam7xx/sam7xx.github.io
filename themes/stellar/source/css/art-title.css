@@ -1,0 +1,35 @@
+div.main {
+  /* 中英文统一手写字体（保持风格一致） */
+  font-family: "Ma Shan Zheng", "Pacifico", cursive !important;
+  font-size: 36px !important;
+  font-weight: normal !important;
+  line-height: 1.3 !important;
+
+  /* 红色到紫色渐变（主色调调整） */
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #8e44ad, #f39c12) !important;
+  background-size: 70% 70% !important; /* 适配渐变流动动画 */
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important; /* 核心：文字透明显示渐变 */
+
+  /* 阴影增强层次感 */
+  text-shadow: 0 2px 5px rgba(0,0,0,0.15) !important;
+
+  /* 渐变流动动画 */
+  animation: gradientShift 7s ease infinite !important;
+  display: inline-block !important;
+}
+
+/* 动画关键帧 */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 悬停强化效果 */
+div.main:hover {
+  text-shadow: 0 3px 8px rgba(0,0,0,0.2) !important;
+  transform: scale(1.05) !important;
+  transition: all 0.3s ease !important;
+}

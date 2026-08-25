@@ -1,0 +1,96 @@
+name: hexo部署流程
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      - name: 检查是否忽略public目录（关键！）
+        run: |
+          echo "===== 检查.gitignore是否排除public ====="
+          if grep -q "public" .gitignore; then
+            echo "⚠️ 注意：.gitignore中包含public，会被忽略（正常现象）"
+          else
+            echo "✅ .gitignore中未忽略public"
+          fi
+          # 显示.gitignore内容
+          cat .gitignore || echo "无.gitignore文件"
+
+      - name: 安装Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: 'npm'
+
+      - name: 安装依赖
+        run: |
+          npm install hexo-cli -g
+          npm install --force
+          npm install hexo-theme-stellar@latest --save  # 确保主题被安装
+          cd themes/stellar && npm install && cd ../../
+
+      - name: 构建public并记录内容
+        run: |
+          hexo clean
+          echo "===== 开始构建public ====="
+          hexo generate
+          
+          # 记录public目录详情（关键调试信息）
+          echo "===== public目录状态 ====="
+          if [ ! -d "public" ]; then
+            echo "❌ public目录未生成！"
+            exit 1
+          fi
+          
+          echo "public目录路径：$(pwd)/public"
+          echo "public目录大小：$(du -sh public)"
+          echo "public目录文件列表（前20个）："
+          ls -la public | head -n 20
+          echo "public/index.html内容（前10行）："
+          head -n 10 public/index.html || echo "❌ 无index.html"
+
+      # 新增步骤：设置带时间戳的环境变量
+      - name: 设置部署时间变量
+        run: |
+          echo "DEPLOY_TIMESTAMP=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+          echo "已设置部署时间：${{ env.DEPLOY_TIMESTAMP }}"
+
+      - name: 部署到gh-pages分支（带推送日志）
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./public  # 确认推送的是public目录下的内容
+          publish_branch: gh-pages
+          force_orphan: true
+          keep_files: false
+          enable_jekyll: false
+          # 使用环境变量中的时间戳
+          commit_message: "Deploy public content: ${{ env.DEPLOY_TIMESTAMP }}"
+
+      - name: 验证gh-pages分支内容
+        run: |
+          echo "===== 克隆gh-pages分支验证 ====="
+          git clone -b gh-pages https://github.com/${{ github.repository }} gh-pages-check
+          
+          echo "===== gh-pages分支根目录内容 ====="
+          ls -la gh-pages-check
+          
+          echo "===== 检查是否有index.html ====="
+          if [ -f "gh-pages-check/index.html" ]; then
+            echo "✅ gh-pages分支存在index.html，部署成功！"
+            echo "访问地址：https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          else
+            echo "❌ gh-pages分支无index.html，部署失败！"
+            exit 1
+          fi

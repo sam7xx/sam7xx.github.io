@@ -1,0 +1,105 @@
+# 您可以在这里创建属于自己的侧边栏组件库，在需要的位置放置自己的组件
+# layout即组件布局，支持自定义的有：
+# - markdown: 渲染 md 文本
+#
+
+ghrepo:
+  layout: ghrepo
+related:
+  layout: related
+
+ghissues:
+  layout: ghissues
+  title: # Recent Issues
+  limit: 3 # 显示的issues最大数量
+  labels: # 过滤只显示具有某些标签的issues
+
+# 将其覆盖设置为空，可删除一个默认组件，例如 welcome:
+# Recent update
+recent:
+  layout: recent
+  rss:  atom.xml # npm i hexo-generator-feed
+  limit: 10 # Count of posts
+
+# 页面树（与当前页面强关联的上下篇文章列表）
+tree:
+  layout: tree
+
+# 本文目录（当前页面内各级标题列表）
+toc:
+  layout: toc
+  list_number: false
+  min_depth: 1
+  max_depth: 6
+  collapse: false # true / false / auto
+  # 编辑本文按钮
+  edit_this_page: # 从开头开始匹配替换
+    '_posts/': # https://github.com/xaoxuu/xaoxuu.com/blob/main/source/_posts/
+    'wiki/stellar/': https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/
+
+# GitHub 用户信息
+ghuser:
+  layout: ghuser
+  username: # your github login username
+  avatar: true # show avatar or not
+
+# 本文作者组件，需要先配置作者信息: authors.yml
+author:
+  layout: author
+  avatar: true
+
+# 标签云组件
+tagcloud:
+  layout: tagcloud
+  title: 标签云
+  # 标签云配置
+  min_font: 12
+  max_font: 24
+  amount: 100
+  orderby: name
+  order: 1 # 1, sac 升序；-1, desc 降序
+  color: true # 使用颜色
+  start_color: rgba(255, 0, 0, 1) # 红色（rgba格式：红255, 绿0, 蓝0, 不透明度1）
+  end_color: rgba(128, 0, 128, 1) # 紫色（rgba格式：红128, 绿0, 蓝128, 不透明度1
+  show_count: false # 显示每个标签的文章总数
+
+timeline:
+  layout: timeline
+  title: 近期动态
+  api: # https://api.github.com/repos/xaoxuu/hexo-theme-stellar/issues
+  user: # 默认显示所有人的数据，设置名称可过滤为仅显示某人的数据，多个名称用英文逗号隔开，不要加空格
+  limit: # 默认通过 api 上增加 per_page 来设置，如果是友链朋友圈，可通过这个设置数量
+
+latest_comment:
+  layout: timeline
+  title: 最新评论
+  api: # 参照文档获取服务对应的api
+  type: # 选择评论服务
+  limit: 16 # 限制获取数量
+
+tagtree:
+  layout: tagtree
+  expand_all: false # 是否展开所有节点
+  expand_active: true # 是否展开当前节点
+  show_tagcon: true # 是否显示标签 icon
+
+# 欢迎语
+welcome:
+  layout: markdown
+  title: 欢迎光临！ 🎉🎉🎉
+  content: |
+    很高兴能在这里与大家相遇，欢迎畅所欲言，分享你的想法与见解～
+    本站运行环境与访问方式如下：
+    - **Hexo 版本**：8.1.1
+    - **Node.js 版本**：22.19.0
+    - **Stellar 主题版本**：1.33.1
+    - 🌐 **主站地址**：[Cloudflare 部署](https://sam7.top/)
+    - 🔁 **备用站点**：
+      - [GitHub 部署](https://sam7xx.github.io/)
+      - [Vercel 部署](https://sam7.dpdns.org/)
+    - 🚀 **CDN 加速**：由 Cloudflare 提供
+    ------
+
+    <div style="text-align: center;"> <span id="jinrishici-sentence">载入中...</span> <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script> </div>
+    
+    ------

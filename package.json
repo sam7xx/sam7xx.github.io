@@ -1,0 +1,63 @@
+{
+  "name": "hexo-site",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "hexo generate",
+    "clean": "hexo clean",
+    "deploy": "hexo deploy",
+    "server": "hexo server"
+  },
+  "hexo": {
+    "version": "8.1.1"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "axios": "^1.12.2",
+    "core-js": "^3.45.1",
+    "eslint": "^9.36.0",
+    "glob": "^11.0.3",
+    "hexo": "^8.0.0",
+    "hexo-abbrlink": "^2.2.1",
+    "hexo-all-minifier": "^0.5.7",
+    "hexo-autonofollow": "^1.0.1",
+    "hexo-deployer-git": "^4.0.0",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-baidu-sitemap": "^0.1.9",
+    "hexo-generator-category": "^2.0.0",
+    "hexo-generator-feed": "^3.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-sitemap": "^3.0.1",
+    "hexo-generator-tag": "^2.0.0",
+    "hexo-inject": "^1.0.0",
+    "hexo-related-popular-posts": "^5.0.1",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-markdown": "^1.6.5",
+    "hexo-renderer-markdown-it": "^7.1.1",
+    "hexo-renderer-njucks": "^1.0.0",
+    "hexo-renderer-stylus": "^3.0.1",
+    "hexo-seo-autopush": "^2.1.5",
+    "hexo-server": "^3.0.0",
+    "hexo-tag-aplayer": "^3.0.4",
+    "hexo-tag-plugins": "^1.0.5",
+    "hexo-theme-stellar": "^1.44.0",
+    "hexo-wordcount": "^6.0.1",
+    "highlight.js": "^11.11.1",
+    "node-fetch": "^3.3.2",
+    "p-limit": "^7.1.1",
+    "probe-image-size": "^7.2.3",
+    "rimraf": "^6.0.1"
+  },
+  "allowScripts": {
+    "hexo-util@2.7.0": true,
+    "hexo-util@3.3.0": true,
+    "hexo-util@0.6.3": true,
+    "hexo-util@0.1.7": true,
+    "hexo-util@4.0.0": true,
+    "gifsicle@5.3.0": true,
+    "jpegtran-bin@5.0.2": true,
+    "mozjpeg@7.1.1": true,
+    "optipng-bin@7.0.1": true,
+    "pngquant-bin@6.0.1": true
+  }
+}

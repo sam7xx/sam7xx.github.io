@@ -1,0 +1,287 @@
+// 通用 hsla 函数
+x-hsla(h = var(--hue), s = var(--sat), l = var(--light), a = var(--alpha))
+  return unquote('hsla(%s %s %s / %s)' % (h s l a))
+
+// 设置不同透明度的主题色
+x-theme-alpha(a = 1)
+  return unquote('hsla(%s %s %s / %s)' % (var(--hue) var(--sat) var(--light) a))
+
+// 设置基础主题色
+x-set-theme-with-color($color)
+  --hue: hue($color)
+  --sat: saturation($color)
+  --light: lightness($color)
+  --alpha: alpha($color)
+  --theme: x-theme-alpha(1)
+  --theme-a10: x-theme-alpha(0.1)
+  --theme-a20: x-theme-alpha(0.2)
+  --theme-a30: x-theme-alpha(0.3)
+
+// 设置链接颜色
+x-set-link-with-color($color)
+  $hue = hue($color)
+  $sat = saturation($color)
+  $light = lightness($color)
+  --link: x-hsla($hue, $sat, $light, 1)
+  --link-a20: x-hsla($hue, $sat, $light, 0.2)
+
+// 设置背景色
+x-set-bg-colors($scheme)
+  $hue = $c-base-hue
+  $sat = 0%
+  $light = $scheme == 'dark' ? 0% : 100%
+  --bg-a20: x-hsla($hue, $sat, $light, 0.2)
+  --bg-a50: x-hsla($hue, $sat, $light, 0.5)
+  --bg-a55: x-hsla($hue, $sat, $light, 0.55)
+  --bg-a60: x-hsla($hue, $sat, $light, 0.6)
+  --bg-a75: x-hsla($hue, $sat, $light, 0.75)
+  --bg-a100: x-hsla($hue, $sat, $light, 1)
+
+// 设置文本及相关色
+x-set-text-colors($scheme, $p0 = 1, $p1 = 0.8, $p2 = 0.7, $p3 = 0.5, $p4 = 0.4)
+  $hue = $c-base-hue
+  $sat = 0%
+  $light = $scheme == 'dark' ? 100% : 0%
+  
+  --text: x-hsla($hue, $sat, $light, $p0)
+  --text-reverse: x-hsla($hue, $sat, $scheme == 'dark' ? 0% : 100%, $p0)
+  --text-p1: x-hsla($hue, $sat, $light, $p1)
+  --text-p2: x-hsla($hue, $sat, $light, $p2)
+  --text-p3: x-hsla($hue, $sat, $light, $p3)
+  --text-p4: x-hsla($hue, $sat, $light, $p4)
+
+  --text-meta: x-hsla($hue, $sat, $light, 0.2)
+  --text-code: x-hsla($hue, $sat, $light, 0.9)
+
+  --text-a10: x-hsla($hue, $sat, $light, 0.1)
+  --text-a20: x-hsla($hue, $sat, $light, 0.2)
+
+  $sat = $scheme == 'dark' ? 24% : 50%
+  $light = $scheme == 'dark' ? 72% : 12%
+  $alpha = $scheme == 'dark' ? 0.08 : 0.04
+  --block: x-hsla($hue, $sat, $light, $alpha)
+  --block-border: x-hsla($hue, $sat, $light, $alpha * 1.5)
+
+
+// ========== 通用主题色渐变 ==========
+// 约定：渐变颜色通过 --item-theme 提供，未设置时回退到站点主题色 var(--theme)；
+// 淡色变体为 --item-theme-light（默认与白色混合 50%）；角度默认取 style.gradient.angle。
+// 注意：局部覆盖 --item-theme 的元素需同时设置 --item-theme-light（如 x-theme-light()），
+// 否则淡色变体仍沿用 :root 上的主题色。
+// 用法示例：
+//   .foo
+//     --item-theme: #1BCDFC                            // 可选，默认使用站点主题色
+//     background: x-theme-gradient()                   // 右上角淡色 → 左下角主色，停止点 20% / 60%
+//     background: x-theme-gradient(30%, 70%, 25%)      // 自定义停止点与淡色比例
+// 图标渐变（SVG）：元素内放置 <svg class="grad-def">…<linearGradient …/></svg>，
+// 并设置 --item-grad:url(#渐变id)，然后对子元素使用 fill:var(--item-grad)。
+x-theme-light($color = unquote('var(--item-theme)'), $ratio = 50%)
+  return unquote('color-mix(in srgb, %s %s, #fff)' % ($color $ratio))
+
+x-theme-gradient($color = unquote('var(--item-theme)'), $start = 20%, $end = 60%, $light-ratio = 50%, $angle = convert(hexo-config('style.gradient.angle')) or 225deg)
+  $light = x-theme-light($color, $light-ratio)
+  return unquote('linear-gradient(%s, %s %s, %s %s)' % ($angle $light $start $color $end))
+
+// 站点背景兜底（$site-background-image 由 _custom.styl 从配置注入）
+// 注意：本 stylus 版本对未定义变量的守卫条件不生效，须无条件赋值
+$site-background-opacity = 0.6
+
+// ---------------- apply theme ----------------
+// 设置浅色模式
+dynamic-theme-light()
+  $hue = $c-base-hue
+  --background: x-hsla($hue, 20%, 98%, 1)
+  --card: $site-background-image ? hsla(white, 0.5) : white
+
+  x-set-bg-colors('light')
+  --site-bg-overlay: x-hsla(0, 0%, 100%, $site-background-opacity)
+  x-set-text-colors('light')
+
+// 设置深色模式
+dynamic-theme-dark()
+  $hue = $c-base-hue
+  --background: x-hsla($hue, 8%, 16%, 1)
+  @media screen and (max-width: $device-mobile-max)
+    --background: #161616
+  --card: $site-background-image ? hsla(white, 0.3) : x-hsla($hue, 10%, 24%, 1)
+
+  x-set-bg-colors('dark')
+  --site-bg-overlay: x-hsla(0, 0%, 0%, $site-background-opacity + 0.2)
+  x-set-text-colors('dark')
+  --text-code: x-hsla(20, 75, 60, 1)
+
+
+:root
+  // 主题色
+  x-set-theme-with-color($c-theme)
+  // 强调色
+  --accent: $c-accent
+  // 链接
+  x-set-link-with-color($c-link)
+  // 通用渐变颜色（局部可用 --item-theme 覆盖）
+  --item-theme: var(--theme)
+  --item-theme-light: x-theme-light()
+
+  // dynamic colors
+  dynamic-theme-light()
+
+
+:root:not([data-theme])
+  @media (prefers-color-scheme: dark)
+    dynamic-theme-dark()
+
+
+:root[data-theme="light"]
+  dynamic-theme-light()
+:root[data-theme="dark"]
+  dynamic-theme-dark()
+
+// ===== 定制: 深色模式图片滤镜 (主题颜色调整) =====
+// 禁用主题原生背景（body>.sitebg），恢复 html::before/::after 壁纸方案
+body>.sitebg
+  display: none
+
+// ========== 图片主题变化解决方案 ==========
+
+// 深色模式下的图片滤镜应用 - 背景为#31383A，对比度更低，保护左侧栏
+:root[data-theme="dark"]
+  // 应用滤镜到内容区域的图片
+  .post-content img,
+  .article-content img,
+  .entry-content img,
+  .markdown-body img,
+  .content img,
+  .post-body img,
+  [class*="content"] img:not(.no-theme):not(.emoji)
+    filter: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.9)
+    transition: filter 0.3s ease
+  
+  // 保护左侧栏和其他UI元素
+  .sidebar img,
+  .widget img,
+  .navbar img,
+  .header img,
+  //.footer img,
+  .avatar,
+  .logo,
+  .site-brand img,
+  .site-logo img,
+  .author-avatar img,
+  .no-theme
+    filter: none !important
+
+  // 对于需要更浅背景的图片
+  img[data-light-bg],
+  .light-bg-img
+    filter: invert(1) hue-rotate(180deg) brightness(0.8) contrast(0.9) saturate(0.95) !important
+  
+  // 对于需要保持较深背景的图片
+  img[data-dark-bg],
+  .dark-bg-img
+    filter: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.95) !important
+
+// 表情图片不随主题变化
+.emoji,
+.emoticon,
+[class*="emoji"],
+[class*="emoticon"],
+img[src*="emoji"],
+img[src*="emoticon"],
+img[data-emoji]
+  filter: none !important
+
+// 方法2: 使用CSS变量（如果浏览器支持）
+img.theme-aware:not(.emoji)
+  filter: var(--image-filter-value)
+  transition: filter 0.3s ease
+
+// 方法3: 为特定类型的图片添加主题支持
+.themed-image:not(.emoji)
+  :root[data-theme="dark"] &
+    filter: invert(1) hue-rotate(180deg) brightness(0.65) contrast(0.85) saturate(0.9)
+    transition: filter 0.3s ease
+  
+  :root[data-theme="light"] &
+    filter: none
+    transition: filter 0.3s ease
+
+// 确保左侧栏图片不受影响
+.sidebar,
+.widget,
+.navbar,
+.header,
+.footer
+  img
+    filter: none !important
+
+// 额外选项：如果需要完全禁用某些图片的主题变化
+.no-theme,
+[data-no-theme]
+  filter: none !important
+
+// 兼容：在浅色主题中让前缀符号（例如 $）显示为浅黑色，恢复为改前行为并提高可读性
+:root[data-theme="light"]
+  .tag-plugin.copy > span
+    color: rgba(0,0,0,0.65)
+
+// ========== Wallpaper: 背景图与主题遮罩（随 data-theme 变化） ==========
+// 使用现有的主题变量（如 --bg-a55, --background）来让遮罩颜色随 light/dark 自动变化
+:root
+  // 背景开关与默认参数（可被主题变量覆盖）
+  --site-bg-enabled: 1
+  // 推荐默认（桌面）：适中模糊/去饱和/降低对比，使背景不抢眼
+  --site-bg-blur: 10px    // 常用桌面起点，若不要毛玻璃可设 0px
+  --site-bg-sat: 85%      // 饱和度：70-90% 推荐范围
+  --site-bg-contrast: 0.9 // 对比度：0.85-0.95 推荐范围
+  // 从主题配置读取背景遮罩透明度（如果有），否则默认使用 0.1
+  if $site-background-opacity
+    --site-bg-opacity: $site-background-opacity
+  else
+    --site-bg-opacity: 0.1
+
+// 伪元素承载大幅背景图与滤镜，遮罩采用 --bg-a55（已在 x-set-bg-colors 中根据主题设置）
+html::before
+  content: ""
+  position: fixed
+  inset: 0
+  z-index: -9998
+  background-size: cover
+  background-position: center center
+  background-repeat: no-repeat
+  transform: scale(1.02)
+  pointer-events: none
+  will-change: opacity
+  // 不使用毛玻璃，只有在有图片时设置背景图
+  // 调整饱和度与对比度以降低背景干扰（不使用 blur）
+  filter: saturate(var(--site-bg-sat)) contrast(var(--site-bg-contrast))
+  opacity: var(--site-bg-enabled)
+  transition: filter 0.3s ease, opacity 0.3s ease
+  if $site-background-image
+    background-image: url($site-background-image)
+  else
+    background-image: none
+
+html::after
+  content: ""
+  position: fixed
+  inset: 0
+  z-index: -9997
+  pointer-events: none
+  // 使用主题变量控制遮罩颜色（浅色或深色）
+  // 蒙版元素自身不透明，强度由 overlay 的 alpha 控制（修复 opacity 倍增导致蒙版失效）
+  background: var(--site-bg-overlay, var(--bg-a55, rgba(0,0,0,0.08)))
+  opacity: 1
+  mix-blend-mode: normal
+  transition: opacity 0.3s ease, background 0.3s ease
+
+// 不改动主要内容层的默认 z-index/position，恢复主题原有布局
+.site
+  position: relative
+
+// （注）已取消对 .sitebg/.siteblur 优先逻辑，改为使用 html::before + html::after 实现背景与遮罩
+
+// 移动端降级：减少模糊以节省性能
+@media (max-width: $device-mobile-max)
+  html::before
+    // 移动端降级：降低饱和度与对比以节省性能并提高清晰度
+    filter: saturate(75%) contrast(0.9)
