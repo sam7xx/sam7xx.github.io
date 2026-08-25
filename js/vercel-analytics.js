@@ -1,0 +1,1 @@
+(()=>{var e=document.createElement("script");e.src="https://cdn.vercel-insights.com/v1/script.js",e.defer=!0,document.head.appendChild(e)})();
