@@ -42,7 +42,7 @@
     "hexo-tag-plugins": "^1.0.5",
     "hexo-theme-stellar": "^1.44.0",
     "hexo-wordcount": "^6.0.1",
-    "highlight.js": "^11.11.1",
+    "highlight.js": "^11.12.0",
     "node-fetch": "^3.3.2",
     "p-limit": "^7.1.1",
     "probe-image-size": "^7.2.3",
