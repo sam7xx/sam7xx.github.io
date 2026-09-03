@@ -61,10 +61,13 @@ jobs:
           head -n 10 public/index.html || echo "❌ 无index.html"
 
       # 新增步骤：设置带时间戳的环境变量
-      - name: 设置部署时间变量
+      - name: 注入 Cloudflare Workers 部署配置
         run: |
-          echo "DEPLOY_TIMESTAMP=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
-          echo "已设置部署时间：${{ env.DEPLOY_TIMESTAMP }}"
+          cp wrangler.jsonc .assetsignore public/
+          echo "===== public 根目录（注入后） ====="
+          ls -la public/wrangler.jsonc public/.assetsignore
+
+      - name: 部署到gh-pages分支（带推送日志）
 
       - name: 部署到gh-pages分支（带推送日志）
         uses: peaceiris/actions-gh-pages@v4
